@@ -16,10 +16,11 @@ import java.util.Set;
 
 /**
  * Model for users. Implements UserDetails.
- * We will be using it when implementing User Authorisation and Authentications.
+ * We will be using UserDetails when implementing User Authorisation and Authentications.
  * To authenticate the user will provide email and password (that's why email is set to be unique)
  * Additionally there is UserRole which may be {ADMIN, NATIONAL_TRAINER, CLUB_TRAINER, UNREGISTERED}.
  * All of theirs authorities we can find in out User Stories
+ * ownedClubs attribute stands for Clubs where User can modify parameters (like adding Wrestlers etc...)
  */
 @Entity
 @Data

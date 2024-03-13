@@ -9,6 +9,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Location of the tournament
+ */
 @Entity
 @Data
 @Builder

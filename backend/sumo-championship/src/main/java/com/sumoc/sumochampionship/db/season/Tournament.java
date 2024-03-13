@@ -12,6 +12,9 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+/**
+ * Model representing Tournaments.
+ */
 @Entity
 @Data
 @Builder

@@ -9,6 +9,11 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+/**
+ * Model representing season.
+ * Each season has got list of tournaments and categories
+ * Tournaments may be organized with ONLY categories specified here
+ */
 @Entity
 @Data
 @Builder
@@ -26,8 +31,7 @@ public class Season {
     @OneToMany(mappedBy = "season")
     private Set<Tournament> tournaments;
 
-    @OneToMany(mappedBy = "season")
+    @ManyToMany(mappedBy = "season")
     private Set<Category> categories;
-
 
 }

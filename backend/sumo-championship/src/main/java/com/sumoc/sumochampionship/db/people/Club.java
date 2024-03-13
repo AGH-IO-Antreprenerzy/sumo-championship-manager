@@ -29,7 +29,7 @@ public class Club {
     private String nationality;
 
     @ManyToMany(mappedBy = "ownedClubs")
-    private Set<WebsiteUser> superiors;
+    private Set<WebsiteUser> trainers;
 
     @OneToMany(mappedBy = "club")
     private Set<Wrestler> wrestlers;

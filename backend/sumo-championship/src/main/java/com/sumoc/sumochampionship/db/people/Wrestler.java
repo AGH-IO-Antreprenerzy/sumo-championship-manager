@@ -13,6 +13,7 @@ import java.util.Set;
 /**
  * Model for wrestlers
  * Include foreign key to Club Table. Wrestler can be in one club at the same time
+ * enrollments attribute is mapped foreign key from WrestlersEnrollment table
  */
 @Entity
 @Data
