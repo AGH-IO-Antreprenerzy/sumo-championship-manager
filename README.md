@@ -15,6 +15,8 @@ System for sumo championship management. Created as a project for Software Engin
 
 ### Build and run
 
+#### Backend
+
 Basic run with Maven (without tests):
 
 ```sh
@@ -23,6 +25,17 @@ mvn clean install -DskipTests exec:java -Dexec.mainClass=com.sumoc.sumochampions
 
 *Caution: You need to set the variables!*
 
+#### Frontend
+
+1. Enter `frontend/sumo-championship` directory and run:
+```sh
+yarn install
+```
+
+2. Run the frontend app:
+```sh
+yarn start
+```
 
 ### Authors
 - [Antoni Wójcik](https://github.com/AntuanW)
