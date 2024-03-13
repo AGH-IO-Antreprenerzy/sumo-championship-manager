@@ -5,12 +5,17 @@
 
 #### Frontend
 
-1. Enter `frontend/sumo-championship` directory and run:
+1. [Install yarn](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable):
+```sh
+npm install --global yarn
+```
+
+2. Enter `frontend/sumo-championship` directory and run:
 ```sh
 yarn install
 ```
 
-2. Run the frontend app:
+3. Run the frontend app:
 ```sh
 yarn start
 ```
