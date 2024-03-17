@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import TextField from '../molecules/TextField';
 import "./../../styles/Organisms.css"
 import Submit from '../Atoms/Submit';
+import { userContext } from '../../contexts/UserContext';
 interface props{}
 
-interface loginInformation{
+export interface loginInformation{
     email: string,
     password: string
 }
@@ -20,45 +21,60 @@ const LoginForm: React.FC<props> = () => {
 
     const [loginInfo, setLoginInfo] = useState<loginInformation>(emptyLoginInfo)
     const [loginInfoError, setLoginInfoError] = useState<loginInformationError>(emptyLoginInfoError)
-    
-    const checkForEmail = (email: string) => {
+
+    const {user, signIn} = useContext(userContext);
+    //add navigate when user logged
+
+    const checkForEmail = (): boolean => {
         const regex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/
 
-        if (email === ""){
+        if (loginInfo.email === ""){
             setLoginInfoError(prev => ({...prev, email: "You need to provide an email"}))
-            return
+            return false
         }
-
-        if (!regex.test(email)){
+        else if (!regex.test(loginInfo.email)){
             setLoginInfoError(prev => ({...prev, email: "Provide a valid email"}))
+            return false
+        }
+        else{
+            setLoginInfoError(prev => ({...prev, email: ""}))
+            return true
         }
     }
 
-    const checkForPassword = (password: string) => {
-        if (password === ""){
+    const checkForPassword = (): boolean => {
+        if (loginInfo.password === ""){
             setLoginInfoError(prev => ({...prev, password: "You need to provide a password"}))
+            return false
         }
+
+        return true    
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         setLoginInfoError(emptyLoginInfoError);
 
-        checkForEmail(loginInfo.email);
-        checkForPassword(loginInfo.password);
+        const isPasswordCorrect = checkForPassword()
+        const isEmailCorrect = checkForEmail() 
 
-        if (loginInfoError !== emptyLoginInfoError){
-            console.log("No nie pasuje")
-            return;
+        if (!isPasswordCorrect || isEmailCorrect){
+            return
         }
-        
-        console.log(loginInfo);
-        setLoginInfo(emptyLoginInfo)
+        try{
+            await signIn(loginInfo)
+        }catch(error: any){
+            console.log(error)
+            console.log("No cos nie pyklo")
+        }
+
+        //navigate here to homepage
     }
+
     return (
         <form onSubmit={(e) => {
                 e.preventDefault();
                 handleSubmit();
-            }} action='POST'>
+            }}>
             <div className='loginForm'>
                 <TextField
                     label='Email'

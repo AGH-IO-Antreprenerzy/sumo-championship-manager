@@ -17,7 +17,8 @@ const TextField: React.FC<props> = ({label, value, onChange, errorMessage, type}
                     value={value} 
                     onChange={onChange} 
                     className='input' 
-                    placeholder={label}/>
+                    placeholder={label}
+                    />
             <div className='error'> {errorMessage && `*${errorMessage}`} </div>
         </div>
     );
