@@ -1,0 +1,23 @@
+.textField_container{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    
+    .label{
+        font-size: 20px;
+        font-weight:bold;
+        margin-bottom: 10px;
+    }
+
+    .error{
+        color: red;
+        font-size: 20px;
+    }
+
+    .input{
+        padding: 15px 10px;
+        width: 25%;
+        border-radius: 15px;
+        font-size: 35px;
+    }
+}
