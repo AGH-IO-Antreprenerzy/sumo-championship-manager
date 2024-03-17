@@ -1,0 +1,7 @@
+.pageLayout{
+    display: flex;
+    justify-content: center;
+    column-gap: 10%;
+    align-items: center;
+    height: 95vh;
+}
