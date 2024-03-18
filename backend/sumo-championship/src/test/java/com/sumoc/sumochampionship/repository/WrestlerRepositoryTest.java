@@ -85,6 +85,26 @@ class WrestlerRepositoryTest {
 
     }
 
+    /*
+     Test if pagination works well
+     */
+    @Test
+    public void Pagination_findWrestlerByCluIn(){
+        // Arrange
+        int pageableNumber = 1;
+        WebsiteUser admin = contextAdmin();
+        Pageable pageable = PageRequest.of(0, pageableNumber);
+
+        // Act
+        // There are 9 Wrestlers but due to 'pageable' this method returns only one
+        List<Wrestler> wrestlers = wrestlerRepository.findWrestlerByClubIn(admin.getOwnedClubs(), pageable).getContent();
+
+        // Assert
+        Assertions.assertEquals(pageableNumber, wrestlers.size());
+
+
+    }
+
     private WebsiteUser contextRegional(){
         List<Club> clubs = new ArrayList<>(contextClubs());
         Set<Club> clubSet = Set.of(clubs.get(0));

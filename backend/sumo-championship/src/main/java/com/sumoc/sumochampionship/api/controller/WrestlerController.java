@@ -33,7 +33,7 @@ public class WrestlerController {
      */
     @GetMapping("/all")
     public ResponseEntity<WrestlersResponse> getWrestlers(@AuthenticationPrincipal WebsiteUser user,
-                                                          @RequestParam(defaultValue = "0") int page){
+                                                          @RequestParam(defaultValue = "0", required = false) int page){
 
         Pageable pageable = PageRequest.of(page, WRESTLERS_ON_PAGE);
 
