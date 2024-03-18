@@ -1,8 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import TextField from '../molecules/TextField';
 import "./../../styles/Organisms.css"
 import Submit from '../Atoms/Submit';
 import { userContext } from '../../contexts/UserContext';
+import { useNavigate } from 'react-router';
+import ROUTES from '../../routes/ROUTES';
 interface props{}
 
 export interface loginInformation{
@@ -22,7 +24,8 @@ const LoginForm: React.FC<props> = () => {
     const [loginInfo, setLoginInfo] = useState<loginInformation>(emptyLoginInfo)
     const [loginInfoError, setLoginInfoError] = useState<loginInformationError>(emptyLoginInfoError)
 
-    const {user, signIn} = useContext(userContext);
+    const {signIn} = useContext(userContext);
+
     //add navigate when user logged
 
     const checkForEmail = (): boolean => {
@@ -57,9 +60,10 @@ const LoginForm: React.FC<props> = () => {
         const isPasswordCorrect = checkForPassword()
         const isEmailCorrect = checkForEmail() 
 
-        if (!isPasswordCorrect || isEmailCorrect){
+        if (!isPasswordCorrect || !isEmailCorrect){
             return
         }
+
         try{
             await signIn(loginInfo)
         }catch(error: any){

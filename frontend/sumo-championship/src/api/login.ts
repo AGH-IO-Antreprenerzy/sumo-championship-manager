@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { loginInformation } from "../components/organisms/LoginForm";
-import { checkIsOk } from "./generalUtils";
 
 export enum Role{
     Admin = "Admin",
