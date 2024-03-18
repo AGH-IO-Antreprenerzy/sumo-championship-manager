@@ -24,8 +24,6 @@ const LoginForm: React.FC<props> = () => {
 
     const {signIn} = useContext(userContext);
 
-    //add navigate when user logged
-
     const checkForEmail = (): boolean => {
         const regex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/
 
