@@ -1,0 +1,83 @@
+.option {
+    position: relative;
+    text-transform: capitalize;
+    display: inline-block;
+    /*min-width: 83px;*/
+}
+
+.nav-inner,
+.options-parent {
+    display: flex;
+    align-items: flex-start;
+}
+.options-parent {
+    align-self: stretch;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px;
+}
+.nav-inner {
+    width: 158px;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 8px 0 0;
+    box-sizing: border-box;
+}
+.login {
+    position: relative;
+    font-size: 16px;
+    text-transform: capitalize;
+    font-family: Inter, serif;
+    color: #000;
+    text-align: left;
+    display: inline-block;
+    min-width: 84px;
+}
+.button,
+.nav {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+.button {
+    cursor: pointer;
+    border: 0;
+    padding: 8px 30px;
+    background-color: #fff;
+    justify-content: flex-start;
+    white-space: nowrap;
+}
+.button:hover {
+    background-color: #e6e6e6;
+}
+.nav {
+    width: 100%;
+    background-color: #0e0e0e;
+    overflow: hidden;
+    justify-content: flex-end;
+    padding: 14px 214px 13px;
+    box-sizing: border-box;
+    gap: 96px;
+    letter-spacing: normal;
+    text-align: left;
+    font-size: 16px;
+    color: #fff;
+    font-family: Inter, serif;
+}
+@media screen and (max-width: 825px) {
+    .nav {
+        flex-wrap: wrap;
+        gap: 96px 48px;
+        padding-left: 107px;
+        padding-right: 107px;
+        box-sizing: border-box;
+    }
+}
+@media screen and (max-width: 450px) {
+    .nav {
+        gap: 96px 24px;
+        padding-left: 20px;
+        padding-right: 20px;
+        box-sizing: border-box;
+    }
+}
