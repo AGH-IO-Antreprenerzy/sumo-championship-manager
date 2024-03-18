@@ -4,6 +4,11 @@
 
 #### Frontend
 
+0. Install following VScode extensions:
+
+- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+- [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+
 1. [Install yarn](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable):
 
 ```sh
