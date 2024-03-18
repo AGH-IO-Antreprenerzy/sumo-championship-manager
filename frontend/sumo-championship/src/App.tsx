@@ -4,6 +4,7 @@ import Nav from "./components/Nav"
 import Other from "./components/Other";
 import Login from "./components/Login";
 import Players from "./components/Players";
+import Home from "./components/Home"
 
 const App: FunctionComponent = () => {
     return (
@@ -14,6 +15,7 @@ const App: FunctionComponent = () => {
                     <Route path="/other" element={<Other />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/players" element={<Players />} />
+                    <Route path="/" element={<Home />} />
                 </Routes>
             </div>
         </BrowserRouter>
