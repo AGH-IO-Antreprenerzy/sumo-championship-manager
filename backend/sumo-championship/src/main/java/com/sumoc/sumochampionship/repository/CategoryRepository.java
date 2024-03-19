@@ -12,5 +12,5 @@ import java.util.Set;
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     // * Method added to test functionality of adding new Season with categories
-    List<Category> findCategoriesBySeason(Set<Season> season);
+    List<Category> findCategoriesBySeason(Season season);
 }

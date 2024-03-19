@@ -38,11 +38,8 @@ public class Category {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @ManyToMany
-    @JoinTable(name = "SeasonCategory",
-            joinColumns = @JoinColumn(name = "category"),
-            inverseJoinColumns = @JoinColumn(name = "season"))
-    private Set<Season> season;
+    @ManyToOne
+    private Season season;
 
     // Categories for a given tournament
     @ManyToMany(mappedBy = "categories")

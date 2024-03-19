@@ -27,6 +27,10 @@ public class WrestlerService {
     Than convert the Page to WrestlersDto
      */
     public WrestlersResponse findAllInClubs(WebsiteUser user, Pageable pageable){
+        if (user == null){
+            // TODO: Refactor this to sth that make more sense
+            return WrestlersResponse.builder().build();
+        }
         Set<Club> ownedClubs = user.getOwnedClubs();
         Page<Wrestler> wrestlerPage = wrestlerRepository.findWrestlerByClubIn(ownedClubs, pageable);
 

@@ -11,6 +11,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -32,10 +33,14 @@ public class SeasonService {
         Season season = getSeasonFromRequest(seasonRequest);
         Set<Category> categories = getCategoriesFromRequest(seasonRequest);
 
+        if(!notNullCheck(season) || !notNullCheck(categories)){
+            return ResponseEntity.badRequest().body("Invalid data. All parameters can not be null");
+        }
+
         // Check if startDate < endDate and if actualDate < startDate
         if(!checkDate(season.getStart(), season.getEnd())){
             return ResponseEntity.badRequest().body("Invalid data provided. Start of the season should be " +
-                    "before the end of the season. Moreover start of the season should be in the future");
+                    "before the end of the season. Moreover start of the season should after today's day");
         }
 
         // Check Age constraints
@@ -55,19 +60,31 @@ public class SeasonService {
         return ResponseEntity.ok().body("Season and Categories saved");
     }
 
-    /* TODO: Relation between season and categories is Many to Many. It means that user may use previously created
-        categories. Therefore before saving Category from Request, I should check if the Category is not exists
-        This MUST be tested
-        Second option: Redo db connection from (Many to many) to One to Many (One Season has got many categories)
-
+    /*
+    Test if 'season.setCategories() will properly connect Categories with Seasons'
      */
     private boolean saveSeason(Season season, Set<Category> categories){
         try {
-            categoryRepository.saveAll(categories);
-            season.setCategories(categories);
             seasonRepository.save(season);
+            for (Category category: categories){
+                category.setSeason(season);
+                categoryRepository.save(category);
+            }
+
         }catch (DataAccessException ex){
             return false;
+        }
+        return true;
+    }
+
+    private boolean notNullCheck(Season season){
+        return season.getName() != null && season.getStart() != null && season.getEnd() != null;
+    }
+
+    private boolean notNullCheck(Set<Category> categories){
+        for(Category category : categories){
+           if (category.getMinWeight() == null || category.getMinAge() == null || category.getMaxAge() == null ||
+           category.getGender() == null || category.getMaxWeight() == null) return false;
         }
         return true;
     }
@@ -76,7 +93,7 @@ public class SeasonService {
     private boolean checkCategories(Set<Category> categories){
         for (Category category: categories){
             if(!(category.getMinAge() < category.getMaxAge())) return false;
-            if(!(category.getMaxAge() > 0)) return false;
+            if(!(category.getMinAge() > 0)) return false;
 
             if(!(category.getMinWeight() < category.getMaxWeight())) return false;
             if(!(category.getMinWeight() > 0)) return false;

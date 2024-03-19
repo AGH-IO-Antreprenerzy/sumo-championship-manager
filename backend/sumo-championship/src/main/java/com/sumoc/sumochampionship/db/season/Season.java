@@ -35,7 +35,6 @@ public class Season {
     @OneToMany(mappedBy = "season")
     private Set<Tournament> tournaments;
 
-    @ManyToMany(mappedBy = "season")
+    @OneToMany(mappedBy = "season")
     private Set<Category> categories;
-
 }
