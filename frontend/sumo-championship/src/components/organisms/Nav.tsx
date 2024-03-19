@@ -1,9 +1,9 @@
-import { FunctionComponent } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/Nav.css";
 import ROUTES from "../../routes/ROUTES";
 
-const Nav: FunctionComponent = () => {
+const Nav: React.FC = () => {
     const navigate = useNavigate();
     return (
         <div className="nav">

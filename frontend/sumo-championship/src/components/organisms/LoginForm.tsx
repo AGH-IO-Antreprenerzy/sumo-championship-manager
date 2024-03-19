@@ -3,7 +3,6 @@ import TextField from '../molecules/TextField';
 import "./../../styles/Organisms.css"
 import Submit from '../Atoms/Submit';
 import { useUser } from '../../contexts/UserContext';
-interface props{}
 
 export interface loginInformation{
     email: string,
@@ -15,7 +14,7 @@ interface loginInformationError{
     password: string
 }
 
-const LoginForm: React.FC<props> = () => {
+const LoginForm: React.FC = () => {
     const emptyLoginInfo: loginInformation = {email: "", password: ""}
     const emptyLoginInfoError: loginInformationError = {email: "", password: ""}
 
@@ -62,7 +61,7 @@ const LoginForm: React.FC<props> = () => {
 
         try{
             await signIn(loginInfo)
-        }catch(error: any){
+        }catch(error){
             console.log(error)
             console.log("No cos nie pyklo")
         }
