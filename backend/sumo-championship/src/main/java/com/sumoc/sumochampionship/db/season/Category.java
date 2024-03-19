@@ -26,7 +26,13 @@ public class Category {
     private Long id;
 
     private String name;
+
+    // Added maxAge - TODO: Discuss
     private Integer minAge;
+    private Integer maxAge;
+
+    // Added minWeight - TODO: Discuss
+    private Integer minWeight;
     private Integer maxWeight;
 
     @Enumerated(EnumType.STRING)

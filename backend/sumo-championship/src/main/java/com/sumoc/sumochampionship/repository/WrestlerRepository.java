@@ -19,7 +19,7 @@ import java.util.Set;
  */
 
 @Repository
-public interface WrestlerRepository extends JpaRepository<Wrestler, Integer> {
+public interface WrestlerRepository extends JpaRepository<Wrestler, Long> {
 
     /* Returns Wrestlers that are connected to requesting WebsiteUser
         For example: Polish National Trainer request for all Wrestlers -> Receive all Wrestlers that

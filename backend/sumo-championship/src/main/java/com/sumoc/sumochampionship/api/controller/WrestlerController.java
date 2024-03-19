@@ -1,8 +1,7 @@
 package com.sumoc.sumochampionship.api.controller;
 
-import com.sumoc.sumochampionship.api.dto.WrestlersResponse;
+import com.sumoc.sumochampionship.api.dto.response.WrestlersResponse;
 import com.sumoc.sumochampionship.db.people.WebsiteUser;
-import com.sumoc.sumochampionship.db.people.Wrestler;
 import com.sumoc.sumochampionship.service.WrestlerService;
 import lombok.RequiredArgsConstructor;
 
@@ -14,8 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * Controller responsible for manipulating request given by Website Users
