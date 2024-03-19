@@ -1,25 +1,26 @@
+import { FunctionComponent } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Nav from './components/Nav';
+import Other from './components/Other';
+import Login from './components/Login';
+import Players from './components/Players';
+import Home from './components/Home';
 import React from 'react';
-import './styles/App.css';
 
-function App() {
+const App: FunctionComponent = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h3>Sumo Championship Manager is coming soon!</h3>
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Nav />
+        <Routes>
+          <Route path="/other" element={<Other />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/players" element={<Players />} />
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;

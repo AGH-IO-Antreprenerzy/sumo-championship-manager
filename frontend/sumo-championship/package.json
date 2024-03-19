@@ -33,12 +33,6 @@
     "fix:eslint": "eslint src --ext .js,.ts,.jsx,.tsx --fix",
     "fix:prettier": "prettier --write ."
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",
