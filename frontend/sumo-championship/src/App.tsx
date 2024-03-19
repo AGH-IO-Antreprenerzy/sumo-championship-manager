@@ -5,6 +5,9 @@ import Other from "./components/Other";
 import Login from "./components/Login";
 import Players from "./components/Players";
 import Home from "./components/Home"
+import React from 'react';
+
+
 
 const App: FunctionComponent = () => {
     return (
