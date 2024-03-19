@@ -1,16 +1,16 @@
-import { FunctionComponent, useContext } from "react";
+import { FunctionComponent } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Nav from "./components/organisms/Nav"
 import Other from "./pages/Other";
 import Players from "./pages/Players";
 import Home from "./pages/Home"
 import LoginPage from "./pages/LoginPage";
-import { userContext } from "./contexts/UserContext";
 import ROUTES from "./routes/ROUTES";
+import { useUser } from "./contexts/UserContext";
 
 const App: FunctionComponent = () => {
 
-    const {user} = useContext(userContext);
+    const {user} = useUser();
 
     return (
         <BrowserRouter>

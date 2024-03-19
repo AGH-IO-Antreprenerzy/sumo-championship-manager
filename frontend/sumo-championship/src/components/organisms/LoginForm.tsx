@@ -1,8 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import TextField from '../molecules/TextField';
 import "./../../styles/Organisms.css"
 import Submit from '../Atoms/Submit';
-import { userContext } from '../../contexts/UserContext';
+import { useUser } from '../../contexts/UserContext';
 interface props{}
 
 export interface loginInformation{
@@ -22,7 +22,7 @@ const LoginForm: React.FC<props> = () => {
     const [loginInfo, setLoginInfo] = useState<loginInformation>(emptyLoginInfo)
     const [loginInfoError, setLoginInfoError] = useState<loginInformationError>(emptyLoginInfoError)
 
-    const {signIn} = useContext(userContext);
+    const { signIn } = useUser()
 
     const checkForEmail = (): boolean => {
         const regex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/

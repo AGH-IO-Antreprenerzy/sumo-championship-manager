@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { Role, postLogin } from '../api/login';
 import { loginInformation } from '../components/organisms/LoginForm';
 
@@ -24,11 +24,7 @@ interface UserContextType{
     signOut: () => void
 }
 
-export const userContext = createContext<UserContextType>({
-    user: defaultUser,
-    signIn: (user: loginInformation) => new Promise((res, rej) => {}),
-    signOut: () => {}
-});
+const userContext = createContext<UserContextType | undefined>(undefined);
 
 const UserContext = (props: { children: any; }) => {
     const [userState, setUserState] = useState<UserContextType>(
@@ -60,5 +56,15 @@ const UserContext = (props: { children: any; }) => {
     )
 
 };
+
+export const useUser = (): UserContextType => {
+    const context = useContext(userContext)
+    
+    if (context === undefined){
+        throw new Error("Context is undefined, please use it inside userContext provider")
+    }
+
+    return context;
+}
 
 export default UserContext;
