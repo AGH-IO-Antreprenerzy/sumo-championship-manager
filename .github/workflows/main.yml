@@ -23,7 +23,11 @@ jobs:
           node-version: "16"
       - name: install
         run: yarn install
+        working-directory: frontend/sumo-championship
       - name: ESLint
         run: yarn run fix .
+        working-directory: backend/sumo-championship
       - name: Prettier
         run: yarn prettier --write .
+        working-directory: backend/sumo-championship
+
