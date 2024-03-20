@@ -26,8 +26,8 @@ jobs:
         working-directory: frontend/sumo-championship
       - name: ESLint
         run: yarn run fix .
-        working-directory: backend/sumo-championship
+        working-directory: frontend/sumo-championship
       - name: Prettier
         run: yarn prettier --write .
-        working-directory: backend/sumo-championship
+        working-directory: frontend/sumo-championship
 
