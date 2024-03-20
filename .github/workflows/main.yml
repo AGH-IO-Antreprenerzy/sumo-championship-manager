@@ -24,6 +24,9 @@ jobs:
       - name: install
         run: yarn install
         working-directory: frontend/sumo-championship
+      - name: Install Prettier
+        run: yarn add --dev prettier
+        working-directory: frontend/sumo-championship
       - name: ESLint
         run: yarn run fix .
         working-directory: frontend/sumo-championship
