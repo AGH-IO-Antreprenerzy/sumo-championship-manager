@@ -7,6 +7,7 @@
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
     "prettier"
   ],
   "parser": "@typescript-eslint/parser",
@@ -18,7 +19,9 @@
     "sourceType": "module"
   },
   "plugins": ["@typescript-eslint", "react", "prettier"],
-  "rules": {},
+  "rules": {
+    "react/react-in-jsx-scope": "off"
+  },
   "settings": {
     "import/resolver": {
       "typescript": {}
