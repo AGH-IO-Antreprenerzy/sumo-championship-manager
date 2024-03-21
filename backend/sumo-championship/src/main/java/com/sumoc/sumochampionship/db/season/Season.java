@@ -25,6 +25,7 @@ public class Season {
     @GeneratedValue
     private Long id;
 
+    @Column(unique = true)
     private String name;
 
     // Change to LocalDate from LocalDateTime (I think the Date does not have to be that precise)
