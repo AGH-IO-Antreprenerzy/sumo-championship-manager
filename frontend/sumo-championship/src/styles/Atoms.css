@@ -1,14 +1,24 @@
-.submit{
-    border-radius: 10px;
-    background-color: #F37316;
-    color: white;
-    padding: 0px 60px;
-    height: 50px;
-    font-size: 20px;
-    border: none;
+.submit {
+  border-radius: 10px;
+  background-color: #f37316;
+  color: white;
+  padding: 0px 60px;
+  height: 50px;
+  font-size: 20px;
+  border: none;
 }
 
-.submit:hover{
-    cursor: pointer;
-    background-color: #ff8b38;
+.submit:hover {
+  cursor: pointer;
+  background-color: #ff8b38;
+}
+
+.title {
+  font-size: 64px;
+  color: #000;
+}
+
+.description {
+  font-size: 20px;
+  color: #767676;
 }

@@ -1,6 +1,14 @@
-.loginForm{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    row-gap: 30px;
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 30px;
+}
+
+.pageTop {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
