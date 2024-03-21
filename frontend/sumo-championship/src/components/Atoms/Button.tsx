@@ -4,10 +4,11 @@ import './../../styles/Atoms.css';
 interface props {
   value: string;
   style?: React.CSSProperties;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
-const Button: React.FC<props> = ({ value, style, onClick }) => {
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+const Button: React.FC<props> = ({ value, style, onClick = () => {} }) => {
   return (
     <button className="submit" style={style} onClick={onClick}>
       {value}

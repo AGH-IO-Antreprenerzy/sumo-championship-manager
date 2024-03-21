@@ -12,3 +12,44 @@
   align-items: center;
   margin-bottom: 20px;
 }
+
+.addSeasonForm {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  justify-content: space-between;
+  margin: 30px 0;
+  column-gap: 64px;
+  height: 700px;
+}
+
+.addSeasonFormColumn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  height: 100%;
+}
+
+.categoryForm {
+  display: flex;
+  flex-direction: column;
+
+  .inputs {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 30px;
+  }
+}
+
+.categoriesTable {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  overflow: auto;
+}

@@ -13,12 +13,35 @@
   background-color: #ff8b38;
 }
 
+.iconButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+}
+
 .title {
   font-size: 64px;
   color: #000;
+}
+.subtitle {
+  font-size: 36px;
+  color: #f37316;
 }
 
 .description {
   font-size: 20px;
   color: #767676;
+}
+
+.centeredText {
+  text-align: center;
+}
+
+.mb20 {
+  margin-bottom: 20px;
+}
+
+.mb30 {
+  margin-bottom: 30px;
 }
