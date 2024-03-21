@@ -4,9 +4,9 @@ name: front-linter
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: ["main"]
+    branches: ["dev"]
   pull_request:
-    branches: ["main"]
+    branches: ["dev"]
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -20,10 +20,17 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: "16"
+          node-version: "20"
       - name: install
         run: yarn install
+        working-directory: frontend/sumo-championship
+      - name: Install Prettier
+        run: yarn add --dev prettier
+        working-directory: frontend/sumo-championship
       - name: ESLint
         run: yarn run fix .
+        working-directory: frontend/sumo-championship
       - name: Prettier
         run: yarn prettier --write .
+        working-directory: frontend/sumo-championship
+
