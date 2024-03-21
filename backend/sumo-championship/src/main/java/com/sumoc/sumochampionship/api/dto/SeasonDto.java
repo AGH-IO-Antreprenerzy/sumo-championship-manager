@@ -21,8 +21,8 @@ public class SeasonDto {
     static public SeasonDto mapToDto(Season season){
         return SeasonDto.builder()
                 .name(season.getName())
-                .start(season.getStart())
-                .end(season.getEnd())
+                .start(season.getStartDate())
+                .end(season.getEndDate())
                 .build();
     }
 

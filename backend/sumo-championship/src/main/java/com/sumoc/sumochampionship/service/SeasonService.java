@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
-import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -53,7 +52,7 @@ public class SeasonService {
         }
 
         // Check if startDate < endDate and if actualDate < startDate
-        if(!checkDate(season.getStart(), season.getEnd())){
+        if(!checkDate(season.getStartDate(), season.getEndDate())){
             return ResponseEntity.badRequest().body("Invalid data provided. Start of the season should be " +
                     "before the end of the season.");
         }
@@ -88,21 +87,21 @@ public class SeasonService {
 
         return SeasonDto.builder()
                 .name(season.getName())
-                .start(season.getStart())
-                .end(season.getEnd())
+                .start(season.getStartDate())
+                .end(season.getEndDate())
                 .build();
     }
 
     public AllSeasonResponse getAllSeasons(int pageNo, int pageSize, boolean historical){
-        Sort sort = Sort.by("start").descending();
+        Sort sort = Sort.by("startDate").descending();
         Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
         Page<Season> seasonPage = null;
         // Returns only this Season that has already ended
         if(historical){
-            seasonPage = seasonRepository.findSeasonsByEndBefore(LocalDate.now(), pageable);
+            seasonPage = seasonRepository.findSeasonsByEndDateBefore(LocalDate.now(), pageable);
         }
         else{
-            seasonPage =  seasonRepository.findSeasonsByEndAfter(LocalDate.now(), pageable);
+            seasonPage =  seasonRepository.findSeasonsByEndDateAfter(LocalDate.now(), pageable);
         }
 
         List<Season> seasons = seasonPage.getContent();
@@ -137,7 +136,7 @@ public class SeasonService {
     }
 
     private boolean notNullCheck(Season season){
-        return season.getName() != null && season.getStart() != null && season.getEnd() != null;
+        return season.getName() != null && season.getStartDate() != null && season.getEndDate() != null;
     }
 
     private boolean notNullCheck(Set<Category> categories){
@@ -166,8 +165,8 @@ public class SeasonService {
     private Season getSeasonFromRequest(SeasonRequest seasonRequest){
         return Season.builder()
                 .name(seasonRequest.getName())
-                .start(seasonRequest.getStartDate())
-                .end(seasonRequest.getEndDate())
+                .startDate(seasonRequest.getStartDate())
+                .endDate(seasonRequest.getEndDate())
                 .build();
     }
 
