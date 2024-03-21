@@ -1,7 +1,7 @@
 package com.sumoc.sumochampionship.service;
 
 import com.sumoc.sumochampionship.api.dto.WrestlersDto;
-import com.sumoc.sumochampionship.api.dto.WrestlersResponse;
+import com.sumoc.sumochampionship.api.dto.response.WrestlersResponse;
 import com.sumoc.sumochampionship.db.people.Club;
 import com.sumoc.sumochampionship.db.people.WebsiteUser;
 import com.sumoc.sumochampionship.db.people.Wrestler;
@@ -10,7 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import java.util.stream.Collectors;
+
 import java.util.List;
 import java.util.Set;
 
@@ -27,6 +27,10 @@ public class WrestlerService {
     Than convert the Page to WrestlersDto
      */
     public WrestlersResponse findAllInClubs(WebsiteUser user, Pageable pageable){
+        if (user == null){
+            // TODO: Refactor this to sth that make more sense
+            return WrestlersResponse.builder().build();
+        }
         Set<Club> ownedClubs = user.getOwnedClubs();
         Page<Wrestler> wrestlerPage = wrestlerRepository.findWrestlerByClubIn(ownedClubs, pageable);
 
