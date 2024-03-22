@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Set;
 
 /**
@@ -25,12 +24,13 @@ public class Season {
     @GeneratedValue
     private Long id;
 
+    @Column(unique = true)
     private String name;
 
     // Change to LocalDate from LocalDateTime (I think the Date does not have to be that precise)
     // TODO: Discuss it with frontend
-    private LocalDate start;
-    private LocalDate end;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
     @OneToMany(mappedBy = "season")
     private Set<Tournament> tournaments;
