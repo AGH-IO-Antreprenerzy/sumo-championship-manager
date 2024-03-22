@@ -1,24 +1,32 @@
 package com.sumoc.sumochampionship.service;
 
 import com.sumoc.sumochampionship.api.dto.CategoryDto;
+import com.sumoc.sumochampionship.api.dto.SeasonDto;
 import com.sumoc.sumochampionship.api.dto.request.SeasonRequest;
+import com.sumoc.sumochampionship.api.dto.response.AllSeasonResponse;
 import com.sumoc.sumochampionship.db.season.Category;
 import com.sumoc.sumochampionship.db.season.Season;
 import com.sumoc.sumochampionship.repository.CategoryRepository;
 import com.sumoc.sumochampionship.repository.SeasonRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLOutput;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
 public class SeasonService {
+
 
     private final SeasonRepository seasonRepository;
 
@@ -33,14 +41,20 @@ public class SeasonService {
         Season season = getSeasonFromRequest(seasonRequest);
         Set<Category> categories = getCategoriesFromRequest(seasonRequest);
 
+        // Check if season with this id exists in the database
+        // TODO: Ask if it is necessary
+        if (seasonRepository.findByName(season.getName()) != null){
+            return ResponseEntity.badRequest().body("Invalid data. Season with this 'name' has already been created");
+        }
+
         if(!notNullCheck(season) || !notNullCheck(categories)){
             return ResponseEntity.badRequest().body("Invalid data. All parameters can not be null");
         }
 
         // Check if startDate < endDate and if actualDate < startDate
-        if(!checkDate(season.getStart(), season.getEnd())){
+        if(!checkDate(season.getStartDate(), season.getEndDate())){
             return ResponseEntity.badRequest().body("Invalid data provided. Start of the season should be " +
-                    "before the end of the season. Moreover start of the season should after today's day");
+                    "before the end of the season.");
         }
 
         // Check Age constraints
@@ -61,6 +75,50 @@ public class SeasonService {
     }
 
     /*
+    Get Season by its name. Name of the Season is unique in the database, so there should not be the problem.
+    If there is no Season with this name in db -> throw EntityNotFoundException
+     */
+    public SeasonDto getSeason(String name) throws EntityNotFoundException{
+        Season season = seasonRepository.findByName(name);
+
+        if (season == null){
+            throw new EntityNotFoundException("Season with name " + name + " not found");
+        }
+
+        return SeasonDto.builder()
+                .name(season.getName())
+                .start(season.getStartDate())
+                .end(season.getEndDate())
+                .build();
+    }
+
+    public AllSeasonResponse getAllSeasons(int pageNo, int pageSize, boolean historical){
+        Sort sort = Sort.by("startDate").descending();
+        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
+        Page<Season> seasonPage = null;
+        // Returns only this Season that has already ended
+        if(historical){
+            seasonPage = seasonRepository.findSeasonsByEndDateBefore(LocalDate.now(), pageable);
+        }
+        else{
+            seasonPage =  seasonRepository.findSeasonsByEndDateAfter(LocalDate.now(), pageable);
+        }
+
+        List<Season> seasons = seasonPage.getContent();
+
+        List<SeasonDto> seasonDtos = seasons.stream().map(SeasonDto::mapToDto).toList();
+
+        return AllSeasonResponse.builder()
+                .seasonDtoList(seasonDtos)
+                .pageNo(seasonPage.getNumber())
+                .pageSize(seasonPage.getSize())
+                .totalElements(seasonPage.getTotalElements())
+                .totalPages(seasonPage.getTotalPages()).build();
+    }
+
+
+
+    /*
     Test if 'season.setCategories() will properly connect Categories with Seasons'
      */
     private boolean saveSeason(Season season, Set<Category> categories){
@@ -78,7 +136,7 @@ public class SeasonService {
     }
 
     private boolean notNullCheck(Season season){
-        return season.getName() != null && season.getStart() != null && season.getEnd() != null;
+        return season.getName() != null && season.getStartDate() != null && season.getEndDate() != null;
     }
 
     private boolean notNullCheck(Set<Category> categories){
@@ -102,24 +160,24 @@ public class SeasonService {
     }
 
     private boolean checkDate(LocalDate start, LocalDate end){
-        return start.isBefore(end) && start.isAfter(LocalDate.now());
+        return start.isBefore(end);
     }
     private Season getSeasonFromRequest(SeasonRequest seasonRequest){
         return Season.builder()
                 .name(seasonRequest.getName())
-                .start(seasonRequest.getStartDate())
-                .end(seasonRequest.getEndDate())
+                .startDate(seasonRequest.getStartDate())
+                .endDate(seasonRequest.getEndDate())
                 .build();
     }
 
     private Set<Category> getCategoriesFromRequest(SeasonRequest seasonRequest){
         Set<CategoryDto> categoryDtos = seasonRequest.getCategories();
 
-        return categoryDtos.stream().map(this::fromDto).collect(Collectors.toSet());
+        return categoryDtos.stream().map(this::fromCategoryDto).collect(Collectors.toSet());
 
     }
 
-    private Category fromDto(CategoryDto dto){
+    private Category fromCategoryDto(CategoryDto dto){
         return Category.builder()
                 .name(dto.getName())
                 .minAge(dto.getMinAge())
