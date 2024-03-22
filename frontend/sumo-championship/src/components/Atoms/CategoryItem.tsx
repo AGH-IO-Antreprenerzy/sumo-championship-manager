@@ -22,6 +22,8 @@ const CategoryItem: React.FC<props> = ({
   const [newValue, setNewValue] = useState(value);
 
   const handleEdit = () => {
+    setNewName(name);
+    setNewValue(value);
     setIsEdited(true);
   };
 
