@@ -4,13 +4,34 @@ import Button from '../components/Atoms/Button';
 import TextField from '../components/molecules/TextField';
 import CategoryForm from '../components/organisms/CategoryForm';
 import CategoryTable from '../components/organisms/CategoryTable';
+import { useNavigate } from 'react-router-dom';
+import ROUTES from '../routes/ROUTES';
 
 type Category = {
   name: string;
   value: number;
 };
 
+const checkIfNameIsUnique = (array: Category[], name: string) => {
+  return !array.some((category) => category.name === name);
+};
+
+const addCategory = (
+  array: Category[],
+  name: string,
+  value: string,
+  callback: (newCategories: Category[]) => void,
+) => {
+  if (!name || !value) return;
+  if (!checkIfNameIsUnique(array, name)) {
+    return alert('Name already exists');
+  }
+  const newCategories = [{ name, value: Number(value) }, ...array];
+  callback(newCategories);
+};
+
 const AddSeason: React.FC = () => {
+  const navigate = useNavigate();
   const [name, setName] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
@@ -21,21 +42,19 @@ const AddSeason: React.FC = () => {
     console.log('Add season');
   };
 
-  const handleAddWeightCategory = (name: string, value: string) => {
-    if (!name || !value) return;
-    const newCategories = [{ name, value: Number(value) }, ...weightCategories];
-    setWeightCategories(newCategories);
-  };
-
-  const handleAddAgeCategory = (name: string, value: string) => {
-    if (!name || !value) return;
-    const newCategories = [{ name, value: Number(value) }, ...ageCategories];
-    setAgeCategories(newCategories);
+  const handleCancel = () => {
+    const response = confirm('Are you sure you want to cancel?');
+    if (response) {
+      navigate(ROUTES.SEASONS);
+    }
   };
 
   return (
     <div className="page">
-      <p className="title">Add season</p>
+      <div className="pageTop">
+        <p className="title">Add season</p>
+        <Button value="Cancel" onClick={handleCancel} />
+      </div>
 
       <div className="addSeasonForm">
         <div className="addSeasonFormColumn">
@@ -77,9 +96,14 @@ const AddSeason: React.FC = () => {
           <CategoryForm
             inputTitle="Category name"
             subinputTitle="Max [kg]"
-            onSubmit={handleAddWeightCategory}
+            onSubmit={(name, value) => {
+              addCategory(weightCategories, name, value, setWeightCategories);
+            }}
           />
-          <CategoryTable categories={weightCategories} />
+          <CategoryTable
+            categories={weightCategories}
+            onUpdate={setWeightCategories}
+          />
         </div>
 
         <div className="addSeasonFormColumn">
@@ -87,9 +111,14 @@ const AddSeason: React.FC = () => {
           <CategoryForm
             inputTitle="Category name"
             subinputTitle="Max age"
-            onSubmit={handleAddAgeCategory}
+            onSubmit={(name, value) => {
+              addCategory(ageCategories, name, value, setAgeCategories);
+            }}
           />
-          <CategoryTable categories={ageCategories} />
+          <CategoryTable
+            categories={ageCategories}
+            onUpdate={setAgeCategories}
+          />
         </div>
       </div>
 
