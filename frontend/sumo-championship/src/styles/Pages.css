@@ -3,6 +3,15 @@
   flex-direction: column;
   justify-content: center;
   padding: 40px;
+  width: 100vw;
+  height: 100vh;
+}
+
+.tile {
+  flex: 1;
+  background-color: white;
+  padding: 40px;
+  border-radius: 15px;
 }
 
 .loginPageLayout {

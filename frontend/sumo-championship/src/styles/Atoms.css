@@ -6,10 +6,21 @@
   height: 50px;
   font-size: 20px;
   border: none;
+  cursor: pointer;
 }
 
-.submit:hover {
+.button {
+  border-radius: 10px;
+  background-color: #f37316;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
   cursor: pointer;
+  color: white;
+}
+
+.submit:hover,
+.button:hover {
   background-color: #ff8b38;
 }
 
@@ -18,10 +29,17 @@
   align-items: center;
   justify-content: center;
   padding: 2px;
+  cursor: pointer;
+}
+
+.disabledButton {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
 }
 
 .title {
-  font-size: 64px;
+  font-size: 32px;
   color: #000;
 }
 .subtitle {
@@ -44,4 +62,19 @@
 
 .mb30 {
   margin-bottom: 30px;
+}
+
+.pageNumber {
+  font-size: 24px;
+  font-weight: bold;
+  color: #f37316;
+  width: 24px;
+  height: 24px;
+  text-align: center;
+  line-height: 24px;
+}
+
+.nonSelectable {
+  user-select: none;
+  -webkit-user-select: none;
 }

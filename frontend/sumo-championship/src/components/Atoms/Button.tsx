@@ -10,7 +10,7 @@ interface props {
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 const Button: React.FC<props> = ({ value, style, onClick = () => {} }) => {
   return (
-    <button className="submit" style={style} onClick={onClick}>
+    <button className="button" style={style} onClick={onClick}>
       {value}
     </button>
   );
