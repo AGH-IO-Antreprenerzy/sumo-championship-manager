@@ -17,6 +17,8 @@
   border: none;
   cursor: pointer;
   color: white;
+  align-items: center;
+  justify-content: center;
 }
 
 .submit:hover,
@@ -30,6 +32,8 @@
   justify-content: center;
   padding: 2px;
   cursor: pointer;
+  border: none;
+  background-color: transparent;
 }
 
 .disabledButton {
@@ -42,8 +46,9 @@
   font-size: 32px;
   color: #000;
 }
+
 .subtitle {
-  font-size: 36px;
+  font-size: 24px;
   color: #f37316;
 }
 
@@ -77,4 +82,23 @@
 .nonSelectable {
   user-select: none;
   -webkit-user-select: none;
+}
+
+.checkbox {
+  font-size: 20px;
+}
+
+.checkbox > label {
+  margin-right: 5px;
+}
+
+.heading {
+  font-size: 20px;
+  color: #000;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
 }

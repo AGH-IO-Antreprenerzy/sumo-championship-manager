@@ -1,33 +1,17 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import './../styles/Pages.css';
 import Button from '../components/Atoms/Button';
 import TextField from '../components/molecules/TextField';
-import CategoryForm from '../components/organisms/CategoryForm';
-import CategoryTable from '../components/organisms/CategoryTable';
 import { useNavigate } from 'react-router-dom';
 import ROUTES from '../routes/ROUTES';
-
-type Category = {
-  name: string;
-  value: number;
-};
+import Checkbox from '../components/Atoms/Checkbox';
+import ValueField from '../components/molecules/ValueField';
+import MinMaxField from '../components/molecules/MinMaxField';
+import CategoryTable from '../components/organisms/CategoryTable';
+import { Category, Gender } from '../types/Category';
 
 const checkIfNameIsUnique = (array: Category[], name: string) => {
   return !array.some((category) => category.name === name);
-};
-
-const addCategory = (
-  array: Category[],
-  name: string,
-  value: string,
-  callback: (newCategories: Category[]) => void,
-) => {
-  if (!name || !value) return;
-  if (!checkIfNameIsUnique(array, name)) {
-    return alert('Name already exists');
-  }
-  const newCategories = [{ name, value: Number(value) }, ...array];
-  callback(newCategories);
 };
 
 const AddSeason: React.FC = () => {
@@ -35,15 +19,50 @@ const AddSeason: React.FC = () => {
   const [name, setName] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [weightCategories, setWeightCategories] = useState<Category[]>([]);
-  const [ageCategories, setAgeCategories] = useState<Category[]>([]);
+  const [categoryName, setCategoryName] = useState('');
+  const [minAge, setMinAge] = useState(0);
+  const [maxAge, setMaxAge] = useState(0);
+  const [minWeight, setMinWeight] = useState(0);
+  const [maxWeight, setMaxWeight] = useState(0);
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  const femaleCheckboxRef = useRef<HTMLInputElement>(null);
+  const maleCheckboxRef = useRef<HTMLInputElement>(null);
 
   const addSeason = () => {
     console.log('Add season');
   };
 
+  const addCategory = () => {
+    console.log(femaleCheckboxRef.current, maleCheckboxRef.current);
+
+    let gender: Gender = 'All';
+    if (
+      !!femaleCheckboxRef.current?.checked &&
+      !!maleCheckboxRef.current?.checked
+    ) {
+      gender = 'All';
+    } else if (femaleCheckboxRef.current?.checked) {
+      gender = 'Female';
+    } else if (maleCheckboxRef.current?.checked) {
+      gender = 'Male';
+    }
+
+    setCategories([
+      {
+        name: categoryName,
+        gender: gender,
+        minAge,
+        maxAge,
+        minWeight,
+        maxWeight,
+      },
+      ...categories,
+    ]);
+  };
+
   const handleCancel = () => {
-    const response = confirm('Are you sure you want to cancel?');
+    const response = confirm('Are you sure you want to cancel adding season?');
     if (response) {
       navigate(ROUTES.SEASONS);
     }
@@ -56,17 +75,15 @@ const AddSeason: React.FC = () => {
         <Button value="Cancel" onClick={handleCancel} />
       </div>
 
-      <div className="addSeasonForm">
-        <div className="addSeasonFormColumn">
-          <p className="subtitle centeredText mb30">General information</p>
+      <div className="addSeasonForm ">
+        <div className="tile generalInfo">
+          <p className="subtitle mb30">General information</p>
 
           <TextField
             label="Name"
             onChange={(e) => setName(e.target.value)}
             value={name}
             errorMessage="You need to provide a name"
-            small
-            style={{ marginBottom: 16 }}
           />
 
           <TextField
@@ -75,8 +92,6 @@ const AddSeason: React.FC = () => {
             value={startDate}
             type="date"
             errorMessage="You need to provide a start date"
-            small
-            style={{ marginBottom: 16 }}
           />
 
           <TextField
@@ -85,40 +100,63 @@ const AddSeason: React.FC = () => {
             value={endDate}
             type="date"
             errorMessage="You need to provide a end date"
-            small
-            style={{ marginBottom: 16 }}
           />
         </div>
 
-        <div className="addSeasonFormColumn">
-          <p className="subtitle centeredText mb30">Weight categories</p>
+        <div className="tile categories categoriesLayout">
+          <div style={{ flex: 1 }}>
+            <p className="subtitle mb30">Categories</p>
+            <TextField
+              label="Category name"
+              onChange={(e) => setCategoryName(e.target.value)}
+              value={categoryName}
+              errorMessage="You need to provide a category name"
+            />
+            <div className="gender">
+              <p className="heading">Gender:</p>
+              <div className="checkboxes">
+                <Checkbox ref={femaleCheckboxRef} label="Female" />
+                <Checkbox ref={maleCheckboxRef} label="Male" />
+              </div>
+            </div>
 
-          <CategoryForm
-            inputTitle="Category name"
-            subinputTitle="Max [kg]"
-            onSubmit={(name, value) => {
-              addCategory(weightCategories, name, value, setWeightCategories);
-            }}
-          />
-          <CategoryTable
-            categories={weightCategories}
-            onUpdate={setWeightCategories}
-          />
-        </div>
+            <div className="age">
+              <p className="heading">Age:</p>
+              <MinMaxField
+                minValue={minAge}
+                maxValue={maxAge}
+                onMinChange={setMinAge}
+                onMaxChange={setMaxAge}
+              />
+            </div>
 
-        <div className="addSeasonFormColumn">
-          <p className="subtitle centeredText mb30">Age categories</p>
-          <CategoryForm
-            inputTitle="Category name"
-            subinputTitle="Max age"
-            onSubmit={(name, value) => {
-              addCategory(ageCategories, name, value, setAgeCategories);
-            }}
-          />
-          <CategoryTable
-            categories={ageCategories}
-            onUpdate={setAgeCategories}
-          />
+            <div className="weight">
+              <p className="heading">Weight:</p>
+              <MinMaxField
+                minValue={minWeight}
+                maxValue={maxWeight}
+                onMinChange={setMinWeight}
+                onMaxChange={setMaxWeight}
+              />
+            </div>
+
+            <Button
+              value="Add category"
+              onClick={addCategory}
+              style={{
+                width: '100%',
+              }}
+            />
+          </div>
+
+          <div style={{ flex: 2 }}>
+            <CategoryTable
+              categories={categories}
+              onUpdate={() => {
+                //
+              }}
+            />
+          </div>
         </div>
       </div>
 

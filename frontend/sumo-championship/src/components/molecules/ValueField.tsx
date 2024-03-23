@@ -3,7 +3,7 @@ import './../../styles/Molecules.css';
 
 type props = {
   label: string;
-  value: string;
+  value: number;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 
   type?: 'text' | 'number';
@@ -30,6 +30,8 @@ const ValueField: React.FC<props> = ({
         name={`input_${label}`}
         value={value}
         onChange={onChange}
+        min={0}
+        max={1000}
       />
     </div>
   );

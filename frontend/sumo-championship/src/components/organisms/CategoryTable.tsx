@@ -1,10 +1,11 @@
 import React, { useCallback, useMemo } from 'react';
 import './../../styles/Organisms.css';
 import CategoryItem from '../Atoms/CategoryItem';
+import { Category } from '../../types/Category';
 
 type props = {
-  categories: { name: string; value: number }[];
-  onUpdate: (categories: { name: string; value: number }[]) => void;
+  categories: Category[];
+  onUpdate: (categories: Category[]) => void;
 };
 
 const CategoryTable: React.FC<props> = ({ categories, onUpdate }) => {
@@ -24,7 +25,7 @@ const CategoryTable: React.FC<props> = ({ categories, onUpdate }) => {
         }
         return category;
       });
-      onUpdate(newCategories);
+      // onUpdate(newCategories);
     },
     [categories, onUpdate],
   );
@@ -34,7 +35,11 @@ const CategoryTable: React.FC<props> = ({ categories, onUpdate }) => {
       return (
         <CategoryItem
           name={category.name}
-          value={category.value}
+          gender={category.gender}
+          minAge={category.minAge}
+          maxAge={category.maxAge}
+          minWeight={category.minWeight}
+          maxWeight={category.maxWeight}
           key={index.toString()}
           onDelete={() => {
             deleteCategory(index);
@@ -47,7 +52,26 @@ const CategoryTable: React.FC<props> = ({ categories, onUpdate }) => {
     });
   }, [categories, deleteCategory, editCategory]);
 
-  return <div className="categoriesTable">{categoriesList}</div>;
+  return (
+    <div className="categoriesTable">
+      <div className="categoryItemHeader">
+        <div
+          className="headerField"
+          style={{
+            flex: 3,
+          }}
+        >
+          Name
+        </div>
+        <div className="headerField">Gender</div>
+        <div className="headerField">Age</div>
+        <div className="headerField">Weight</div>
+        <div className="headerField">Options</div>
+      </div>
+
+      {categoriesList}
+    </div>
+  );
 };
 
 export default CategoryTable;
