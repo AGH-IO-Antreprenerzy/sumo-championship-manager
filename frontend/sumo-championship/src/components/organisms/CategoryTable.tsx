@@ -1,35 +1,21 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import './../../styles/Organisms.css';
 import CategoryItem from '../Atoms/CategoryItem';
 import { Category } from '../../types/Category';
 
 type props = {
   categories: Category[];
-  onUpdate: (categories: Category[]) => void;
+  onDelete: (category: Category) => void;
+  onEdit: (category: Category) => void;
+  onEditCancel: () => void;
 };
 
-const CategoryTable: React.FC<props> = ({ categories, onUpdate }) => {
-  const deleteCategory = useCallback(
-    (index: number) => {
-      const newCategories = categories.filter((_, i) => i !== index);
-      onUpdate(newCategories);
-    },
-    [categories, onUpdate],
-  );
-
-  const editCategory = useCallback(
-    (index: number, name: string, value: number) => {
-      const newCategories = categories.map((category, i) => {
-        if (i === index) {
-          return { name, value };
-        }
-        return category;
-      });
-      // onUpdate(newCategories);
-    },
-    [categories, onUpdate],
-  );
-
+const CategoryTable: React.FC<props> = ({
+  categories,
+  onDelete,
+  onEdit,
+  onEditCancel,
+}) => {
   const categoriesList = useMemo(() => {
     return categories.map((category, index) => {
       return (
@@ -42,15 +28,17 @@ const CategoryTable: React.FC<props> = ({ categories, onUpdate }) => {
           maxWeight={category.maxWeight}
           key={index.toString()}
           onDelete={() => {
-            deleteCategory(index);
+            onEditCancel();
+            onDelete(category);
           }}
-          onEdit={(newName, newValue) => {
-            editCategory(index, newName, newValue);
+          onEdit={() => {
+            onEdit(category);
           }}
+          onEditCancel={onEditCancel}
         />
       );
     });
-  }, [categories, deleteCategory, editCategory]);
+  }, [categories, onDelete, onEdit, onEditCancel]);
 
   return (
     <div className="categoriesTable">
@@ -69,7 +57,18 @@ const CategoryTable: React.FC<props> = ({ categories, onUpdate }) => {
         <div className="headerField">Options</div>
       </div>
 
-      {categoriesList}
+      {categories.length > 0 ? (
+        categoriesList
+      ) : (
+        <p
+          style={{
+            textAlign: 'center',
+            marginTop: 40,
+          }}
+        >
+          No categories yet
+        </p>
+      )}
     </div>
   );
 };

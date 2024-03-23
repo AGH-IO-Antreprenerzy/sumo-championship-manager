@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './../../styles/Atoms.css';
 import IconButton from './IconButton';
 import { Gender } from '../../types/Category';
 
 interface props {
   key?: string;
-  name?: string;
-  gender?: Gender;
-  minAge?: number;
-  maxAge?: number;
-  minWeight?: number;
-  maxWeight?: number;
-  onEdit?: (name: string, value: number) => void;
+  name: string;
+  gender: Gender;
+  minAge: number;
+  maxAge: number;
+  minWeight: number;
+  maxWeight: number;
+  onEdit: () => void;
+  onEditCancel: () => void;
   onDelete?: () => void;
 }
 
@@ -24,24 +25,24 @@ const CategoryItem: React.FC<props> = ({
   minWeight,
   maxWeight,
   onEdit,
+  onEditCancel,
   onDelete,
 }) => {
   const [isEdited, setIsEdited] = useState(false);
-  const [newName, setNewName] = useState(name);
 
   const handleEdit = () => {
-    setNewName(name);
+    onEdit();
     setIsEdited(true);
   };
 
-  const handleSave = (newName: string, newValue: number) => {
-    console.log('handleSave');
+  const handleCancel = () => {
+    onEditCancel();
     setIsEdited(false);
   };
 
-  const handleCancel = () => {
+  useEffect(() => {
     setIsEdited(false);
-  };
+  }, [name, gender, minAge, maxAge, minWeight, maxWeight]);
 
   return (
     <div key={key} className="categoryItem">
@@ -58,13 +59,6 @@ const CategoryItem: React.FC<props> = ({
       <div className="field">
         {isEdited ? (
           <div className="actions">
-            <IconButton
-              name="check"
-              size={20}
-              onClick={() => {
-                //
-              }}
-            />
             <IconButton name="cross" size={16} onClick={handleCancel} />
           </div>
         ) : (
