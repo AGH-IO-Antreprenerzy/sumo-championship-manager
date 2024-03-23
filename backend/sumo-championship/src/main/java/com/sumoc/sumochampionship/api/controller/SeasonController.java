@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
  * Implements POST for adding new seasons (and their categories)
  */
 @RequiredArgsConstructor
+@CrossOrigin
 @RestController
 @RequestMapping("api/v1/season")
 public class SeasonController {
