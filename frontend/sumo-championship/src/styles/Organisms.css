@@ -1,6 +1,101 @@
-.loginForm{
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 30px;
+}
+
+.pageTop {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.addSeasonForm {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  column-gap: 20px;
+
+  .generalInfo {
+    flex: 1;
+  }
+
+  .categories {
+    flex: 3;
+  }
+
+  .categoriesLayout {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+  }
+
+  .gender {
+    display: flex;
+    flex-direction: row;
     align-items: center;
-    row-gap: 30px;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .checkboxes {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .checkbox {
+    margin-right: 10px;
+  }
+}
+
+.addSeasonFormColumn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  height: 100%;
+}
+
+.categoryForm {
+  display: flex;
+  flex-direction: column;
+
+  .inputs {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 30px;
+  }
+}
+
+.categoriesTable {
+  height: 700px;
+  overflow: scroll;
+}
+
+.minMaxField_container {
+  margin: 5px 0 10px 0;
+
+  .fields {
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
+  }
+
+  .valueField_container {
+    margin-bottom: 0px;
+  }
+}
+
+.seasonList {
+  display: grid;
+  margin: 0 auto;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
