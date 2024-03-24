@@ -4,6 +4,7 @@ import com.sumoc.sumochampionship.api.dto.CategoryDto;
 import com.sumoc.sumochampionship.api.dto.SeasonDto;
 import com.sumoc.sumochampionship.api.dto.request.SeasonRequest;
 import com.sumoc.sumochampionship.api.dto.response.AllSeasonResponse;
+import com.sumoc.sumochampionship.api.dto.response.SeasonDetailsResponse;
 import com.sumoc.sumochampionship.db.season.Category;
 import com.sumoc.sumochampionship.db.season.Season;
 import com.sumoc.sumochampionship.repository.CategoryRepository;
@@ -117,6 +118,22 @@ public class SeasonService {
     }
 
 
+    public SeasonDetailsResponse getSeasonDetails(String name) throws EntityNotFoundException{
+        Season season = seasonRepository.findByName(name);
+
+        if (season == null){
+            throw new EntityNotFoundException("Season with name " + name + " not found");
+        }
+        List<Category> categories = categoryRepository.findCategoriesBySeason(season);
+        List<CategoryDto> categoriesdto = categories.stream().map(CategoryDto::toDto).toList();
+
+        return SeasonDetailsResponse.builder()
+                .start(season.getStartDate())
+                .end(season.getEndDate())
+                .categories(categoriesdto)
+                .name(season.getName())
+                .build();
+    }
 
     /*
     Test if 'season.setCategories() will properly connect Categories with Seasons'
