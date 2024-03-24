@@ -9,29 +9,13 @@ import ROUTES from './routes/ROUTES';
 import { useUser } from './contexts/UserContext';
 import Seasons from './pages/Seasons';
 import AddSeason from './pages/AddSeason';
+import AddTournament from './pages/AddTournament';
 
 const App: FunctionComponent = () => {
   const { user } = useUser();
 
   return (
-    <BrowserRouter>
-      <div className="App">
-        <Nav />
-        <Routes>
-          <Route path={ROUTES.OTHER} element={<Other />} />
-          <Route
-            path={ROUTES.LOGIN}
-            element={
-              !user.isLogged ? <LoginPage /> : <Navigate to={ROUTES.HOME} />
-            }
-          />
-          <Route path={ROUTES.PLAYERS} element={<Players />} />
-          <Route path={ROUTES.SEASONS} element={<Seasons />} />
-          <Route path={ROUTES.SEASONS_ADD} element={<AddSeason />} />
-          <Route path={ROUTES.HOME} element={<Home />} />
-        </Routes>
-      </div>
-    </BrowserRouter>
+    <AddTournament/>
   );
 };
 

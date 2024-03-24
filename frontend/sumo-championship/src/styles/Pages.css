@@ -15,3 +15,10 @@
   column-gap: 10%;
   height: 95vh;
 }
+
+.addTournamentPage {
+  display: flex;
+  column-gap: 50px;
+  justify-content: space-around;
+  width: 100%;
+}

@@ -13,18 +13,20 @@ interface props{
 const GeneralTrounamentInformation: React.FC<props> = ({values, changeValues}) => {
     const [seasonNames, setSeasonNames] = useState<string[]>([])
 
-    const getSeasonNames = async () => {
-        const seasons = await getAllSeasons();
-        const names = seasons.seasonDtoList.map(s => s.name);
-        setSeasonNames(names);
-    }
+    
 
     useEffect(() => {
+        const getSeasonNames = async () => {
+            const seasons = await getAllSeasons();
+            const names = seasons.seasonDtoList.map(s => s.name);
+            setSeasonNames(names);
+        }
+        
         getSeasonNames();
     }, [])
 
     return (
-        <div className='generalInformationBox'>
+        <div className='addTournamentInformationBox'>
             <h1>General Information</h1>
             <TextField
                 label="Name"
