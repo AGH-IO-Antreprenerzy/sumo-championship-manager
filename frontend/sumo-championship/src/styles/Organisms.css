@@ -100,7 +100,7 @@
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
-.generalInformationBox{
+.generalInformationBox {
   display: flex;
   flex-direction: column;
   row-gap: 30px;
@@ -108,6 +108,35 @@
   margin: 10px;
 
   h1 {
-    color: #F37316;
+    color: #f37316;
+  }
+}
+
+.seasonPage {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  align-content: flex-start;
+  margin-bottom: 20px;
+
+  .season_topPanel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+    row-gap: 20px;
+    column-gap: 20px;
+    background-color: red;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .generalInfo {
+    flex: 1;
+  }
+
+  .categories {
+    flex: 3;
   }
 }

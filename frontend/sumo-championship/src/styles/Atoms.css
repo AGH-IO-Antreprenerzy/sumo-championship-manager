@@ -110,3 +110,12 @@
   font-size: 14px;
   margin-top: 5px;
 }
+
+.tile {
+  flex: 1;
+  background-color: white;
+  padding: 20px;
+  border-radius: 15px;
+  column-gap: 20px;
+  row-gap: 20px;
+}

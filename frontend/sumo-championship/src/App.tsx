@@ -7,8 +7,9 @@ import Home from './pages/Home';
 import LoginPage from './pages/LoginPage';
 import ROUTES from './routes/ROUTES';
 import { useUser } from './contexts/UserContext';
-import Seasons from './pages/Seasons';
 import AddSeason from './pages/AddSeason';
+import SeasonPage from './pages/SeasonPage';
+import AllSeasonsPage from './pages/AllSeasonsPage';
 
 const App: FunctionComponent = () => {
   const { user } = useUser();
@@ -26,8 +27,9 @@ const App: FunctionComponent = () => {
             }
           />
           <Route path={ROUTES.PLAYERS} element={<Players />} />
-          <Route path={ROUTES.SEASONS} element={<Seasons />} />
+          <Route path={ROUTES.SEASONS} element={<AllSeasonsPage />} />
           <Route path={ROUTES.SEASONS_ADD} element={<AddSeason />} />
+          <Route path={ROUTES.SEASON_PAGE} element={<SeasonPage />} />
           <Route path={ROUTES.HOME} element={<Home />} />
         </Routes>
       </div>

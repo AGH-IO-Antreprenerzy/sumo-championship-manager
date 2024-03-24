@@ -6,7 +6,7 @@ import api from '../api/api';
 import SeasonList from '../components/molecules/SeasonList';
 import PageSwitcher from '../components/molecules/PageSwitcher';
 
-const Seasons: FunctionComponent = () => {
+const AllSeasonsPage: FunctionComponent = () => {
   const navigate = useNavigate();
   const [seasons, setSeasons] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
@@ -49,4 +49,4 @@ const Seasons: FunctionComponent = () => {
   );
 };
 
-export default Seasons;
+export default AllSeasonsPage;

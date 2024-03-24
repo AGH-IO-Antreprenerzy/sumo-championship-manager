@@ -3,12 +3,16 @@ import './../../styles/Organisms.css';
 import { Season } from '../../types/Seasons';
 import Tile from '../Atoms/Tile';
 import SeasonItem from './SeasonItem';
+import { useNavigate } from 'react-router-dom';
+import ROUTES from '../../routes/ROUTES';
 
 type props = {
   seasons: Season[];
 };
 
 const SeasonList: React.FC<props> = ({ seasons }) => {
+  const navigate = useNavigate();
+
   const itemList = useMemo(() => {
     if (seasons.length === 0) {
       return (
@@ -23,10 +27,13 @@ const SeasonList: React.FC<props> = ({ seasons }) => {
           name={season.name}
           startDate={season.start}
           endDate={season.end}
+          onClick={() => {
+            navigate(ROUTES.SEASON_PAGE.replace(':name', season.name));
+          }}
         />
       );
     });
-  }, [seasons]);
+  }, [navigate, seasons]);
 
   return (
     <Tile>
