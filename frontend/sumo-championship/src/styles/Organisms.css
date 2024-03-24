@@ -99,3 +99,15 @@
   gap: 1rem;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
+
+.generalInformationBox{
+  display: flex;
+  flex-direction: column;
+  row-gap: 30px;
+  align-content: flex-start;
+  margin: 10px;
+
+  h1 {
+    color: #F37316;
+  }
+}
