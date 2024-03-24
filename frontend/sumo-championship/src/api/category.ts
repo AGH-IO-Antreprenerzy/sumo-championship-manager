@@ -1,7 +1,7 @@
 import { z } from "zod";
 import api from "./api";
 
-export const getCategoriesForSeason = async (season: string): Promise<Category2[]> => {
+export const getCategoriesForSeason = async (season: string): Promise<CategoryDto[]> => {
     const response = await api.getPaginated("v1/category/to-season", 100, {season})(0)
     const parsedResponse = categoriesSchema.parse(response);
     return parsedResponse.categories;
@@ -23,7 +23,7 @@ const categorySchema = z.object({
     gender: z.nativeEnum(Gender)
 })
 
-export type Category2 = z.infer<typeof categorySchema>;
+export type CategoryDto = z.infer<typeof categorySchema>;
 
 const categoriesSchema = z.object({
     categories: z.array(categorySchema),

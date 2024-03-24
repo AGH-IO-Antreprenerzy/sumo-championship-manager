@@ -1,15 +1,15 @@
 import React from 'react';
-import { Category2 } from '../../../api/category';
+import { CategoryDto } from '../../../api/category';
 import WeightCategoriesContainer from '../../molecules/WeightCategoriesContainer';
 
 interface props{
     label: string,
-    values: Category2[]
+    values: CategoryDto[]
     removeCategory: (name: string) => void
 }
 const TournamentCategoriesInformation: React.FC<props> = ({label, values, removeCategory}) => {
 
-    const categoriesGroupedByAge: { [minAge: number] : Category2[]} = {}
+    const categoriesGroupedByAge: { [minAge: number] : CategoryDto[]} = {}
 
     values.forEach(category => {
         const age = category.maxAge;

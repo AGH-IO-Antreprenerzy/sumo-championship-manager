@@ -1,10 +1,10 @@
 import React from 'react';
-import { Category2 } from '../../api/category';
+import { CategoryDto } from '../../api/category';
 import WeightBox from '../Atoms/WeightBox';
 import './../../styles/Molecules.css';
 
 interface props{
-    values: Category2[]
+    values: CategoryDto[]
     removeCategory: (name: string) => void
 }
 
