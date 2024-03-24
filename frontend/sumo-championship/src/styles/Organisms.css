@@ -92,3 +92,9 @@
     margin-bottom: 0px;
   }
 }
+
+.seasonsList {
+  flex: 'none' !important;
+  min-height: 780px !important;
+  overflow: auto !important;
+}

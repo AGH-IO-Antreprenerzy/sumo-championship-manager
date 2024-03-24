@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import ROUTES from '../routes/ROUTES';
 import { Category } from '../types/Category';
 import CategoryForm from '../components/organisms/CategoryForm';
+import Tile from '../components/Atoms/Tile';
 
 const errorPointsValues = {
   name: 2,
@@ -73,7 +74,7 @@ const AddSeason: React.FC = () => {
       </div>
 
       <div className="addSeasonForm ">
-        <div className="tile generalInfo">
+        <Tile className="generalInfo">
           <p className="subtitle mb30">General information</p>
 
           <TextField
@@ -112,7 +113,7 @@ const AddSeason: React.FC = () => {
                   : null
             }
           />
-        </div>
+        </Tile>
 
         <CategoryForm onUpdate={handleCategoriesUpdate} />
       </div>

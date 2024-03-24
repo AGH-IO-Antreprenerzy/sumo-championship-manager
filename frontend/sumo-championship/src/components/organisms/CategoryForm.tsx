@@ -6,6 +6,7 @@ import CategoryTable from './CategoryTable';
 import MinMaxField from '../molecules/MinMaxField';
 import Checkbox from '../Atoms/Checkbox';
 import TextField from '../molecules/TextField';
+import Tile from '../Atoms/Tile';
 type props = {
   onUpdate: (categories: Category[]) => void;
 };
@@ -152,7 +153,7 @@ const CategoryForm: React.FC<props> = ({ onUpdate }) => {
   };
 
   return (
-    <div className="tile categories categoriesLayout">
+    <Tile className="categories categoriesLayout">
       <div style={{ flex: 1 }}>
         <p className="subtitle mb30">Categories</p>
         <TextField
@@ -220,7 +221,7 @@ const CategoryForm: React.FC<props> = ({ onUpdate }) => {
           onEditCancel={handleEditCancel}
         />
       </div>
-    </div>
+    </Tile>
   );
 };
 

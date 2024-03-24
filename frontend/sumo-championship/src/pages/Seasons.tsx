@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import ROUTES from '../routes/ROUTES';
 import api from '../api/api';
 import IconButton from '../components/Atoms/IconButton';
+import Tile from '../components/Atoms/Tile';
 
 const iconStyle = {
   border: 'none',
@@ -41,11 +42,11 @@ const Seasons: FunctionComponent = () => {
         <Button value="Add Season" onClick={handleAddSeason} />
       </div>
 
-      <div className="tile">
+      <Tile className="seasonsList">
         {seasons.length === 0 ? (
           <p className="description">Currently there are no seasons ongoing</p>
         ) : null}
-      </div>
+      </Tile>
       <div className="pageSwitcher">
         <IconButton
           name="left-arrow"
