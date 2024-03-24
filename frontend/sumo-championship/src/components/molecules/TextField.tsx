@@ -5,7 +5,7 @@ type props = {
   label: string;
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  errorMessage?: string;
+  errorMessage?: string | null;
   type?: 'text' | 'password' | 'date';
   style?: React.CSSProperties;
   small?: boolean;
