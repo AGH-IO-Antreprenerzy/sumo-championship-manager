@@ -19,20 +19,20 @@ public class TournamentDto {
     private String name;
     private Location location;
     private Season season;
-    private LocalDateTime contestStartDate;
-    private LocalDateTime contestEndDate;
-    private LocalDateTime registrationStartDate;
-    private LocalDateTime registrationEndDate;
+    private LocalDateTime contestStart;
+    private LocalDateTime contestEnd;
+    private LocalDateTime registerStart;
+    private LocalDateTime registerEnd;
 
     public static TournamentDto mapToDto(Tournament tournament){
         return TournamentDto.builder()
                 .name(tournament.getName())
                 .location(tournament.getLocation())
                 .season(tournament.getSeason())
-                .contestStartDate(tournament.getContestStart())
-                .contestEndDate(tournament.getContestEnd())
-                .registrationStartDate(tournament.getRegisterStart())
-                .registrationEndDate(tournament.getRegisterEnd())
+                .contestStart(tournament.getContestStart())
+                .contestEnd(tournament.getContestEnd())
+                .registerStart(tournament.getRegisterStart())
+                .registerEnd(tournament.getRegisterEnd())
                 .build();
     }
 }

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Data
@@ -16,8 +17,8 @@ public class TournamentRequest {
     String name;
     Integer locationId;
     Integer seasonId;
-    LocalDate contestStartDate;
-    LocalDate contestEndDate;
-    LocalDate registrationStartDate;
-    LocalDate registrationEndDate;
+    LocalDateTime contestStart;
+    LocalDateTime contestEnd;
+    LocalDateTime registerStart;
+    LocalDateTime registerEnd;
 }
