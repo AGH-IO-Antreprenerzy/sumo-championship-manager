@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './../../styles/Atoms.css';
-import IconButton from './IconButton';
-import { Gender } from '../../types/Category';
+import IconButton from '../Atoms/IconButton';
+import { Gender } from '../../types/Seasons';
 import capitalizeFirstLetter from '../../utils/stringMethods';
 
 interface props {

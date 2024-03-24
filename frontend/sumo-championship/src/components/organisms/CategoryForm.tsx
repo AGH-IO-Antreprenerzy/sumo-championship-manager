@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import './../../styles/Organisms.css';
-import { Category, Gender } from '../../types/Category';
+import { Category, Gender } from '../../types/Seasons';
 import Button from '../Atoms/Button';
 import CategoryTable from './CategoryTable';
 import MinMaxField from '../molecules/MinMaxField';

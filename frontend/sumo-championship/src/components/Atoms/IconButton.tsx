@@ -25,7 +25,7 @@ const IconButton: React.FC<props> = ({
       onClick={() => !disabled && onClick()}
     >
       <Icon
-        src={require(`./../../assets/${name}.png`)}
+        src={require(`./../../assets/icons/${name}.png`)}
         alt={name}
         size={size - 2}
       />

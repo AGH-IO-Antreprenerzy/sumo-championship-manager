@@ -1,10 +1,13 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { FunctionComponent, useEffect, useMemo, useState } from 'react';
 import Button from '../components/Atoms/Button';
 import { useNavigate } from 'react-router-dom';
 import ROUTES from '../routes/ROUTES';
 import api from '../api/api';
 import IconButton from '../components/Atoms/IconButton';
 import Tile from '../components/Atoms/Tile';
+import SeasonItem from '../components/molecules/SeasonItem';
+import { Season } from '../types/Seasons';
+import SeasonList from '../components/molecules/SeasonList';
 
 const iconStyle = {
   border: 'none',
@@ -42,11 +45,8 @@ const Seasons: FunctionComponent = () => {
         <Button value="Add Season" onClick={handleAddSeason} />
       </div>
 
-      <Tile className="seasonsList">
-        {seasons.length === 0 ? (
-          <p className="description">Currently there are no seasons ongoing</p>
-        ) : null}
-      </Tile>
+      <SeasonList seasons={seasons} />
+
       <div className="pageSwitcher">
         <IconButton
           name="left-arrow"

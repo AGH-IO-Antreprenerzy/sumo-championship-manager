@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import './../../styles/Organisms.css';
-import CategoryItem from '../Atoms/CategoryItem';
-import { Category } from '../../types/Category';
+import CategoryItem from '../molecules/CategoryItem';
+import { Category } from '../../types/Seasons';
 
 type props = {
   categories: Category[];

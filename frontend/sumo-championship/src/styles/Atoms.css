@@ -97,6 +97,12 @@
   color: #000;
 }
 
+.text {
+  font-size: 16px;
+  color: #000;
+  margin-bottom: 5px;
+}
+
 .error {
   color: red;
   font-size: 14px;

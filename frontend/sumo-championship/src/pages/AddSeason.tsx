@@ -4,7 +4,7 @@ import Button from '../components/Atoms/Button';
 import TextField from '../components/molecules/TextField';
 import { useNavigate } from 'react-router-dom';
 import ROUTES from '../routes/ROUTES';
-import { Category } from '../types/Category';
+import { Category } from '../types/Seasons';
 import CategoryForm from '../components/organisms/CategoryForm';
 import Tile from '../components/Atoms/Tile';
 import api from '../api/api';

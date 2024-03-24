@@ -76,3 +76,23 @@
     justify-content: center;
   }
 }
+
+.seasonItem {
+  min-width: 300px;
+  min-height: 290px;
+  border-radius: 15px;
+  border: 1px solid black;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  .seasonItem_image {
+    width: 100%;
+  }
+
+  .seasonItem_content {
+    flex: 1;
+    padding: 10px;
+  }
+}

@@ -93,8 +93,9 @@
   }
 }
 
-.seasonsList {
-  flex: 'none' !important;
-  min-height: 780px !important;
-  overflow: auto !important;
+.seasonList {
+  display: grid;
+  margin: 0 auto;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }

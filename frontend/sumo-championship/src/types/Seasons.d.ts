@@ -9,4 +9,11 @@ type Category = {
   maxWeight: number;
 };
 
-export { Category, Gender };
+type Season = {
+  name: string;
+  start: string;
+  end: string;
+  categories: Category[];
+};
+
+export { Season, Category, Gender };

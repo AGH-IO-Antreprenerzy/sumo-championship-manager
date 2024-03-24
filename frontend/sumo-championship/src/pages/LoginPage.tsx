@@ -4,9 +4,9 @@ import './../styles/Pages.css';
 const LoginPage: React.FC = () => {
   return (
     <div className="page loginPageLayout">
-      <img src={require('./../assets/sumo.png')} alt="sumo" />
+      <img src={require('./../assets/icons/sumo.png')} alt="sumo" />
       <LoginForm />
-      <img src={require('./../assets/sumo.png')} alt="sumoIcon" />
+      <img src={require('./../assets/icons/sumo.png')} alt="sumoIcon" />
     </div>
   );
 };
