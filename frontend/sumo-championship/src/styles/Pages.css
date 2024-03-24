@@ -1,7 +1,17 @@
-.pageLayout{
-    display: flex;
-    justify-content: center;
-    column-gap: 10%;
-    align-items: center;
-    height: 95vh;
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px;
+  width: 100vw;
+  justify-content: start;
+}
+
+.loginPageLayout {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  column-gap: 10%;
+  height: 95vh;
 }
