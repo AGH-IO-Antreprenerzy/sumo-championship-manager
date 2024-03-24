@@ -26,23 +26,29 @@ interface UserContextType{
 
 const userContext = createContext<UserContextType | undefined>(undefined);
 
-const UserContext = (props: { children: any; }) => {
+const UserContext = (props: { children: string | JSX.Element | JSX.Element[]; }) => {
     const [userState, setUserState] = useState<UserContextType>(
         {
             user: defaultUser,
 
             signIn: async (loginInfo: loginInformation) => {
-                const response = await postLogin(loginInfo)
+                try{
+                    const response = await postLogin(loginInfo)
 
-                const user: User = {
-                    isLogged: true,
-                    name: response.name,
-                    lastname: response.lastname,
-                    email: response.email,
-                    role: response.role
+                    const user: User = {
+                        isLogged: true,
+                        name: response.firstname,
+                        lastname: response.lastname,
+                        email: response.email,
+                        role: response.userRole
+                    }
+                    
+                    setUserState(prev => ({...prev, user: user}));
+                }catch(exception: unknown){
+                    if (exception instanceof Response){
+                        alert(await exception.text())
+                    }
                 }
-                
-                setUserState(prev => ({...prev, user: user}));
             },
 
             signOut: () => setUserState(prev => ({...prev, user: defaultUser}))
