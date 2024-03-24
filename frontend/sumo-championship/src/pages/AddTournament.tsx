@@ -7,8 +7,6 @@ const AddTournament = () => {
 
     const [generalInformation, setGeneralInformation] = useState<GeneralInformation>(defaultGeneralInformation);
 
-    console.log(generalInformation)
-
     return (
         <div className='page'>
             <GeneralTrounamentInformation
