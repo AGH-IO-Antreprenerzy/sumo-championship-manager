@@ -5,22 +5,10 @@ import './../../styles/Molecules.css';
 
 interface props{
     values: Category2[]
+    removeCategory: (name: string) => void
 }
 
-const WeightCategoriesContainer: React.FC<props> = ({values}) => {
-
-    // const categoriesGroupedByAge: { [minAge: number] : Category2[]} = {}
-
-    // values.forEach(category => {
-    //     const age = category.maxAge;
-    //     if (categoriesGroupedByAge[age]){
-    //         categoriesGroupedByAge[age].push(category)
-    //     }
-    //     else{
-    //         categoriesGroupedByAge[age] = [category]
-    //     }
-    // })
-
+const WeightCategoriesContainer: React.FC<props> = ({values, removeCategory}) => {
     return (
         <div className='categories'>
             <div className='generalContainer'>
@@ -30,7 +18,7 @@ const WeightCategoriesContainer: React.FC<props> = ({values}) => {
                 {values.map( (category, i) => (<WeightBox
                     value={category.maxWeight}
                     key={i}
-                    onRemove={() => values = values.filter(v => v.maxWeight != category.maxWeight)}
+                    onRemove={() => removeCategory(category.name)}
                 />))}
             </div>
             

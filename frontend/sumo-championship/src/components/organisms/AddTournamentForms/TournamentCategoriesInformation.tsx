@@ -5,8 +5,9 @@ import WeightCategoriesContainer from '../../molecules/WeightCategoriesContainer
 interface props{
     label: string,
     values: Category2[]
+    removeCategory: (name: string) => void
 }
-const TournamentCategoriesInformation: React.FC<props> = ({label, values}) => {
+const TournamentCategoriesInformation: React.FC<props> = ({label, values, removeCategory}) => {
 
     const categoriesGroupedByAge: { [minAge: number] : Category2[]} = {}
 
@@ -25,11 +26,11 @@ const TournamentCategoriesInformation: React.FC<props> = ({label, values}) => {
             return value.length > 0 && <WeightCategoriesContainer
                 key={key}
                 values={value}
+                removeCategory={removeCategory}
             />
         }
     }
 
-    //change naming of class if turns out to be ok
     //add checkboxes
     return (
         <div className='addTournamentInformationBox'> 

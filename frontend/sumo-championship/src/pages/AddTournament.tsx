@@ -11,6 +11,10 @@ const AddTournament = () => {
 
     const [choosenSeasonCategories, setChoosenSeasonCategories] = useState<Category2[]>([])
 
+    const removeCategory = (name: string) => {
+        setChoosenSeasonCategories(prev => prev.filter(category => category.name != name))
+    }
+
     
 
     useEffect(() => {
@@ -31,10 +35,12 @@ const AddTournament = () => {
             <TournamentCategoriesInformation
                 label='Men Competition'
                 values={choosenSeasonCategories.filter(category => category.gender === Gender.MALE || category.gender === Gender.ALL)}
+                removeCategory={removeCategory}
             />
             <TournamentCategoriesInformation
                 label='Women Competition'
                 values={choosenSeasonCategories.filter(category => category.gender === Gender.FEMALE || category.gender === Gender.ALL)}
+                removeCategory={removeCategory}
             />
         </div>
     );
