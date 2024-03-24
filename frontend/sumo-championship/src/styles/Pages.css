@@ -7,15 +7,6 @@
   justify-content: start;
 }
 
-.tile {
-  flex: 1;
-  background-color: white;
-  padding: 20px;
-  border-radius: 15px;
-  column-gap: 20px;
-  row-gap: 20px;
-}
-
 .loginPageLayout {
   display: flex;
   flex-direction: row;

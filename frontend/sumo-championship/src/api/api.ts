@@ -1,3 +1,13 @@
+/*
+    This file contains the generic functions to interact with the backend API.
+    The functions are:
+        - get: to fetch data from the backend
+        - getPaginated: to fetch data from the backend with pagination
+        - post: to send data to the backend
+        - delete_: to delete data from the backend
+        - put: to update data in the backend
+    */
+
 const DOMAIN = 'http://localhost:8080/api/';
 
 const throwFetchError = (
@@ -50,12 +60,8 @@ function post(endpoint: string, body = {}) {
     });
 
     if (response.ok) {
-      const contentType = response.headers.get('content-type');
-      if (contentType && contentType.indexOf('application/json') !== -1) {
-        const data = await response.json();
-        return data;
-      }
-      return null;
+      const data = await response.json();
+      return data;
     }
     throwFetchError('POST', endpoint, response);
   };
