@@ -1,4 +1,4 @@
-type Gender = 'Female' | 'Male' | 'All';
+type Gender = 'FEMALE' | 'MALE' | 'ALL';
 
 type Category = {
   name: string;

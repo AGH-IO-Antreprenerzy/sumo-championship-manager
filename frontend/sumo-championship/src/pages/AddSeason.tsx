@@ -7,6 +7,7 @@ import ROUTES from '../routes/ROUTES';
 import { Category } from '../types/Category';
 import CategoryForm from '../components/organisms/CategoryForm';
 import Tile from '../components/Atoms/Tile';
+import api from '../api/api';
 
 const errorPointsValues = {
   name: 2,
@@ -24,13 +25,28 @@ const AddSeason: React.FC = () => {
 
   const [errorPoints, setErrorPoints] = useState(1);
 
-  const addSeason = () => {
+  const addSeason = async () => {
     if (checkForGeneralInfoFormErrors() > 1) {
       alert('Please fill in all the required fields');
       return;
     }
 
-    console.log('Add season', categories);
+    const newSeason = {
+      name,
+      startDate,
+      endDate,
+      categories,
+    };
+
+    try {
+      await api.post('v1/season/add', newSeason)();
+      navigate(ROUTES.SEASONS);
+    } catch (error) {
+      alert('Failed to add season');
+      return;
+    }
+
+    console.log('Add season', newSeason);
   };
 
   const handleCancel = () => {

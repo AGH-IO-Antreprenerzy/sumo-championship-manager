@@ -24,7 +24,7 @@ const checkIfNameIsUnique = (array: Category[], name: string) => {
 
 const CategoryForm: React.FC<props> = ({ onUpdate }) => {
   const [categoryName, setCategoryName] = useState('');
-  const [minAge, setMinAge] = useState(16);
+  const [minAge, setMinAge] = useState(6);
   const [maxAge, setMaxAge] = useState(100);
   const [minWeight, setMinWeight] = useState(40);
   const [maxWeight, setMaxWeight] = useState(200);
@@ -38,7 +38,7 @@ const CategoryForm: React.FC<props> = ({ onUpdate }) => {
 
   const resetCategoryForm = () => {
     setCategoryName('');
-    setMinAge(16);
+    setMinAge(6);
     setMaxAge(100);
     setMinWeight(40);
     setMaxWeight(200);
@@ -65,16 +65,16 @@ const CategoryForm: React.FC<props> = ({ onUpdate }) => {
   };
 
   const getGender = () => {
-    let gender: Gender = 'All';
+    let gender: Gender = 'ALL';
     if (
       !!femaleCheckboxRef.current?.checked &&
       !!maleCheckboxRef.current?.checked
     ) {
-      gender = 'All';
+      gender = 'ALL';
     } else if (femaleCheckboxRef.current?.checked) {
-      gender = 'Female';
+      gender = 'FEMALE';
     } else if (maleCheckboxRef.current?.checked) {
-      gender = 'Male';
+      gender = 'MALE';
     }
     return gender;
   };
@@ -109,7 +109,10 @@ const CategoryForm: React.FC<props> = ({ onUpdate }) => {
       return;
     }
 
-    if (!checkIfNameIsUnique(categories, categoryName)) {
+    if (
+      categories[editedCategoryNumber].name !== categoryName &&
+      !checkIfNameIsUnique(categories, categoryName)
+    ) {
       alert('Category name must be unique');
       return;
     }

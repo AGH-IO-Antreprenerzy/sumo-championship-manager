@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './../../styles/Atoms.css';
 import IconButton from './IconButton';
 import { Gender } from '../../types/Category';
+import capitalizeFirstLetter from '../../utils/stringMethods';
 
 interface props {
   key?: string;
@@ -49,7 +50,7 @@ const CategoryItem: React.FC<props> = ({
       <div className="field" style={{ flex: 3, justifyContent: 'start' }}>
         {name}
       </div>
-      <div className="field">{gender}</div>
+      <div className="field">{capitalizeFirstLetter(gender)}</div>
       <div className="field">
         {minAge} - {maxAge}
       </div>
