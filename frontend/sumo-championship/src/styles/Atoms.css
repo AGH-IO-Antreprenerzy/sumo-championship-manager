@@ -34,12 +34,14 @@
   cursor: pointer;
   border: none;
   background-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .disabledButton {
   background-color: #ccc;
   color: #666;
-  cursor: not-allowed;
+  cursor: default;
 }
 
 .title {

@@ -29,11 +29,7 @@ const SeasonList: React.FC<props> = ({ seasons }) => {
   }, [seasons]);
 
   return (
-    <Tile
-      style={{
-        minHeight: 700,
-      }}
-    >
+    <Tile>
       <div className="seasonList"> {itemList}</div>
     </Tile>
   );

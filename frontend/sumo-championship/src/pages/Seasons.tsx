@@ -1,18 +1,10 @@
-import React, { FunctionComponent, useEffect, useMemo, useState } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 import Button from '../components/Atoms/Button';
 import { useNavigate } from 'react-router-dom';
 import ROUTES from '../routes/ROUTES';
 import api from '../api/api';
-import IconButton from '../components/Atoms/IconButton';
-import Tile from '../components/Atoms/Tile';
-import SeasonItem from '../components/molecules/SeasonItem';
-import { Season } from '../types/Seasons';
 import SeasonList from '../components/molecules/SeasonList';
-
-const iconStyle = {
-  border: 'none',
-  backgroundColor: 'transparent',
-};
+import PageSwitcher from '../components/molecules/PageSwitcher';
 
 const Seasons: FunctionComponent = () => {
   const navigate = useNavigate();
@@ -35,8 +27,8 @@ const Seasons: FunctionComponent = () => {
   };
 
   useEffect(() => {
-    getSeasons(currentPage);
-  }, [currentPage]);
+    getSeasons(0);
+  }, []);
 
   return (
     <div className="page">
@@ -47,23 +39,12 @@ const Seasons: FunctionComponent = () => {
 
       <SeasonList seasons={seasons} />
 
-      <div className="pageSwitcher">
-        <IconButton
-          name="left-arrow"
-          size={20}
-          style={iconStyle}
-          disabled={totalPages === 0 || currentPage === 0}
-        />
-        <p className="pageNumber nonSelectable">
-          {currentPage + totalPages === 0 ? 0 : 1}
-        </p>
-        <IconButton
-          name="right-arrow"
-          size={20}
-          style={iconStyle}
-          disabled={totalPages === 0 || currentPage === totalPages - 1}
-        />
-      </div>
+      <PageSwitcher
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPrevClick={() => getSeasons(currentPage - 1)}
+        onNextClick={() => getSeasons(currentPage + 1)}
+      />
     </div>
   );
 };
