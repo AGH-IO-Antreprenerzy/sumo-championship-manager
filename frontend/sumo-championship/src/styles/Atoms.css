@@ -63,6 +63,10 @@
   text-align: center;
 }
 
+.mb10 {
+  margin-bottom: 10px;
+}
+
 .mb20 {
   margin-bottom: 20px;
 }
@@ -118,4 +122,21 @@
   border-radius: 15px;
   column-gap: 20px;
   row-gap: 20px;
+}
+
+.detailItem {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  justify-content: space-between;
+  margin-bottom: 10px;
+
+  .left {
+    width: 100px;
+  }
+
+  .right {
+    text-align: right;
+    flex: 1;
+  }
 }
