@@ -9,6 +9,8 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class CategoryDto {
+
+    Long id;
     String name;
 
     Integer minAge;
@@ -21,6 +23,7 @@ public class CategoryDto {
 
     public static CategoryDto toDto(Category category){
         return CategoryDto.builder()
+                .id(category.getId())
                 .name(category.getName())
                 .minAge(category.getMinAge())
                 .maxAge(category.getMaxAge())

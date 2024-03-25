@@ -18,5 +18,5 @@ public class SeasonRequest {
     String name;
     LocalDate startDate;
     LocalDate endDate;
-    Set<CategoryDto> categories;
+    Set<CategoryRequest> categories;
 }
