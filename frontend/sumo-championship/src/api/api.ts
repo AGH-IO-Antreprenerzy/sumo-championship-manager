@@ -63,6 +63,7 @@ function post(endpoint: string, body = {}) {
       const data = await response.json();
       return data;
     }
+
     throwFetchError('POST', endpoint, response);
   };
 }

@@ -9,7 +9,6 @@ import ROUTES from './routes/ROUTES';
 import { useUser } from './contexts/UserContext';
 import Seasons from './pages/Seasons';
 import AddSeason from './pages/AddSeason';
-import AddTournament from './pages/AddTournamentPage';
 
 const App: FunctionComponent = () => {
   const { user } = useUser();
@@ -18,9 +17,7 @@ const App: FunctionComponent = () => {
     <BrowserRouter>
       <div className="App">
         <Nav />
-        <AddTournament/>
-        {/* <Routes>
-          <Route path={ROUTES.OTHER} element={<Other />} />
+        <Routes>
           <Route
             path={ROUTES.LOGIN}
             element={
@@ -32,7 +29,7 @@ const App: FunctionComponent = () => {
           <Route path={ROUTES.SEASONS} element={<Seasons />} />
           <Route path={ROUTES.SEASONS_ADD} element={<AddSeason />} />
           <Route path={ROUTES.HOME} element={<Home />} />
-        </Routes> */}
+        </Routes>
       </div>
     </BrowserRouter>
   );

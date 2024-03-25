@@ -1,6 +1,9 @@
 import { CategoriesPerSex } from "../pages/AddTournamentPage"
 import { GeneralInformation } from "../types/Tournaments"
 import api from "./api"
+import { checkIsOk } from "./generalUtils";
+
+const BASE_TOURNAMENT_URL = 'http://localhost:8080/api/v1/tournament';
 
 export const addTournament = async (general: GeneralInformation, male: CategoriesPerSex, female: CategoriesPerSex) => {
     const categories: number[] = []
@@ -23,8 +26,14 @@ export const addTournament = async (general: GeneralInformation, male: Categorie
         registerEnd: general.registerEnd,
         categoryIds: categories
     }
-    console.log(body);
-    await api.post("v1/tournament/add", JSON.stringify(body))();
+
+    fetch(BASE_TOURNAMENT_URL + "/add", {
+        method: "POST",
+        body: JSON.stringify(body),
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    }).then(checkIsOk)
 }
 
 const mapCategoriesToIds = (categories: CategoriesPerSex): number[] => {

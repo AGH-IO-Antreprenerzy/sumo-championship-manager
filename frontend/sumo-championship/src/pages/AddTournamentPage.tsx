@@ -96,7 +96,7 @@ const AddTournament = () => {
         
         if(generalInformation.contestStart < generalInformation.registerEnd){
             isSuccesful = false;
-            setGeneralInformationErrors(prev => ({...prev, registerStart: "Content must start after end of registration"}))
+            setGeneralInformationErrors(prev => ({...prev, contestStart: "Content must start after end of registration"}))
         }
 
         if (generalInformation.name.trim() === ""){
@@ -152,8 +152,9 @@ const AddTournament = () => {
 
         try{
             await addTournament(generalInformation, maleCategories, femaleCategories);
-            navigate(ROUTES.HOME) //TODO: somewhere else
+            navigate(ROUTES.HOME) //TODO: navigate to tournaments after page is created
         }catch(ex: unknown){
+            console.log(ex)
             alert("Something went wrong");
         }
     }
