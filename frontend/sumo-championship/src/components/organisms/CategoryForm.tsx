@@ -222,6 +222,7 @@ const CategoryForm: React.FC<props> = ({ onUpdate }) => {
           onDelete={handleDelete}
           onEdit={handleEdit}
           onEditCancel={handleEditCancel}
+          showOptions
         />
       </div>
     </Tile>

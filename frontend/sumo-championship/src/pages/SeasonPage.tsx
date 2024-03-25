@@ -5,6 +5,7 @@ import DetailItem from '../components/Atoms/DetailItem';
 import api from '../api/api';
 import { DetailedSeason } from '../types/Seasons';
 import { isDateBetween } from '../utils/dateUtils';
+import CategoryTable from '../components/organisms/CategoryTable';
 
 const SeasonPage: React.FC = () => {
   const { name } = useParams();
@@ -50,12 +51,16 @@ const SeasonPage: React.FC = () => {
           />
         </Tile>
         <Tile className="categories">
-          <p className="subtitle mb30">Categories</p>
+          <p className="subtitle mb10">Categories</p>
+          <CategoryTable
+            categories={seasonInfo?.categories || []}
+            showOptions={false}
+            style={{ height: 300 }}
+          />
         </Tile>
       </div>
       <div className="season_bottomPanel">
         <Tile>
-          {' '}
           <p className="subtitle mb30">Tournaments</p>
         </Tile>
       </div>
