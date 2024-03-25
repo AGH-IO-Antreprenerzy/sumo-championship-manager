@@ -60,7 +60,7 @@ const CurrentTournamentsPage: FunctionComponent = () => {
       </div>
 
       <Tile>
-        <TournamentList tournaments={tournaments} />
+        <TournamentList tournaments={tournaments} grid />
       </Tile>
 
       <PageSwitcher

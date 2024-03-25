@@ -157,7 +157,7 @@
   }
 }
 
-.tournamentList {
+.tournamentFlexList {
   display: flex;
   flex-direction: row;
   justify-content: start;
@@ -165,8 +165,15 @@
   gap: 20px;
 }
 
+.tournamentGridList {
+  display: grid;
+  margin: 0 auto;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
 @media (max-width: 900px) {
-  .tournamentList {
+  .tournamentFlexList {
     justify-content: center;
   }
 }

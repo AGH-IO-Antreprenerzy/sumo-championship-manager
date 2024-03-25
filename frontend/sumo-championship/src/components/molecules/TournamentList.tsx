@@ -6,16 +6,20 @@ import { Tournament } from '../../types/Tournament';
 
 type props = {
   tournaments: Tournament[];
+  grid?: boolean;
   style?: React.CSSProperties;
 };
 
-const TournamentList: React.FC<props> = ({ tournaments, style }) => {
+const TournamentList: React.FC<props> = ({ tournaments, grid, style }) => {
   if (tournaments.length === 0) {
     return <p>No tournaments available</p>;
   }
 
   return (
-    <div className="tournamentList" style={style}>
+    <div
+      className={grid ? 'tournamentGridList' : 'tournamentFlexList'}
+      style={style}
+    >
       {tournaments.map((tournament, index) => (
         <TournamentItem
           key={index}
@@ -23,6 +27,7 @@ const TournamentList: React.FC<props> = ({ tournaments, style }) => {
           date={tournament.contestStart}
           location={tournament.location.city}
           registrationDate={tournament.registerStart}
+          usedOnGrid={grid}
         />
       ))}
     </div>
