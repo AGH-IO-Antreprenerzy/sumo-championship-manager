@@ -15,4 +15,5 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     List<Category> findCategoriesBySeason(Season season);
     Page<Category> findCategoriesBySeasonName(String name, Pageable pageable);
+    Set<Category> findAllByIdIn(List<Long> ids);
 }

@@ -1,6 +1,7 @@
 package com.sumoc.sumochampionship.service;
 
 import com.sumoc.sumochampionship.api.dto.CategoryDto;
+import com.sumoc.sumochampionship.api.dto.LocationDto;
 import com.sumoc.sumochampionship.api.dto.SeasonDto;
 import com.sumoc.sumochampionship.api.dto.TournamentDto;
 import com.sumoc.sumochampionship.api.dto.request.TournamentRequest;
@@ -18,6 +19,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,6 +34,7 @@ public class TournamentService {
     public ResponseEntity<String> saveTournament(TournamentRequest tournamentRequest) {
         Tournament tournament;
         Set<Category> categories = getCategoriesFromRequest(tournamentRequest);
+
         try {
             tournament = getTournamentFromRequest(tournamentRequest);
         } catch (EntityNotFoundException e) {
@@ -44,7 +47,10 @@ public class TournamentService {
             return ResponseEntity.badRequest().body("Invalid data provided. Start of the contest should be " +
                     "before the end of the contest and start of the registration should be before the contest start");
         }
-        if (!saveTournament(tournament, categories)) {
+
+        tournament.setCategories(categories);
+
+        if (!saveTournament(tournament)) {
             return ResponseEntity.badRequest().body("Invalid data.");
         }
 
@@ -67,11 +73,17 @@ public class TournamentService {
                 .build();
     }
 
-    private boolean saveTournament(Tournament tournament, Set<Category> categories){
+    private boolean saveTournament(Tournament tournament){
         try{
+            // Save location
+            locationRepository.save(tournament.getLocation());
+
+            // Not need to save categories because they are already saved
+
+            // Save Tournament
             tournamentRepository.save(tournament);
-            tournament.setCategories(categories);
-//            categoryRepository.saveAll(tournament.getCategories());
+
+
             return true;
         } catch (DataAccessException e) {
             return false;
@@ -91,13 +103,12 @@ public class TournamentService {
     }
 
     private Tournament getTournamentFromRequest(TournamentRequest tournamentRequest) throws EntityNotFoundException {
-        Location location = locationRepository.findById(tournamentRequest.getLocationId());
-        if (location == null) {
-            throw new EntityNotFoundException("Location with id: " + tournamentRequest.getLocationId() + " not found");
-        }
-        Season season = seasonRepository.findById(tournamentRequest.getSeasonId());
+        LocationDto locationDto = tournamentRequest.getLocation();
+        Location location = LocationDto.fromDto(locationDto);
+
+        Season season = seasonRepository.findByName(tournamentRequest.getSeasonName());
         if (season == null) {
-            throw new EntityNotFoundException("Season with id: " + tournamentRequest.getSeasonId() + " not found");
+            throw new EntityNotFoundException("Season with id: " + tournamentRequest.getSeasonName() + " not found");
         }
         return Tournament.builder()
                 .name(tournamentRequest.getName())
@@ -111,10 +122,10 @@ public class TournamentService {
     }
 
     private Set<Category> getCategoriesFromRequest(TournamentRequest tournamentRequest) {
-        Set<CategoryDto> categoryDtos = tournamentRequest.getCategories();
-        return categoryDtos.stream()
-                .map(this::getCategoryFromDto)
-                .collect(Collectors.toSet());
+        List<Long> categoriesId = tournamentRequest.getCategoryIds();
+
+        return categoryRepository.findAllByIdIn(categoriesId);
+
     }
 
     private Category getCategoryFromDto(CategoryDto dto) {
