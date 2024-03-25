@@ -5,6 +5,7 @@ import com.sumoc.sumochampionship.api.dto.LocationDto;
 import com.sumoc.sumochampionship.api.dto.SeasonDto;
 import com.sumoc.sumochampionship.api.dto.TournamentDto;
 import com.sumoc.sumochampionship.api.dto.request.TournamentRequest;
+import com.sumoc.sumochampionship.api.dto.response.AllTournamentsResponse;
 import com.sumoc.sumochampionship.db.season.Category;
 import com.sumoc.sumochampionship.db.season.Location;
 import com.sumoc.sumochampionship.db.season.Season;
@@ -16,9 +17,13 @@ import com.sumoc.sumochampionship.repository.TournamentRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -82,6 +87,31 @@ public class TournamentService {
 
         List<Tournament> tournaments = tournamentRepository.findAllBySeasonName(seasonName);
         return tournaments.stream().map(TournamentDto::mapToDto).toList();
+    }
+
+    public AllTournamentsResponse getAllTournaments(int page, int pageSize, boolean onlyActive){
+        Pageable pageable = PageRequest.of(page, pageSize);
+        Page<Tournament> tournamentPage  = null;
+
+        if (onlyActive){
+            tournamentPage = tournamentRepository.findAllByContestEndAfter(LocalDate.now(), pageable);
+        }
+        else {
+            tournamentPage = tournamentRepository.findAll(pageable);
+        }
+        List<Tournament> tournaments = tournamentPage.getContent();
+
+        List<TournamentDto> tournamentDtos = tournaments.stream().map(TournamentDto::mapToDto).toList();
+
+        return AllTournamentsResponse.builder()
+                .tournamentDtoList(tournamentDtos)
+                .pageNo(tournamentPage.getNumber())
+                .pageSize(tournamentPage.getSize())
+                .totalElements(tournamentPage.getTotalElements())
+                .totalPages(tournamentPage.getTotalPages())
+                .build();
+
+
     }
 
     private boolean saveTournament(Tournament tournament){
