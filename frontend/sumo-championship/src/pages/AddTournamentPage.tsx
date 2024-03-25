@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import './../styles/Pages.css';
 import GeneralTrounamentInformation from '../components/organisms/AddTournamentForms/GeneralTrounamentInformation';
 import { GeneralInformation, GeneralInformationError, defaultGeneralInformation, defaultGeneralInformationErrors } from '../types/Tournaments';
-import { CategoryDto, Gender, addTournament, getCategoriesForSeason } from '../api/category';
+import { CategoryDto, Gender, getCategoriesForSeason } from '../api/category';
 import TournamentCategoriesInformation from '../components/organisms/AddTournamentForms/TournamentCategoriesInformation';
 import Button from '../components/Atoms/Button';
 import { useNavigate } from 'react-router-dom';
 import ROUTES from '../routes/ROUTES';
+import { addTournament } from '../api/tournament';
 
 export interface CategoriesPerSex{
     isChoosen: boolean
