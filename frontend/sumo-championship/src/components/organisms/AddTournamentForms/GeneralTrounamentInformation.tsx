@@ -2,56 +2,95 @@ import React, { useEffect, useState } from 'react';
 import './../../../styles/Organisms.css';
 import { getAllSeasons } from '../../../api/season';
 import TextField from '../../molecules/TextField';
-import { GeneralInformation } from '../../../types/Tournaments';
+import { GeneralInformation, GeneralInformationError } from '../../../types/Tournaments';
 import SelectField from '../../molecules/SelectField';
+import ValueField from '../../molecules/ValueField';
 
 interface props{
     values: GeneralInformation,
+    errors: GeneralInformationError,
     changeValues: React.Dispatch<React.SetStateAction<GeneralInformation>>
 }
 
-const GeneralTrounamentInformation: React.FC<props> = ({values, changeValues}) => {
+const GeneralTrounamentInformation: React.FC<props> = ({values, errors, changeValues}) => {
     const [seasonNames, setSeasonNames] = useState<string[]>([])
 
-    const getSeasonNames = async () => {
-        const seasons = await getAllSeasons();
-        const names = seasons.seasonDtoList.map(s => s.name);
-        setSeasonNames(names);
-    }
+    
 
     useEffect(() => {
+        const getSeasonNames = async () => {
+            const seasons = await getAllSeasons();
+            const names = seasons.seasonDtoList.map(s => s.name);
+            setSeasonNames(names);
+        }
+        
         getSeasonNames();
     }, [])
 
     return (
-        <div className='generalInformationBox'>
+        <div className='addTournamentInformationBox'>
             <h1>General Information</h1>
             <TextField
                 label="Name"
                 onChange={(e) => changeValues(prev => ({...prev, name: e.target.value}))}
                 value={values.name}
                 type='text'
+                errorMessage={errors.name}
             />
             <TextField
-                label="Tournament date"
-                onChange={(e) => changeValues(prev => ({...prev, tournamentDate: e.target.value}))}
-                value={values.tournamentDate}
+                label="Start of contest"
+                onChange={(e) => changeValues(prev => ({...prev, contestStart: e.target.value}))}
+                value={values.contestStart}
                 type='date'
+                errorMessage={errors.contestStart}
             />
             <TextField
-                label="Location"
-                onChange={(e) => changeValues(prev => ({...prev, location: e.target.value}))}
-                value={values.location}
-            />
-            <TextField
-                label="Registration date"
-                onChange={(e) => changeValues(prev => ({...prev, registrationDate: e.target.value}))}
-                value={values.registrationDate}
+                label="End of contest"
+                onChange={(e) => changeValues(prev => ({...prev, contestEnd: e.target.value}))}
+                value={values.contestEnd}
                 type='date'
+                errorMessage={errors.contestEnd}
+            />
+            <TextField
+                label="Country"
+                onChange={(e) => changeValues(prev => ({...prev, country: e.target.value}))}
+                value={values.country}
+                errorMessage={errors.country}
+            />
+            <TextField
+                label="City"
+                onChange={(e) => changeValues(prev => ({...prev, city: e.target.value}))}
+                value={values.city}
+                errorMessage={errors.city}
+            />
+            <TextField
+                label="Street"
+                onChange={(e) => changeValues(prev => ({...prev, street: e.target.value}))}
+                value={values.street}
+                errorMessage={errors.street}
+            />
+            <ValueField
+                label='Street number'
+                onChange={(e) => changeValues(prev => ({...prev, nr: +e.target.value}))}
+                value={values.nr ?? 0}
+            />
+            <TextField
+                label="Start of registration"
+                onChange={(e) => changeValues(prev => ({...prev, registerStart: e.target.value}))}
+                value={values.registerStart}
+                type='date'
+                errorMessage={errors.registerStart}
+            />
+            <TextField
+                label="End of registration"
+                onChange={(e) => changeValues(prev => ({...prev, registerEnd: e.target.value}))}
+                value={values.registerEnd}
+                type='date'
+                errorMessage={errors.registerEnd}
             />
             <SelectField
                 name='Season'
-                onChange={(e) => changeValues(prev => ({...prev, season: e.target.value}))}
+                onChange={(e) => changeValues(prev => ({...prev, seasonName: e.target.value}))}
                 options={seasonNames}
             />
         </div>

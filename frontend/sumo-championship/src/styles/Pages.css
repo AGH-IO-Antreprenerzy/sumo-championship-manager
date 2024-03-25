@@ -1,7 +1,6 @@
 .page {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   padding: 40px;
   width: 100vw;
   justify-content: start;
@@ -14,4 +13,11 @@
   align-items: center;
   column-gap: 10%;
   height: 95vh;
+}
+
+.addTournamentPage {
+  display: flex;
+  column-gap: 50px;
+  justify-content: space-around;
+  width: 100%;
 }
