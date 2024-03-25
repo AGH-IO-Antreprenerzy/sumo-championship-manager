@@ -6,6 +6,7 @@ const ROUTES = {
   SEASON_PAGE: '/seasons/:name',
   TOURNAMENTS: '/tournaments',
   TOURNAMENTS_ADD: '/tournaments/add',
+  TOURNAMENTS_ADD_TO_SEASON: '/tournaments/add/:name',
   CONTACT: '/contact',
 };
 

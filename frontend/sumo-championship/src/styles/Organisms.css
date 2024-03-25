@@ -75,6 +75,7 @@
 }
 
 .categoriesTable {
+  width: 100%;
   height: 700px;
   overflow: scroll;
 }
@@ -100,7 +101,7 @@
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
-.addTournamentInformationBox{
+.addTournamentInformationBox {
   display: flex;
   flex-direction: column;
   row-gap: 30px;
@@ -108,7 +109,7 @@
   margin: 10px;
   width: 30%;
 
-  .generalContainer{
+  .generalContainer {
     display: flex;
     justify-content: flex-start;
     align-items: center;
