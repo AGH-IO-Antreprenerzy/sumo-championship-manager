@@ -23,9 +23,9 @@ public class TournamentRequest {
     LocationDto location;
 
     String seasonName;
-    LocalDateTime contestStart;
-    LocalDateTime contestEnd;
-    LocalDateTime registerStart;
-    LocalDateTime registerEnd;
+    LocalDate contestStart;
+    LocalDate contestEnd;
+    LocalDate registerStart;
+    LocalDate registerEnd;
     List<Long> categoryIds;
 }
