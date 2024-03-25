@@ -16,7 +16,7 @@ export interface CategoriesPerSex{
 
 export type CategoryToAdd = CategoryDto & {isChoosen: boolean}
 
-const AddTournament = () => {
+const AddTournamentPage = () => {
 
     const [generalInformation, setGeneralInformation] = useState<GeneralInformation>(defaultGeneralInformation);
     const [generalInformationErrors, setGeneralInformationErrors] = useState<GeneralInformationError>(defaultGeneralInformationErrors);
@@ -195,4 +195,4 @@ const AddTournament = () => {
     );
 };
 
-export default AddTournament;
+export default AddTournamentPage;
