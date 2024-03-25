@@ -1,6 +1,6 @@
 import React from 'react';
 import WeightCategoriesContainer from '../../molecules/WeightCategoriesContainer';
-import { CategoryToAdd } from '../../../pages/AddTournament';
+import { CategoryToAdd } from '../../../pages/AddTournamentPage';
 
 interface props{
     label: string,

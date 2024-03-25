@@ -1,7 +1,7 @@
 import React from 'react';
 import WeightBox from '../Atoms/WeightBox';
 import './../../styles/Molecules.css';
-import { CategoryToAdd } from '../../pages/AddTournament';
+import { CategoryToAdd } from '../../pages/AddTournamentPage';
 
 interface props{
     values: CategoryToAdd[]

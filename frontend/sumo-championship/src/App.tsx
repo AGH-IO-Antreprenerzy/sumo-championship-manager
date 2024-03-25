@@ -9,7 +9,7 @@ import ROUTES from './routes/ROUTES';
 import { useUser } from './contexts/UserContext';
 import Seasons from './pages/Seasons';
 import AddSeason from './pages/AddSeason';
-import AddTournament from './pages/AddTournament';
+import AddTournament from './pages/AddTournamentPage';
 
 const App: FunctionComponent = () => {
   const { user } = useUser();
