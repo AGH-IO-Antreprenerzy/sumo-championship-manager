@@ -1,3 +1,5 @@
+import { Tournament } from './Tournament';
+
 type Gender = 'FEMALE' | 'MALE' | 'ALL';
 
 type Category = {
@@ -13,7 +15,12 @@ type Season = {
   name: string;
   start: string;
   end: string;
-  categories: Category[];
 };
 
-export { Season, Category, Gender };
+type DetailedSeason = Season & {
+  categories: Category[];
+  status: 'ACTIVE' | 'INACTIVE';
+  tournaments: Tournament[];
+};
+
+export { DetailedSeason, Season, Category, Gender };
