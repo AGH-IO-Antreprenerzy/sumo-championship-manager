@@ -16,6 +16,7 @@ public class TournamentController {
 
     @PostMapping("/add")
     public ResponseEntity<String> addTournament(@RequestBody TournamentRequest tournamentRequest){
+
         return tournamentService.saveTournament(tournamentRequest);
     }
 

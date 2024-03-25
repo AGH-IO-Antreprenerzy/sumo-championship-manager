@@ -32,11 +32,13 @@ public class TournamentService {
     private final CategoryRepository categoryRepository;
 
     public ResponseEntity<String> saveTournament(TournamentRequest tournamentRequest) {
+        System.out.println("Start service");
         Tournament tournament;
         Set<Category> categories = getCategoriesFromRequest(tournamentRequest);
-
+        System.out.println("Got categories");
         try {
             tournament = getTournamentFromRequest(tournamentRequest);
+            System.out.println("Tournament got");
         } catch (EntityNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -82,7 +84,6 @@ public class TournamentService {
 
             // Save Tournament
             tournamentRepository.save(tournament);
-
 
             return true;
         } catch (DataAccessException e) {
