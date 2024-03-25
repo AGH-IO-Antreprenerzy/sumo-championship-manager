@@ -10,8 +10,6 @@ type props = {
 };
 
 const TournamentList: React.FC<props> = ({ tournaments, style }) => {
-  console.log(tournaments);
-
   if (tournaments.length === 0) {
     return <p>No tournaments available</p>;
   }

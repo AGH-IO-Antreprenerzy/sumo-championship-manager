@@ -25,7 +25,7 @@ const AllSeasonsPage: FunctionComponent = () => {
 
     setTotalPages(seasons.totalPages);
     setCurrentPage(seasons.pageNo);
-    setSeasons(seasons.seasonDtoList as any);
+    setSeasons(seasons.seasonDtoList);
   };
 
   useEffect(() => {
