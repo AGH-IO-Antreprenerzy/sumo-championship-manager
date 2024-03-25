@@ -1,10 +1,13 @@
 package com.sumoc.sumochampionship.api.controller;
 
+import com.sumoc.sumochampionship.api.dto.CategoryDto;
 import com.sumoc.sumochampionship.api.dto.response.CategoriesResponse;
 import com.sumoc.sumochampionship.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @CrossOrigin
@@ -24,8 +27,13 @@ public class CategoryController {
             @RequestParam(required = false, defaultValue = SEASON_CATEGORIES_PER_PAGE, name = "size") int pageSize){
 
         return ResponseEntity.ok(categoryService.getSeasonCategories(season, page, pageSize));
-
     }
 
+    @GetMapping("/all-previous")
+    ResponseEntity<List<CategoryDto>> getAllCategories(){
+
+        return ResponseEntity.ok(categoryService.getAllCategories());
+
+    }
 
 }

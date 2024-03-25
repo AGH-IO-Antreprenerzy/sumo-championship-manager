@@ -2,6 +2,7 @@ package com.sumoc.sumochampionship.service;
 
 import com.sumoc.sumochampionship.api.dto.CategoryDto;
 import com.sumoc.sumochampionship.api.dto.SeasonDto;
+import com.sumoc.sumochampionship.api.dto.request.CategoryRequest;
 import com.sumoc.sumochampionship.api.dto.request.SeasonRequest;
 import com.sumoc.sumochampionship.api.dto.response.AllSeasonResponse;
 import com.sumoc.sumochampionship.api.dto.response.SeasonDetailsResponse;
@@ -188,21 +189,11 @@ public class SeasonService {
     }
 
     private Set<Category> getCategoriesFromRequest(SeasonRequest seasonRequest){
-        Set<CategoryDto> categoryDtos = seasonRequest.getCategories();
+        Set<CategoryRequest> categoryRequests = seasonRequest.getCategories();
 
-        return categoryDtos.stream().map(this::fromCategoryDto).collect(Collectors.toSet());
+        return categoryRequests.stream().map(CategoryRequest::fromRequest).collect(Collectors.toSet());
 
     }
 
-    private Category fromCategoryDto(CategoryDto dto){
-        return Category.builder()
-                .name(dto.getName())
-                .minAge(dto.getMinAge())
-                .maxAge(dto.getMaxAge())
-                .minWeight(dto.getMinWeight())
-                .maxWeight(dto.getMaxWeight())
-                .gender(dto.getGender())
-                .build();
-    }
 
 }

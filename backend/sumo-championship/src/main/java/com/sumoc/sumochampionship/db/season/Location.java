@@ -1,13 +1,12 @@
 package com.sumoc.sumochampionship.db.season;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import static java.util.Objects.hash;
 
 /**
  * Location of the tournament
@@ -27,7 +26,12 @@ public class Location {
     private String street;
     private Integer nr;
 
-    @OneToOne(mappedBy = "location")
+    @OneToOne(mappedBy = "location", fetch = FetchType.LAZY)
     private Tournament tournament;
 
+
+    @Override
+    public int hashCode(){
+        return hash(id);
+    }
 }

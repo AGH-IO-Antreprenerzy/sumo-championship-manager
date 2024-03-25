@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @Repository
 public interface SeasonRepository extends JpaRepository<Season, Long> {
     Season findByName(String name);
+    Season findById(Integer id);
     Page<Season> findSeasonsByEndDateBefore(LocalDate end, Pageable pageable);
     Page<Season> findSeasonsByEndDateAfter(LocalDate end, Pageable pageable);
 }
