@@ -32,9 +32,11 @@
   }
   .button:hover {
     background-color: #f6a823;
+    transition: 0.3s;
   }
   .option:hover {
-    font-size: 1.3rem;
+    color: gray;
+    transition: 0.3s;
   }
   .menu {
     display: none;
