@@ -100,12 +100,25 @@
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
-.generalInformationBox {
+.addTournamentInformationBox{
   display: flex;
   flex-direction: column;
   row-gap: 30px;
   align-content: flex-start;
   margin: 10px;
+  width: 30%;
+
+  .generalContainer{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    column-gap: 20px;
+
+    input {
+      width: 20px;
+      height: 20px;
+    }
+  }
 
   h1 {
     color: #f37316;

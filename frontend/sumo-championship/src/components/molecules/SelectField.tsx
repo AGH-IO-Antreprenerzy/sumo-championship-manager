@@ -9,11 +9,14 @@ interface props{
 
 const SelectField: React.FC<props> = ({options, name, onChange}) => {
     return (
-        <select name={name} className='selectField' onChange={onChange}>
-            {options.map((option, id) => (<option key={id} value={option}>
-                {option}
-            </option>))}
-        </select>
+        <div className='textField_container'>
+            <label htmlFor={name} className='label'>{name}</label>
+            <select name={name} className='selectField' onChange={onChange}>
+                {options.map((option, id) => (<option key={id} value={option}>
+                    {option}
+                </option>))}
+            </select>
+        </div>
     );
 };
 
