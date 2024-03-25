@@ -6,7 +6,7 @@ import api from '../api/api';
 import { DetailedSeason } from '../types/Seasons';
 import { isDateBetween } from '../utils/dateUtils';
 import CategoryTable from '../components/organisms/CategoryTable';
-import TournamentList from '../components/molecules/TournamentsList';
+import TournamentList from '../components/molecules/TournamentList';
 
 const SeasonPage: React.FC = () => {
   const { name } = useParams();

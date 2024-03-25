@@ -17,4 +17,12 @@ type Tournament = {
   registerEnd: string;
 };
 
-export { Tournament };
+type PaginatedTournaments = {
+  totalPages: number;
+  tournamentDtoList: Tournament[];
+  pageNo: number;
+  pageSize: number;
+  totalElements: number;
+};
+
+export { Tournament, PaginatedTournaments };
