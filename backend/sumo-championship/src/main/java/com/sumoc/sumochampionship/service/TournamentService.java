@@ -1,11 +1,15 @@
 package com.sumoc.sumochampionship.service;
 
+import com.sumoc.sumochampionship.api.dto.CategoryDto;
+import com.sumoc.sumochampionship.api.dto.LocationDto;
 import com.sumoc.sumochampionship.api.dto.SeasonDto;
 import com.sumoc.sumochampionship.api.dto.TournamentDto;
 import com.sumoc.sumochampionship.api.dto.request.TournamentRequest;
+import com.sumoc.sumochampionship.db.season.Category;
 import com.sumoc.sumochampionship.db.season.Location;
 import com.sumoc.sumochampionship.db.season.Season;
 import com.sumoc.sumochampionship.db.season.Tournament;
+import com.sumoc.sumochampionship.repository.CategoryRepository;
 import com.sumoc.sumochampionship.repository.LocationRepository;
 import com.sumoc.sumochampionship.repository.SeasonRepository;
 import com.sumoc.sumochampionship.repository.TournamentRepository;
@@ -15,15 +19,22 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @AllArgsConstructor
 @Service
 public class TournamentService {
     private final TournamentRepository tournamentRepository;
     private final SeasonRepository seasonRepository;
     private final LocationRepository locationRepository;
+    private final CategoryRepository categoryRepository;
 
     public ResponseEntity<String> saveTournament(TournamentRequest tournamentRequest) {
         Tournament tournament;
+        Set<Category> categories = getCategoriesFromRequest(tournamentRequest);
+
         try {
             tournament = getTournamentFromRequest(tournamentRequest);
         } catch (EntityNotFoundException e) {
@@ -36,8 +47,11 @@ public class TournamentService {
             return ResponseEntity.badRequest().body("Invalid data provided. Start of the contest should be " +
                     "before the end of the contest and start of the registration should be before the contest start");
         }
+
+        tournament.setCategories(categories);
+
         if (!saveTournament(tournament)) {
-            return ResponseEntity.badRequest().body("Invalid data. Tournament with this name has already been created");
+            return ResponseEntity.badRequest().body("Invalid data.");
         }
 
         return ResponseEntity.ok().body("Tournament saved and added into season");
@@ -61,7 +75,15 @@ public class TournamentService {
 
     private boolean saveTournament(Tournament tournament){
         try{
+            // Save location
+            locationRepository.save(tournament.getLocation());
+
+            // Not need to save categories because they are already saved
+
+            // Save Tournament
             tournamentRepository.save(tournament);
+
+
             return true;
         } catch (DataAccessException e) {
             return false;
@@ -81,13 +103,12 @@ public class TournamentService {
     }
 
     private Tournament getTournamentFromRequest(TournamentRequest tournamentRequest) throws EntityNotFoundException {
-        Location location = locationRepository.findById(tournamentRequest.getLocationId());
-        if (location == null) {
-            throw new EntityNotFoundException("Location with id: " + tournamentRequest.getLocationId() + " not found");
-        }
-        Season season = seasonRepository.findById(tournamentRequest.getSeasonId());
+        LocationDto locationDto = tournamentRequest.getLocation();
+        Location location = LocationDto.fromDto(locationDto);
+
+        Season season = seasonRepository.findByName(tournamentRequest.getSeasonName());
         if (season == null) {
-            throw new EntityNotFoundException("Season with id: " + tournamentRequest.getSeasonId() + " not found");
+            throw new EntityNotFoundException("Season with id: " + tournamentRequest.getSeasonName() + " not found");
         }
         return Tournament.builder()
                 .name(tournamentRequest.getName())
@@ -97,6 +118,24 @@ public class TournamentService {
                 .contestEnd(tournamentRequest.getContestEnd())
                 .registerStart(tournamentRequest.getRegisterStart())
                 .registerEnd(tournamentRequest.getRegisterEnd())
+                .build();
+    }
+
+    private Set<Category> getCategoriesFromRequest(TournamentRequest tournamentRequest) {
+        List<Long> categoriesId = tournamentRequest.getCategoryIds();
+
+        return categoryRepository.findAllByIdIn(categoriesId);
+
+    }
+
+    private Category getCategoryFromDto(CategoryDto dto) {
+        return Category.builder()
+                .name(dto.getName())
+                .minAge(dto.getMinAge())
+                .maxAge(dto.getMaxAge())
+                .minWeight(dto.getMinWeight())
+                .maxWeight(dto.getMaxWeight())
+                .gender(dto.getGender())
                 .build();
     }
 }
