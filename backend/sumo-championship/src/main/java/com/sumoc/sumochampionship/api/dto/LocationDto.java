@@ -26,4 +26,13 @@ public class LocationDto {
                 .build();
     }
 
+    public static LocationDto mapToDto(Location location){
+        return LocationDto.builder()
+                .city(location.getCity())
+                .nr(location.getNr())
+                .country(location.getCountry())
+                .street(location.getStreet())
+                .build();
+    }
+
 }

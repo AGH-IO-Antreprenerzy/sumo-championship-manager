@@ -66,13 +66,22 @@ public class TournamentService {
         }
         return TournamentDto.builder()
                 .name(tournament.getName())
-                .location(tournament.getLocation())
-                .season(tournament.getSeason())
+                .location(LocationDto.mapToDto(tournament.getLocation()))
+                .season(SeasonDto.mapToDto(tournament.getSeason()))
                 .contestStart(tournament.getContestStart())
                 .contestEnd(tournament.getContestEnd())
                 .registerStart(tournament.getRegisterStart())
                 .registerEnd(tournament.getRegisterEnd())
                 .build();
+    }
+
+    public List<TournamentDto> getAllTournamentsToSeason(String seasonName) throws EntityNotFoundException{
+        if (seasonRepository.findByName(seasonName) == null){
+            throw new EntityNotFoundException("Season " + seasonName + " not found in database");
+        }
+
+        List<Tournament> tournaments = tournamentRepository.findAllBySeasonName(seasonName);
+        return tournaments.stream().map(TournamentDto::mapToDto).toList();
     }
 
     private boolean saveTournament(Tournament tournament){
