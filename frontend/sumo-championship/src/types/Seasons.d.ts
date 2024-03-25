@@ -1,4 +1,4 @@
-import { GeneralInformation } from './Tournaments';
+import { Tournament } from './Tournament';
 
 type Gender = 'FEMALE' | 'MALE' | 'ALL';
 
@@ -20,7 +20,7 @@ type Season = {
 type DetailedSeason = Season & {
   categories: Category[];
   status: 'ACTIVE' | 'INACTIVE';
-  tournament: GeneralInformation[];
+  tournaments: Tournament[];
 };
 
 export { DetailedSeason, Season, Category, Gender };

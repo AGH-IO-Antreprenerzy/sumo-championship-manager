@@ -6,6 +6,7 @@ import api from '../api/api';
 import { DetailedSeason } from '../types/Seasons';
 import { isDateBetween } from '../utils/dateUtils';
 import CategoryTable from '../components/organisms/CategoryTable';
+import TournamentList from '../components/molecules/TournamentsList';
 
 const SeasonPage: React.FC = () => {
   const { name } = useParams();
@@ -13,7 +14,7 @@ const SeasonPage: React.FC = () => {
 
   const getSeasonInfo = useCallback(async () => {
     try {
-      const seasonInfo = await api.get<DetailedSeason>('v1/season/info', {
+      const seasonInfo = await api.get<DetailedSeason>('v1/season/details', {
         name,
       })();
       setSeasonInfo(seasonInfo);
@@ -61,7 +62,8 @@ const SeasonPage: React.FC = () => {
       </div>
       <div className="season_bottomPanel">
         <Tile>
-          <p className="subtitle mb30">Tournaments</p>
+          <p className="subtitle mb20">Tournaments</p>
+          <TournamentList tournaments={seasonInfo?.tournaments || []} />
         </Tile>
       </div>
     </div>
