@@ -12,22 +12,14 @@ type props = {
  * It also has a border radius of 15px and column and row gap of 20px.
  */
 const Tile = React.forwardRef<HTMLInputElement, props>(function Tile(
-  { children, className, ...rest },
+  { children, className, style },
   ref,
 ) {
   return (
     <div
       ref={ref}
-      className={'' + (className ? ` ${className}` : '')}
-      style={{
-        flex: 1,
-        backgroundColor: 'white',
-        padding: 20,
-        borderRadius: 15,
-        columnGap: 20,
-        rowGap: 20,
-      }}
-      {...rest}
+      className={'tile' + (className ? ` ${className}` : '')}
+      style={style}
     >
       {children}
     </div>

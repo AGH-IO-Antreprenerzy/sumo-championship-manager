@@ -1,4 +1,4 @@
-import React,{ useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/Nav.css';
 import ROUTES from '../../routes/ROUTES';
@@ -13,8 +13,13 @@ const Nav: React.FC = () => {
         <span></span>
         <span></span>
       </div>
-      <img src={require("../../assets/icons/logo.png")} alt="Logo" className="nav-image" />
-      <div className={`options-parent ${menuOpen ? "open" : ""}`}>
+      <img
+        src={require('../../assets/icons/logo.png')}
+        alt="Logo"
+        className="nav-image"
+        style={{ height: 64 }}
+      />
+      <div className={`options-parent ${menuOpen ? 'open' : ''}`}>
         <div className="option" onClick={() => navigate(ROUTES.HOME)}>
           Home
         </div>
@@ -29,7 +34,7 @@ const Nav: React.FC = () => {
         </div>
       </div>
       <button
-        className={`button ${menuOpen ? "open" : ""}`}
+        className={`nav-button ${menuOpen ? 'open' : ''}`}
         onClick={() => navigate(ROUTES.LOGIN)}
       >
         <div className="login">Log in</div>

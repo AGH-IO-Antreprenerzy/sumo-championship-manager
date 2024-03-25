@@ -10,15 +10,11 @@
 
 const DOMAIN = 'http://localhost:8080/api/';
 
-const throwFetchError = (
-  method: string,
-  endpoint: string,
-  response: Response,
-) => {
-  throw new Error(`[${method}] ${endpoint}: ${response.statusText}`);
+const throwFetchError = (method: string, endpoint: string, text: string) => {
+  throw new Error(`[${method}] ${endpoint}: ${text}`);
 };
 
-function get(endpoint: string, params = {}) {
+function get<T>(endpoint: string, params = {}): () => Promise<T> {
   return async () => {
     let uri = `${DOMAIN}${endpoint}`;
     if (params) {
@@ -37,19 +33,23 @@ function get(endpoint: string, params = {}) {
       const data = await response.json();
       return data;
     }
-    throwFetchError('GET', endpoint, response);
+    throwFetchError('GET', endpoint, response.statusText);
   };
 }
 
-function getPaginated(endpoint: string, size: number, params = {}) {
+function getPaginated<T>(
+  endpoint: string,
+  size: number,
+  params = {},
+): (pageParam: number) => Promise<T> {
   return (pageParam: number) => {
     const paramsWithPagination = { page: pageParam, size, ...params };
 
-    return get(endpoint, paramsWithPagination)();
+    return get<T>(endpoint, paramsWithPagination)();
   };
 }
 
-function post(endpoint: string, body = {}) {
+function post<T>(endpoint: string, body = {}): () => Promise<T> {
   return async () => {
     const response = await fetch(`${DOMAIN}${endpoint}`, {
       method: 'Post',
@@ -63,8 +63,7 @@ function post(endpoint: string, body = {}) {
       const data = await response.json();
       return data;
     }
-
-    throwFetchError('POST', endpoint, response);
+    throwFetchError('POST', endpoint, response.statusText);
   };
 }
 
@@ -79,7 +78,7 @@ function delete_(endpoint: string, body = {}) {
     });
 
     if (!response.ok) {
-      throwFetchError('DELETE', endpoint, response);
+      throwFetchError('DELETE', endpoint, response.statusText);
     }
   };
 }
@@ -95,7 +94,7 @@ function put(endpoint: string, body = {}) {
     });
 
     if (!response.ok) {
-      throwFetchError('PUT', endpoint, response);
+      throwFetchError('PUT', endpoint, response.statusText);
     }
   };
 }

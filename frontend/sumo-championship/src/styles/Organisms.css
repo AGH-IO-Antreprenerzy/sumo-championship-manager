@@ -121,6 +121,59 @@
   }
 
   h1 {
-    color: #F37316;
+    color: #f37316;
   }
+}
+
+.seasonPage {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  align-content: flex-start;
+  margin-bottom: 20px;
+
+  .season_topPanel {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    row-gap: 20px;
+    column-gap: 20px;
+  }
+
+  .generalInfo {
+    flex: 1;
+  }
+
+  .categories {
+    flex: 3;
+  }
+
+  .season_image {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+    margin-bottom: 10px;
+  }
+}
+
+.tournamentList {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+@media (max-width: 900px) {
+  .tournamentList {
+    justify-content: center;
+  }
+}
+
+.addSeason_footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+  margin-top: 20px;
 }

@@ -19,6 +19,7 @@
   color: white;
   align-items: center;
   justify-content: center;
+  transition: 0.3s;
 }
 
 .submit:hover,
@@ -61,6 +62,10 @@
 
 .centeredText {
   text-align: center;
+}
+
+.mb10 {
+  margin-bottom: 10px;
 }
 
 .mb20 {
@@ -121,4 +126,30 @@
   background-color: #A3A3A3;
   color: #000;
   border: solid black 2px;
+}
+
+.tile {
+  flex: 1;
+  background-color: white;
+  padding: 20px;
+  border-radius: 15px;
+  column-gap: 20px;
+  row-gap: 20px;
+}
+
+.detailItem {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  justify-content: space-between;
+  margin-bottom: 10px;
+
+  .left {
+    width: 100px;
+  }
+
+  .right {
+    text-align: right;
+    flex: 1;
+  }
 }

@@ -5,11 +5,12 @@ type props = {
   name: string;
   startDate: string;
   endDate: string;
+  onClick?: () => void;
 };
 
-const SeasonItem: React.FC<props> = ({ name, startDate, endDate }) => {
+const SeasonItem: React.FC<props> = ({ name, startDate, endDate, onClick }) => {
   return (
-    <div className="seasonItem">
+    <div className="seasonItem" onClick={onClick}>
       <img
         src={require('./../../assets/images/sumoFight.png')}
         alt="Season preview image"
