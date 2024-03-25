@@ -52,6 +52,15 @@ public class SeasonRepositoryTest {
         Assertions.assertEquals("2024-2", seasons.get(1).getName());
     }
 
+    @Test
+    void  findById(){
+        // Act
+        Season season = seasonRepository.findById(1);
+
+        // Assertions
+        Assertions.assertEquals("2023", season.getName());
+    }
+
     @BeforeEach
     public void context(){
         Season season2023 = Season.builder()
