@@ -2,6 +2,7 @@ package com.sumoc.sumochampionship.service;
 
 import com.sumoc.sumochampionship.api.dto.CategoryDto;
 import com.sumoc.sumochampionship.api.dto.SeasonDto;
+import com.sumoc.sumochampionship.api.dto.request.CategoryRequest;
 import com.sumoc.sumochampionship.api.dto.request.SeasonRequest;
 import com.sumoc.sumochampionship.api.dto.response.AllSeasonResponse;
 import com.sumoc.sumochampionship.db.people.Gender;
@@ -47,27 +48,27 @@ public class SeasonServiceTest {
         // Arrange
         when(seasonRepository.save(Mockito.any())).thenReturn(new Season());
         when(categoryRepository.save(Mockito.any())).thenReturn(new Category());
-        Set<CategoryDto> goodCategorySet = Set.of(
-                CategoryDto.builder().name("Junior").minAge(13).maxAge(14).minWeight(50).maxWeight(60).gender(Gender.MALE).build(),
-                CategoryDto.builder().name("Senior").minAge(24).maxAge(50).minWeight(50).maxWeight(60).gender(Gender.MALE).build()
+        Set<CategoryRequest> goodCategorySet = Set.of(
+                CategoryRequest.builder().name("Junior").minAge(13).maxAge(14).minWeight(50).maxWeight(60).gender(Gender.MALE).build(),
+                CategoryRequest.builder().name("Senior").minAge(24).maxAge(50).minWeight(50).maxWeight(60).gender(Gender.MALE).build()
         );
 
-        Set<CategoryDto> wrongCategorySet1 = Set.of(
+        Set<CategoryRequest> wrongCategorySet1 = Set.of(
                 // Wrong Age
-                CategoryDto.builder().name("Junior").minAge(15).maxAge(14).minWeight(50).maxWeight(60).gender(Gender.MALE).build(),
-                CategoryDto.builder().name("Senior").minAge(24).maxAge(50).minWeight(50).maxWeight(60).gender(Gender.MALE).build()
+                CategoryRequest.builder().name("Junior").minAge(15).maxAge(14).minWeight(50).maxWeight(60).gender(Gender.MALE).build(),
+                CategoryRequest.builder().name("Senior").minAge(24).maxAge(50).minWeight(50).maxWeight(60).gender(Gender.MALE).build()
                 );
 
-        Set<CategoryDto> wrongCategorySet2 = Set.of(
+        Set<CategoryRequest> wrongCategorySet2 = Set.of(
                 // Wrong Weight
-                CategoryDto.builder().name("Junior").minAge(13).maxAge(14).minWeight(50).maxWeight(60).gender(Gender.MALE).build(),
-                CategoryDto.builder().name("Senior").minAge(24).maxAge(50).minWeight(70).maxWeight(60).gender(Gender.MALE).build()
+                CategoryRequest.builder().name("Junior").minAge(13).maxAge(14).minWeight(50).maxWeight(60).gender(Gender.MALE).build(),
+                CategoryRequest.builder().name("Senior").minAge(24).maxAge(50).minWeight(70).maxWeight(60).gender(Gender.MALE).build()
         );
 
-        Set<CategoryDto> wrongCategorySet3 = Set.of(
+        Set<CategoryRequest> wrongCategorySet3 = Set.of(
                 // Provided to less information (lack of ages)
-                CategoryDto.builder().name("Junior").maxAge(14).minWeight(50).maxWeight(60).gender(Gender.MALE).build(),
-                CategoryDto.builder().name("Senior").minWeight(70).maxWeight(60).gender(Gender.MALE).build()
+                CategoryRequest.builder().name("Junior").maxAge(14).minWeight(50).maxWeight(60).gender(Gender.MALE).build(),
+                CategoryRequest.builder().name("Senior").minWeight(70).maxWeight(60).gender(Gender.MALE).build()
         );
 
         SeasonRequest wrongSeasonRequest1 = SeasonRequest.
