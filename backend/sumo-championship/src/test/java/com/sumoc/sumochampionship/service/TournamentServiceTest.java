@@ -52,8 +52,6 @@ class TournamentServiceTest {
 
         TournamentRequest goodRequest = TournamentRequest.builder()
                 .name("Tournament 01")
-                .locationId(1)
-                .seasonId(1)
                 .contestStart(LocalDateTime.now())
                 .contestEnd(LocalDateTime.now().plusDays(1))
                 .registerStart(LocalDateTime.now().minusDays(1))
@@ -62,8 +60,6 @@ class TournamentServiceTest {
 
         TournamentRequest wrongRegisterDate = TournamentRequest.builder()
                 .name("Tournament 02")
-                .locationId(1)
-                .seasonId(1)
                 .contestStart(LocalDateTime.now().plusDays(1))
                 .contestEnd(LocalDateTime.now())
                 .registerStart(LocalDateTime.now().minusDays(1))
@@ -72,8 +68,6 @@ class TournamentServiceTest {
 
         TournamentRequest wrongContestDate = TournamentRequest.builder()
                 .name("Tournament 03")
-                .locationId(1)
-                .seasonId(1)
                 .contestStart(LocalDateTime.now())
                 .contestEnd(LocalDateTime.now().minusDays(1))
                 .registerStart(LocalDateTime.now().minusDays(1))
@@ -82,8 +76,6 @@ class TournamentServiceTest {
 
         TournamentRequest wrongLocation = TournamentRequest.builder()
                 .name("Tournament 04")
-                .locationId(2)
-                .seasonId(1)
                 .contestStart(LocalDateTime.now())
                 .contestEnd(LocalDateTime.now().plusDays(1))
                 .registerStart(LocalDateTime.now().minusDays(1))
@@ -92,8 +84,6 @@ class TournamentServiceTest {
 
         TournamentRequest wrongSeason = TournamentRequest.builder()
                 .name("Tournament 05")
-                .locationId(1)
-                .seasonId(2)
                 .contestStart(LocalDateTime.now())
                 .contestEnd(LocalDateTime.now().plusDays(1))
                 .registerStart(LocalDateTime.now().minusDays(1))
