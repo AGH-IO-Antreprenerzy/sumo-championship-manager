@@ -3,9 +3,12 @@ package com.sumoc.sumochampionship.api.controller;
 import com.sumoc.sumochampionship.api.dto.TournamentDto;
 import com.sumoc.sumochampionship.api.dto.request.TournamentRequest;
 import com.sumoc.sumochampionship.service.TournamentService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @CrossOrigin
@@ -29,5 +32,16 @@ public class TournamentController {
             return ResponseEntity.badRequest().body(tournamentDto);
         }
         return ResponseEntity.ok(tournamentDto);
+    }
+
+    @GetMapping("/to-season")
+    public ResponseEntity<List<TournamentDto>> getAllTournaments(@RequestParam String name){
+        List<TournamentDto> response=null;
+        try{
+           response = tournamentService.getAllTournamentsToSeason(name);
+        }catch (EntityNotFoundException e){
+            return ResponseEntity.badRequest().body(response);
+        }
+        return ResponseEntity.ok(response);
     }
 }

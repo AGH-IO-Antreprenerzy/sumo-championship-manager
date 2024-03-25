@@ -1,6 +1,7 @@
 package com.sumoc.sumochampionship.api.dto.response;
 
 import com.sumoc.sumochampionship.api.dto.CategoryDto;
+import com.sumoc.sumochampionship.api.dto.TournamentDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,7 +21,6 @@ public class SeasonDetailsResponse {
 
     private List<CategoryDto> categories;
 
-    // TODO: TournamentDto implemented by Antek
-
+    private List<TournamentDto> tournaments;
 
 }

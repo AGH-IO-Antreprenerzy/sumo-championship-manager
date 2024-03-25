@@ -2,14 +2,17 @@ package com.sumoc.sumochampionship.service;
 
 import com.sumoc.sumochampionship.api.dto.CategoryDto;
 import com.sumoc.sumochampionship.api.dto.SeasonDto;
+import com.sumoc.sumochampionship.api.dto.TournamentDto;
 import com.sumoc.sumochampionship.api.dto.request.CategoryRequest;
 import com.sumoc.sumochampionship.api.dto.request.SeasonRequest;
 import com.sumoc.sumochampionship.api.dto.response.AllSeasonResponse;
 import com.sumoc.sumochampionship.api.dto.response.SeasonDetailsResponse;
 import com.sumoc.sumochampionship.db.season.Category;
 import com.sumoc.sumochampionship.db.season.Season;
+import com.sumoc.sumochampionship.db.season.Tournament;
 import com.sumoc.sumochampionship.repository.CategoryRepository;
 import com.sumoc.sumochampionship.repository.SeasonRepository;
+import com.sumoc.sumochampionship.repository.TournamentRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataAccessException;
@@ -33,6 +36,8 @@ public class SeasonService {
     private final SeasonRepository seasonRepository;
 
     private final CategoryRepository categoryRepository;
+
+    private final TournamentRepository tournamentRepository;
 
     /*
     Check if the season is correct (TODO: Discuss when the season can not be saved !)
@@ -118,7 +123,9 @@ public class SeasonService {
                 .totalPages(seasonPage.getTotalPages()).build();
     }
 
-
+    /*
+    Get all Season information
+     */
     public SeasonDetailsResponse getSeasonDetails(String name) throws EntityNotFoundException{
         Season season = seasonRepository.findByName(name);
 
@@ -128,10 +135,17 @@ public class SeasonService {
         List<Category> categories = categoryRepository.findCategoriesBySeason(season);
         List<CategoryDto> categoriesdto = categories.stream().map(CategoryDto::toDto).toList();
 
+        List<Tournament> tournaments = tournamentRepository.findAllBySeason(season);
+
+        // Map Tournaments to Dto and set season to null to not duplicate data across the web
+        List<TournamentDto> tournamentDtos = tournaments.stream()
+                .map(TournamentDto::mapToDto).toList();
+
         return SeasonDetailsResponse.builder()
                 .start(season.getStartDate())
                 .end(season.getEndDate())
                 .categories(categoriesdto)
+                .tournaments(tournamentDtos)
                 .name(season.getName())
                 .build();
     }

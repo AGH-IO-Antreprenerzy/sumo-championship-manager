@@ -17,18 +17,18 @@ import java.time.LocalDateTime;
 @Builder
 public class TournamentDto {
     private String name;
-    private Location location;
-    private Season season;
-    private LocalDateTime contestStart;
-    private LocalDateTime contestEnd;
-    private LocalDateTime registerStart;
-    private LocalDateTime registerEnd;
+    private LocationDto location;
+    private SeasonDto season;
+    private LocalDate contestStart;
+    private LocalDate contestEnd;
+    private LocalDate registerStart;
+    private LocalDate registerEnd;
 
     public static TournamentDto mapToDto(Tournament tournament){
         return TournamentDto.builder()
                 .name(tournament.getName())
-                .location(tournament.getLocation())
-                .season(tournament.getSeason())
+                .location(LocationDto.mapToDto(tournament.getLocation()))
+                .season(SeasonDto.mapToDto(tournament.getSeason()))
                 .contestStart(tournament.getContestStart())
                 .contestEnd(tournament.getContestEnd())
                 .registerStart(tournament.getRegisterStart())

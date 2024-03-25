@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -27,11 +28,11 @@ public class Tournament {
     private Long id;
     private String name;
 
-    private LocalDateTime registerStart;
-    private LocalDateTime registerEnd;
+    private LocalDate registerStart;
+    private LocalDate registerEnd;
 
-    private LocalDateTime contestStart;
-    private LocalDateTime contestEnd;
+    private LocalDate contestStart;
+    private LocalDate contestEnd;
 
     @OneToOne
     private Location location;
