@@ -1,5 +1,6 @@
 package com.sumoc.sumochampionship.api.dto.request;
 
+import com.sumoc.sumochampionship.api.dto.CategoryDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,4 +22,5 @@ public class TournamentRequest {
     LocalDateTime contestEnd;
     LocalDateTime registerStart;
     LocalDateTime registerEnd;
+    Set<CategoryDto> categories;
 }
