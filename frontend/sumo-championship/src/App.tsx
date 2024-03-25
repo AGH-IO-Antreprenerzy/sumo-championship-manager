@@ -15,7 +15,25 @@ const App: FunctionComponent = () => {
   const { user } = useUser();
 
   return (
-    <AddTournament/>
+    <BrowserRouter>
+      <div className="App">
+        <Nav />
+        <AddTournament/>
+        {/* <Routes>
+          <Route path={ROUTES.OTHER} element={<Other />} />
+          <Route
+            path={ROUTES.LOGIN}
+            element={
+              !user.isLogged ? <LoginPage /> : <Navigate to={ROUTES.HOME} />
+            }
+          />
+          <Route path={ROUTES.PLAYERS} element={<Players />} />
+          <Route path={ROUTES.SEASONS} element={<Seasons />} />
+          <Route path={ROUTES.SEASONS_ADD} element={<AddSeason />} />
+          <Route path={ROUTES.HOME} element={<Home />} />
+        </Routes> */}
+      </div>
+    </BrowserRouter>
   );
 };
 

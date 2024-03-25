@@ -13,3 +13,11 @@ export const defaultGeneralInformation: GeneralInformation = {
     registrationDate: "",
     season: ""
 }
+
+export const defaultGeneralInformationErrors: GeneralInformation = {
+    name: "",
+    tournamentDate: "",
+    location: "",
+    registrationDate: "",
+    season: ""
+}

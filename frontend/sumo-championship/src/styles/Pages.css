@@ -1,7 +1,6 @@
 .page {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   padding: 40px;
   width: 100vw;
   justify-content: start;

@@ -108,6 +108,18 @@
   margin: 10px;
   width: 30%;
 
+  .generalContainer{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    column-gap: 20px;
+
+    input {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
   h1 {
     color: #F37316;
   }

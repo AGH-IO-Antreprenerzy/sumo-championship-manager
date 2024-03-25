@@ -1,15 +1,19 @@
 import React from 'react';
-import { CategoryDto } from '../../../api/category';
 import WeightCategoriesContainer from '../../molecules/WeightCategoriesContainer';
+import { CategoryToAdd } from '../../../pages/AddTournament';
 
 interface props{
     label: string,
-    values: CategoryDto[]
+    values: CategoryToAdd[]
     removeCategory: (name: string) => void
+    onPerSexCheckboxToggle: (value: boolean) => void
+    onPerAgeCheckboxToggle: (categoryNames: string[], value: boolean) => void
+    isPerSexCheckboxChecked: boolean
 }
-const TournamentCategoriesInformation: React.FC<props> = ({label, values, removeCategory}) => {
+const TournamentCategoriesInformation: React.FC<props> = ({label, values, removeCategory,
+    onPerSexCheckboxToggle, onPerAgeCheckboxToggle, isPerSexCheckboxChecked}) => {
 
-    const categoriesGroupedByAge: { [minAge: number] : CategoryDto[]} = {}
+    const categoriesGroupedByAge: { [minAge: number] : CategoryToAdd[]} = {}
 
     values.forEach(category => {
         const age = category.maxAge;
@@ -27,14 +31,19 @@ const TournamentCategoriesInformation: React.FC<props> = ({label, values, remove
                 key={key}
                 values={value}
                 removeCategory={removeCategory}
+                onCheckboxToggle={onPerAgeCheckboxToggle}
             />
         }
     }
 
     //add checkboxes
     return (
-        <div className='addTournamentInformationBox'> 
-            <h1> {label} </h1>
+        <div className='addTournamentInformationBox'>
+            <div className='generalContainer'>
+                <h1> {label} </h1>
+                <input type='checkbox' onChange={e => onPerSexCheckboxToggle(e.target.checked)} checked={isPerSexCheckboxChecked}/>
+            </div>
+            
             {renderElements()}
         </div>
     );

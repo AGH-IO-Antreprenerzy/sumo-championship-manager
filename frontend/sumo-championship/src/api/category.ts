@@ -12,7 +12,6 @@ export enum Gender{
     FEMALE = "FEMALE",
     ALL = "ALL"
 }
-//unify with Seasons types
 
 const categorySchema = z.object({
     name: z.string(),
