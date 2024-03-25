@@ -19,6 +19,7 @@
   color: white;
   align-items: center;
   justify-content: center;
+  transition: 0.3s;
 }
 
 .submit:hover,

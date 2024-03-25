@@ -9,7 +9,7 @@
   display: flex;
   margin-right: auto;
 }
-.button {
+.nav-button {
   top: 0;
   left: 0;
   border-radius: 10px;
@@ -30,7 +30,7 @@
 .login {
   color: white;
 }
-.button:hover {
+.nav-button:hover {
   background-color: #f6a823;
   transition: 0.3s;
 }
@@ -80,11 +80,11 @@
     text-align: center;
     margin-bottom: 0.4rem;
   }
-  .button {
+  .nav-button {
     display: none;
     margin-bottom: 0.25rem;
   }
-  .button.open {
+  .nav-button.open {
     display: flex;
   }
   .nav-image {

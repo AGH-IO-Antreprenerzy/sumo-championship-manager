@@ -88,7 +88,6 @@ const AddSeason: React.FC = () => {
         <p className="title">Add season</p>
         <Button value="Cancel" onClick={handleCancel} />
       </div>
-
       <div className="addSeasonForm ">
         <Tile className="generalInfo">
           <p className="subtitle mb30">General information</p>
@@ -133,8 +132,9 @@ const AddSeason: React.FC = () => {
 
         <CategoryForm onUpdate={handleCategoriesUpdate} />
       </div>
-
-      <Button onClick={addSeason} value="Add season" />
+      <div className="addSeason_footer">
+        <Button onClick={addSeason} value="Add season" style={{ width: 200 }} />
+      </div>
     </div>
   );
 };

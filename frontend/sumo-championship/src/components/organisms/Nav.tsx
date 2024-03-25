@@ -34,7 +34,7 @@ const Nav: React.FC = () => {
         </div>
       </div>
       <button
-        className={`button ${menuOpen ? 'open' : ''}`}
+        className={`nav-button ${menuOpen ? 'open' : ''}`}
         onClick={() => navigate(ROUTES.LOGIN)}
       >
         <div className="login">Log in</div>
