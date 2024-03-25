@@ -1,6 +1,5 @@
 import { CategoriesPerSex } from "../pages/AddTournamentPage"
 import { GeneralInformation } from "../types/Tournaments"
-import api from "./api"
 import { checkIsOk } from "./generalUtils";
 
 const BASE_TOURNAMENT_URL = 'http://localhost:8080/api/v1/tournament';
