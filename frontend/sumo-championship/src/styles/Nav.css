@@ -1,89 +1,93 @@
 .nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+}
+.options-parent {
+  align-items: center;
+  display: flex;
+  margin-right: auto;
+}
+.nav-button {
+  top: 0;
+  left: 0;
+  border-radius: 10px;
+  background-color: #f37316;
+  padding: 0.6rem;
+  padding-left: 1.2rem;
+  padding-right: 1.2rem;
+  margin: 0 0.5rem;
+  border-radius: 0.5rem;
+  border: none;
+}
+.option {
+  display: block;
+  padding: 0.5rem;
+  margin: 0 0.5rem;
+  border-radius: 0.5rem;
+}
+.login {
+  color: white;
+}
+.nav-button:hover {
+  background-color: #f6a823;
+  transition: 0.3s;
+}
+.option:hover {
+  color: gray;
+  transition: 0.3s;
+}
+.menu {
+  display: none;
+  position: absolute;
+  top: 1rem;
+  right: 0.5rem;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 2.25rem;
+  height: 2rem;
+}
+.menu span {
+  height: 0.4rem;
+  width: 100%;
+  background-color: #f37316;
+  border-radius: 0.2rem;
+}
+
+.nav-image {
+  margin-left: 10px;
+}
+
+@media (max-width: 600px) {
+  .menu {
     display: flex;
-    justify-content: space-between;
+  }
+  .nav {
+    flex-direction: column;
     align-items: center;
-    background-color: white;
   }
   .options-parent {
-    align-items: center;
-    display: flex;
-    margin-right: auto;
+    display: none;
+    flex-direction: column;
+    text-align: center;
+    margin: 0 auto;
   }
-  .button {
-    top: 0;
-    left: 0;
-    border-radius: 10px;
-    background-color: #f37316;
-    padding: 0.6rem;
-    padding-left: 1.2rem;
-    padding-right: 1.2rem;
-    margin: 0 0.5rem;
-    border-radius: 0.5rem;
-    border: none;
+  .options-parent.open {
+    display: flex;
   }
   .option {
-    display: block;
-    padding: 0.5rem;
-    margin: 0 0.5rem;
-    border-radius: 0.5rem;
+    text-align: center;
+    margin-bottom: 0.4rem;
   }
-  .login {
-    color: white;
-  }
-  .button:hover {
-    background-color: #f6a823;
-    transition: 0.3s;
-  }
-  .option:hover {
-    color: gray;
-    transition: 0.3s;
-  }
-  .menu {
+  .nav-button {
     display: none;
-    position: absolute;
-    top: 1rem;
-    right: 0.5rem;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 2.25rem;
-    height: 2rem;
+    margin-bottom: 0.25rem;
   }
-  .menu span {
-    height: 0.4rem;
-    width: 100%;
-    background-color: #f37316;
-    border-radius: 0.2rem;
+  .nav-button.open {
+    display: flex;
   }
-  @media (max-width: 600px) {
-    .menu {
-      display: flex;
-    }
-    .nav {
-      flex-direction: column;
-      align-items: center;
-    }
-    .options-parent {
-      display: none;
-      flex-direction: column;
-      text-align: center;
-      margin: 0 auto;
-    }
-    .options-parent.open {
-      display: flex;
-    }
-    .option {
-      text-align: center;
-      margin-bottom: 0.4rem;
-    }
-    .button {
-      display: none;
-      margin-bottom: 0.25rem;
-    }
-    .button.open {
-      display: flex;
-    }
-    .nav-image {
-      margin-right: auto;
-    }
+  .nav-image {
+    margin-right: auto;
   }
-  
+}

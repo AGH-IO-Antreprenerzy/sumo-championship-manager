@@ -3,9 +3,9 @@ const ROUTES = {
   LOGIN: '/login',
   SEASONS: '/seasons',
   SEASONS_ADD: '/seasons/add',
-  TOURNAMENTS: "/tournaments",
-  CONTACT: "/contact",
-
+  SEASON_PAGE: '/seasons/:name',
+  TOURNAMENTS: '/tournaments',
+  CONTACT: '/contact',
 };
 
 export default ROUTES;

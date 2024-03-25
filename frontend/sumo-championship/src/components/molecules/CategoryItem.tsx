@@ -15,6 +15,7 @@ interface props {
   onEdit: () => void;
   onEditCancel: () => void;
   onDelete?: () => void;
+  showOptions?: boolean;
 }
 
 const CategoryItem: React.FC<props> = ({
@@ -28,6 +29,7 @@ const CategoryItem: React.FC<props> = ({
   onEdit,
   onEditCancel,
   onDelete,
+  showOptions,
 }) => {
   const [isEdited, setIsEdited] = useState(false);
 
@@ -57,18 +59,20 @@ const CategoryItem: React.FC<props> = ({
       <div className="field">
         {minWeight} - {maxWeight}
       </div>
-      <div className="field">
-        {isEdited ? (
-          <div className="actions">
-            <IconButton name="cross" size={16} onClick={handleCancel} />
-          </div>
-        ) : (
-          <div className="actions">
-            <IconButton name="edit" size={20} onClick={handleEdit} />
-            <IconButton name="trash" size={20} onClick={onDelete} />
-          </div>
-        )}
-      </div>
+      {showOptions && (
+        <div className="field">
+          {isEdited ? (
+            <div className="actions">
+              <IconButton name="cross" size={16} onClick={handleCancel} />
+            </div>
+          ) : (
+            <div className="actions">
+              <IconButton name="edit" size={20} onClick={handleEdit} />
+              <IconButton name="trash" size={20} onClick={onDelete} />
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

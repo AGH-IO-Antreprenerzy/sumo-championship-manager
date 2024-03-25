@@ -5,10 +5,12 @@ import ROUTES from '../routes/ROUTES';
 import api from '../api/api';
 import SeasonList from '../components/molecules/SeasonList';
 import PageSwitcher from '../components/molecules/PageSwitcher';
+import { AllSeasons } from '../api/season';
+import { Season } from '../types/Seasons';
 
-const Seasons: FunctionComponent = () => {
+const AllSeasonsPage: FunctionComponent = () => {
   const navigate = useNavigate();
-  const [seasons, setSeasons] = useState([]);
+  const [seasons, setSeasons] = useState<Season[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
 
@@ -17,7 +19,7 @@ const Seasons: FunctionComponent = () => {
   };
 
   const getSeasons = async (page: number) => {
-    const seasons = await api.getPaginated('v1/season/all', 6, {
+    const seasons = await api.getPaginated<AllSeasons>('v1/season/all', 6, {
       historical: false,
     })(page);
 
@@ -49,4 +51,4 @@ const Seasons: FunctionComponent = () => {
   );
 };
 
-export default Seasons;
+export default AllSeasonsPage;

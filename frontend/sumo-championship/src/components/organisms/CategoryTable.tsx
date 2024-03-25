@@ -5,16 +5,20 @@ import { Category } from '../../types/Seasons';
 
 type props = {
   categories: Category[];
-  onDelete: (category: Category) => void;
-  onEdit: (category: Category) => void;
-  onEditCancel: () => void;
+  showOptions?: boolean;
+  onDelete?: (category: Category) => void;
+  onEdit?: (category: Category) => void;
+  onEditCancel?: () => void;
+  style?: React.CSSProperties;
 };
 
 const CategoryTable: React.FC<props> = ({
   categories,
+  showOptions = false,
   onDelete,
   onEdit,
   onEditCancel,
+  style,
 }) => {
   const categoriesList = useMemo(() => {
     return categories.map((category, index) => {
@@ -28,20 +32,21 @@ const CategoryTable: React.FC<props> = ({
           maxWeight={category.maxWeight}
           key={index.toString()}
           onDelete={() => {
-            onEditCancel();
-            onDelete(category);
+            if (onEditCancel) onEditCancel();
+            if (onDelete) onDelete(category);
           }}
           onEdit={() => {
-            onEdit(category);
+            if (onEdit) onEdit(category);
           }}
-          onEditCancel={onEditCancel}
+          onEditCancel={() => onEditCancel && onEditCancel()}
+          showOptions={showOptions}
         />
       );
     });
-  }, [categories, onDelete, onEdit, onEditCancel]);
+  }, [categories, onDelete, onEdit, onEditCancel, showOptions]);
 
   return (
-    <div className="categoriesTable">
+    <div className="categoriesTable" style={style}>
       <div className="categoryItemHeader">
         <div
           className="headerField"
@@ -54,7 +59,7 @@ const CategoryTable: React.FC<props> = ({
         <div className="headerField">Gender</div>
         <div className="headerField">Age</div>
         <div className="headerField">Weight</div>
-        <div className="headerField">Options</div>
+        {showOptions && <div className="headerField">Options</div>}
       </div>
 
       {categories.length > 0 ? (
