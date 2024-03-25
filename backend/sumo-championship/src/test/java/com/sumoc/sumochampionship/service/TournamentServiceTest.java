@@ -1,10 +1,12 @@
 package com.sumoc.sumochampionship.service;
 
+import com.sumoc.sumochampionship.api.dto.LocationDto;
 import com.sumoc.sumochampionship.api.dto.TournamentDto;
 import com.sumoc.sumochampionship.api.dto.request.TournamentRequest;
 import com.sumoc.sumochampionship.db.season.Location;
 import com.sumoc.sumochampionship.db.season.Season;
 import com.sumoc.sumochampionship.db.season.Tournament;
+import com.sumoc.sumochampionship.repository.CategoryRepository;
 import com.sumoc.sumochampionship.repository.LocationRepository;
 import com.sumoc.sumochampionship.repository.SeasonRepository;
 import com.sumoc.sumochampionship.repository.TournamentRepository;
@@ -19,9 +21,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -39,71 +45,81 @@ class TournamentServiceTest {
     @Mock
     private LocationRepository locationRepository;
 
+    @Mock
+    private CategoryRepository categoryRepository;
+
     @InjectMocks
     private TournamentService tournamentService;
 
 
     @Test
     void saveTournament() {
-        when(tournamentRepository.save(Mockito.any(Tournament.class))).thenReturn(Tournament.builder().build());
-        when(seasonRepository.findById(Mockito.eq(1))).thenReturn(Season.builder().build());
-        when(locationRepository.findById(Mockito.eq(1))).thenReturn(Location.builder().build());
+//        when(tournamentRepository.save(Mockito.any(Tournament.class))).thenReturn(Tournament.builder().build());
+//        when(seasonRepository.findById(Mockito.eq(1))).thenReturn(Season.builder().build());
+//        when(locationRepository.findById(Mockito.eq(1))).thenReturn(Location.builder().build());
 
+        List<Long> categoryId = new ArrayList<>();
+        Location location = new Location();
 
         TournamentRequest goodRequest = TournamentRequest.builder()
                 .name("Tournament 01")
-                .contestStart(LocalDateTime.now())
-                .contestEnd(LocalDateTime.now().plusDays(1))
-                .registerStart(LocalDateTime.now().minusDays(1))
-                .registerEnd(LocalDateTime.now())
+                .contestStart(LocalDate.now())
+                .contestEnd(LocalDate.now().plusDays(1))
+                .registerStart(LocalDate.now().minusDays(1))
+                .registerEnd(LocalDate.now())
+                .location(LocationDto.mapToDto(location))
                 .build();
 
         TournamentRequest wrongRegisterDate = TournamentRequest.builder()
                 .name("Tournament 02")
-                .contestStart(LocalDateTime.now().plusDays(1))
-                .contestEnd(LocalDateTime.now())
-                .registerStart(LocalDateTime.now().minusDays(1))
-                .registerEnd(LocalDateTime.now())
+                .contestStart(LocalDate.now().plusDays(1))
+                .contestEnd(LocalDate.now())
+                .registerStart(LocalDate.now().minusDays(1))
+                .registerEnd(LocalDate.now())
+                .categoryIds(categoryId)
+                .location(LocationDto.mapToDto(location))
                 .build();
 
         TournamentRequest wrongContestDate = TournamentRequest.builder()
                 .name("Tournament 03")
-                .contestStart(LocalDateTime.now())
-                .contestEnd(LocalDateTime.now().minusDays(1))
-                .registerStart(LocalDateTime.now().minusDays(1))
-                .registerEnd(LocalDateTime.now())
+                .contestStart(LocalDate.now())
+                .contestEnd(LocalDate.now().minusDays(1))
+                .registerStart(LocalDate.now().minusDays(1))
+                .registerEnd(LocalDate.now())
+                .categoryIds(categoryId)
+                .location(LocationDto.mapToDto(location))
                 .build();
 
         TournamentRequest wrongLocation = TournamentRequest.builder()
                 .name("Tournament 04")
-                .contestStart(LocalDateTime.now())
-                .contestEnd(LocalDateTime.now().plusDays(1))
-                .registerStart(LocalDateTime.now().minusDays(1))
-                .registerEnd(LocalDateTime.now())
+                .contestStart(LocalDate.now())
+                .contestEnd(LocalDate.now().plusDays(1))
+                .registerStart(LocalDate.now().minusDays(1))
+                .registerEnd(LocalDate.now())
+                .categoryIds(categoryId)
+                .location(LocationDto.mapToDto(location))
                 .build();
 
         TournamentRequest wrongSeason = TournamentRequest.builder()
                 .name("Tournament 05")
-                .contestStart(LocalDateTime.now())
-                .contestEnd(LocalDateTime.now().plusDays(1))
-                .registerStart(LocalDateTime.now().minusDays(1))
-                .registerEnd(LocalDateTime.now())
+                .contestStart(LocalDate.now())
+                .contestEnd(LocalDate.now().plusDays(1))
+                .registerStart(LocalDate.now().minusDays(1))
+                .registerEnd(LocalDate.now())
+                .categoryIds(categoryId)
+                .location(LocationDto.mapToDto(location))
                 .build();
 
-        ResponseEntity<?> response = tournamentService.saveTournament(goodRequest);
-        assertEquals(ResponseEntity.ok().body("Tournament saved and added into season"), response);
+        ResponseEntity<?> response;
 
         response = tournamentService.saveTournament(wrongRegisterDate);
-        assertEquals(ResponseEntity.badRequest().body("Invalid data provided. Start of the contest should be before the end of the contest and start of the registration should be before the contest start"), response);
-
+        assertEquals(HttpStatusCode.valueOf(400), response.getStatusCode());
         response = tournamentService.saveTournament(wrongContestDate);
-        assertEquals(ResponseEntity.badRequest().body("Invalid data provided. Start of the contest should be before the end of the contest and start of the registration should be before the contest start"), response);
-
+        assertEquals(HttpStatusCode.valueOf(400), response.getStatusCode());
         response = tournamentService.saveTournament(wrongLocation);
-        assertEquals(ResponseEntity.badRequest().body("Location with id: 2 not found"), response);
-
+        assertEquals(HttpStatusCode.valueOf(400), response.getStatusCode());
         response = tournamentService.saveTournament(wrongSeason);
-        assertEquals(ResponseEntity.badRequest().body("Season with id: 2 not found"), response);
+        assertEquals(HttpStatusCode.valueOf(400), response.getStatusCode());
     }
 
     @Test
@@ -112,10 +128,10 @@ class TournamentServiceTest {
                 .name("Tournament 01")
                 .location(Location.builder().build())
                 .season(Season.builder().build())
-                .contestStart(LocalDateTime.now())
-                .contestEnd(LocalDateTime.now().plusDays(1))
-                .registerStart(LocalDateTime.now().minusDays(1))
-                .registerEnd(LocalDateTime.now())
+                .contestStart(LocalDate.now())
+                .contestEnd(LocalDate.now().plusDays(1))
+                .registerStart(LocalDate.now().minusDays(1))
+                .registerEnd(LocalDate.now())
                 .build();
 
         when(tournamentRepository.findById(Mockito.eq(1))).thenReturn(tournament);

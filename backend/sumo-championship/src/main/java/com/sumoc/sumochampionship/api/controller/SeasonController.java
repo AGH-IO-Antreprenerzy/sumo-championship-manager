@@ -3,6 +3,7 @@ package com.sumoc.sumochampionship.api.controller;
 import com.sumoc.sumochampionship.api.dto.SeasonDto;
 import com.sumoc.sumochampionship.api.dto.request.SeasonRequest;
 import com.sumoc.sumochampionship.api.dto.response.AllSeasonResponse;
+import com.sumoc.sumochampionship.api.dto.response.SeasonDetailsResponse;
 import com.sumoc.sumochampionship.service.SeasonService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -61,6 +62,22 @@ public class SeasonController {
 
         AllSeasonResponse allSeasonResponse = seasonService.getAllSeasons(page, pageSize, historical);
         return ResponseEntity.ok(allSeasonResponse);
+    }
+
+    /*
+    Return all information about specified season: Dates, Tournaments and Categories
+     */
+    @GetMapping("/details")
+    public ResponseEntity<SeasonDetailsResponse> getSeason(@RequestParam(name = "name") String name){
+        SeasonDetailsResponse response = null;
+
+        try{
+            response = seasonService.getSeasonDetails(name);
+        }catch (EntityNotFoundException e){
+            return ResponseEntity.badRequest().body(response);
+        }
+
+        return ResponseEntity.ok(response);
     }
 
 }
