@@ -1,0 +1,196 @@
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 30px;
+}
+
+.pageTop {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.addSeasonForm {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  column-gap: 20px;
+
+  .generalInfo {
+    flex: 1;
+  }
+
+  .categories {
+    flex: 3;
+  }
+
+  .categoriesLayout {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .gender {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .checkboxes {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .checkbox {
+    margin-right: 10px;
+  }
+}
+
+.addSeasonFormColumn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  height: 100%;
+}
+
+.categoryForm {
+  display: flex;
+  flex-direction: column;
+
+  .inputs {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 30px;
+  }
+}
+
+.categoriesTable {
+  width: 100%;
+  height: 700px;
+  overflow: scroll;
+}
+
+.minMaxField_container {
+  margin: 5px 0 10px 0;
+
+  .fields {
+    display: flex;
+    flex-direction: row;
+    column-gap: 20px;
+  }
+
+  .valueField_container {
+    margin-bottom: 0px;
+  }
+}
+
+.seasonList {
+  display: grid;
+  margin: 0 auto;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.addTournamentInformationBox {
+  display: flex;
+  flex-direction: column;
+  row-gap: 30px;
+  align-content: flex-start;
+  margin: 10px;
+  width: 30%;
+
+  .generalContainer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    column-gap: 20px;
+
+    input {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  h1 {
+    color: #f37316;
+  }
+}
+
+.seasonPage {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  align-content: flex-start;
+  margin-bottom: 20px;
+
+  .season_topPanel {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    row-gap: 20px;
+    column-gap: 20px;
+  }
+
+  .generalInfo {
+    flex: 1;
+  }
+
+  .categories {
+    flex: 3;
+  }
+
+  .season_image {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+    margin-bottom: 10px;
+  }
+}
+
+.tournamentFlexList {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.tournamentGridList {
+  display: grid;
+  margin: 0 auto;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+@media (max-width: 900px) {
+  .tournamentFlexList {
+    justify-content: center;
+  }
+}
+
+.addSeason_footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.homeContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 500px;
+  row-gap: 20px;
+}

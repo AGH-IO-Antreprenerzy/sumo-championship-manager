@@ -1,0 +1,165 @@
+.submit {
+  border-radius: 10px;
+  background-color: #f37316;
+  color: white;
+  padding: 0px 60px;
+  height: 50px;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.button {
+  border-radius: 10px;
+  background-color: #f37316;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+}
+
+.submit:hover,
+.button:hover {
+  background-color: #ff8b38;
+}
+
+.iconButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.disabledButton {
+  background-color: #ccc;
+  color: #666;
+  cursor: default;
+}
+
+.bigTitle {
+  font-size: 48px;
+  color: black;
+  font-weight: normal;
+}
+
+.title {
+  font-size: 32px;
+  color: #000;
+}
+
+.subtitle {
+  font-size: 24px;
+  color: #f37316;
+}
+
+.description {
+  font-size: 20px;
+  color: #767676;
+}
+
+.centeredText {
+  text-align: center;
+}
+
+.mb10 {
+  margin-bottom: 10px;
+}
+
+.mb20 {
+  margin-bottom: 20px;
+}
+
+.mb30 {
+  margin-bottom: 30px;
+}
+
+.mb40 {
+  margin-bottom: 40px;
+}
+
+.pageNumber {
+  font-size: 24px;
+  font-weight: bold;
+  color: #f37316;
+  width: 24px;
+  height: 24px;
+  text-align: center;
+  line-height: 24px;
+}
+
+.nonSelectable {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.checkbox {
+  font-size: 20px;
+}
+
+.checkbox > label {
+  margin-right: 5px;
+}
+
+.heading {
+  font-size: 20px;
+  color: #000;
+}
+
+.text {
+  font-size: 16px;
+  color: #000;
+  margin-bottom: 5px;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.weightBox {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+  padding: 10px;
+  height: 40px;
+  border-radius: 15px;
+  background-color: #a3a3a3;
+  color: #000;
+  border: solid black 2px;
+}
+
+.tile {
+  flex: 1;
+  background-color: white;
+  padding: 20px;
+  border-radius: 15px;
+  column-gap: 20px;
+  row-gap: 20px;
+}
+
+.detailItem {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  justify-content: space-between;
+  margin-bottom: 10px;
+
+  .left {
+    width: 100px;
+  }
+
+  .right {
+    text-align: right;
+    flex: 1;
+  }
+}
