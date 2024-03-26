@@ -28,11 +28,17 @@ const GeneralTrounamentInformation: React.FC<props> = ({
     const getSeasonNames = async () => {
       const seasons = await getAllSeasons();
       const names = seasons.seasonDtoList.map((s) => s.name);
-      setSeasonNames(names);
+
+      if (defaultSeason && names.includes(defaultSeason)) {
+        changeValues((prev) => ({ ...prev, seasonName: defaultSeason }));
+        setSeasonNames([defaultSeason]);
+      } else {
+        setSeasonNames(names);
+      }
     };
 
     getSeasonNames();
-  }, []);
+  }, [changeValues, defaultSeason]);
 
   return (
     <div className="addTournamentInformationBox">
