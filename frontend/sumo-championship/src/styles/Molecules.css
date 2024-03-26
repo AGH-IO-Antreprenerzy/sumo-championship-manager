@@ -112,7 +112,7 @@
 
 .seasonItem:hover {
   transform: scale(1.02);
-  background-color: #d9d9d9;
+  background-color: #eee;
 }
 
 .selectField {
@@ -124,13 +124,13 @@
   height: 50px;
 }
 
-.categories { 
+.categories {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   row-gap: 10px;
 
-  .generalContainer{
+  .generalContainer {
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -179,4 +179,5 @@
 
 .tournamentItem:hover {
   transform: scale(1.02);
+  background-color: #eee;
 }

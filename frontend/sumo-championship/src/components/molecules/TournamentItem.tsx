@@ -8,6 +8,7 @@ type props = {
   location: string;
   registrationDate: string;
   onClick?: () => void;
+  usedOnGrid?: boolean;
 };
 
 const TournamentItem: React.FC<props> = ({
@@ -16,6 +17,7 @@ const TournamentItem: React.FC<props> = ({
   location,
   registrationDate,
   onClick,
+  usedOnGrid = false,
 }) => {
   const tournamentDate = new Date(date);
   const registrationStartDate = new Date(registrationDate);
@@ -32,7 +34,18 @@ const TournamentItem: React.FC<props> = ({
   };
 
   return (
-    <div className="tournamentItem" onClick={onClick}>
+    <div
+      className="tournamentItem"
+      onClick={onClick}
+      style={
+        usedOnGrid
+          ? {
+              maxWidth: '100%',
+              minWidth: '300px',
+            }
+          : {}
+      }
+    >
       <img
         src={require('./../../assets/images/tournamentPlaceholder.png')}
         alt="Season preview image"

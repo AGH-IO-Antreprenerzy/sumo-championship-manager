@@ -15,4 +15,6 @@ public interface TournamentRepository extends JpaRepository<Tournament, Long> {
     Tournament findById(Integer id);
     List<Tournament> findAllBySeason(Season season);
     List<Tournament> findAllBySeasonName(String seasonName);
+
+    Page<Tournament> findAllByContestEndAfter(LocalDate date, Pageable pageable);
 }

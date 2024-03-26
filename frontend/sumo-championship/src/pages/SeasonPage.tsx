@@ -1,14 +1,17 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Tile from '../components/Atoms/Tile';
 import DetailItem from '../components/Atoms/DetailItem';
 import api from '../api/api';
 import { DetailedSeason } from '../types/Seasons';
 import { isDateBetween } from '../utils/dateUtils';
 import CategoryTable from '../components/organisms/CategoryTable';
-import TournamentList from '../components/molecules/TournamentsList';
+import TournamentList from '../components/molecules/TournamentList';
+import Button from '../components/Atoms/Button';
+import ROUTES from '../routes/ROUTES';
 
 const SeasonPage: React.FC = () => {
+  const navigate = useNavigate();
   const { name } = useParams();
   const [seasonInfo, setSeasonInfo] = useState<DetailedSeason | null>(null);
 
@@ -22,6 +25,10 @@ const SeasonPage: React.FC = () => {
       setSeasonInfo(null);
     }
   }, [name]);
+
+  const handleAddTournament = () => {
+    navigate(ROUTES.TOURNAMENTS_ADD_TO_SEASON.replace(':name', name ?? ''));
+  };
 
   useEffect(() => {
     getSeasonInfo();
@@ -62,7 +69,10 @@ const SeasonPage: React.FC = () => {
       </div>
       <div className="season_bottomPanel">
         <Tile>
-          <p className="subtitle mb20">Tournaments</p>
+          <div className="pageTop">
+            <p className="subtitle mb20">Tournaments:</p>
+            <Button value="Add Tournament +" onClick={handleAddTournament} />
+          </div>
           <TournamentList tournaments={seasonInfo?.tournaments || []} />
         </Tile>
       </div>

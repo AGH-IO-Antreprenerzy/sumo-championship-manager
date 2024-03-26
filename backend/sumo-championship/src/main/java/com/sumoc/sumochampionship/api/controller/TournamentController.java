@@ -2,6 +2,7 @@ package com.sumoc.sumochampionship.api.controller;
 
 import com.sumoc.sumochampionship.api.dto.TournamentDto;
 import com.sumoc.sumochampionship.api.dto.request.TournamentRequest;
+import com.sumoc.sumochampionship.api.dto.response.AllTournamentsResponse;
 import com.sumoc.sumochampionship.service.TournamentService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -42,6 +43,16 @@ public class TournamentController {
         }catch (EntityNotFoundException e){
             return ResponseEntity.badRequest().body(response);
         }
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<AllTournamentsResponse> getAllTournaments(
+            @RequestParam(defaultValue = "0", required = false, name = "page") int page,
+            @RequestParam(defaultValue = "10", required = false, name = "pageSize") int pageSize,
+            @RequestParam(defaultValue = "false", required = false, name = "onlyActive") boolean onlyActive
+    ){
+        AllTournamentsResponse response = tournamentService.getAllTournaments(page, pageSize, onlyActive);
         return ResponseEntity.ok(response);
     }
 }

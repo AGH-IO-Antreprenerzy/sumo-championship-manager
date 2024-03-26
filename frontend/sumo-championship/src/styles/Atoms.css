@@ -45,6 +45,12 @@
   cursor: default;
 }
 
+.bigTitle {
+  font-size: 48px;
+  color: black;
+  font-weight: normal;
+}
+
 .title {
   font-size: 32px;
   color: #000;
@@ -74,6 +80,10 @@
 
 .mb30 {
   margin-bottom: 30px;
+}
+
+.mb40 {
+  margin-bottom: 40px;
 }
 
 .pageNumber {
@@ -123,7 +133,7 @@
   padding: 10px;
   height: 40px;
   border-radius: 15px;
-  background-color: #A3A3A3;
+  background-color: #a3a3a3;
   color: #000;
   border: solid black 2px;
 }
