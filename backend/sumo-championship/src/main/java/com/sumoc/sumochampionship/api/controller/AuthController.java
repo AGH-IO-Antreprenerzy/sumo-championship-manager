@@ -1,16 +1,13 @@
 package com.sumoc.sumochampionship.api.controller;
 
-import com.sumoc.sumochampionship.api.dto.LoginDto;
-import com.sumoc.sumochampionship.api.dto.response.WebsiteUserResponse;
-import com.sumoc.sumochampionship.db.people.WebsiteUser;
+import com.sumoc.sumochampionship.api.dto.websiteuser.LoginDto;
+import com.sumoc.sumochampionship.api.dto.websiteuser.WebsiteUserResponse;
 import com.sumoc.sumochampionship.repository.WebsiteUserRepository;
 import com.sumoc.sumochampionship.service.CustomUserDetailsService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.CachingUserDetailsService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;

@@ -1,7 +1,7 @@
 package com.sumoc.sumochampionship.api.controller;
 
-import com.sumoc.sumochampionship.api.dto.CategoryDto;
-import com.sumoc.sumochampionship.api.dto.response.CategoriesResponse;
+import com.sumoc.sumochampionship.api.dto.category.CategoryDto;
+import com.sumoc.sumochampionship.api.dto.category.CategoriesResponse;
 import com.sumoc.sumochampionship.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

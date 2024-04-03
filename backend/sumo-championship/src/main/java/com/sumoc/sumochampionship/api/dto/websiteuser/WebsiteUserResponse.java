@@ -1,4 +1,4 @@
-package com.sumoc.sumochampionship.api.dto.response;
+package com.sumoc.sumochampionship.api.dto.websiteuser;
 
 import com.sumoc.sumochampionship.db.people.UserRole;
 import lombok.AllArgsConstructor;

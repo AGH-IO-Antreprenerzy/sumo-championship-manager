@@ -1,6 +1,6 @@
 package com.sumoc.sumochampionship.service;
 
-import com.sumoc.sumochampionship.api.dto.response.WebsiteUserResponse;
+import com.sumoc.sumochampionship.api.dto.websiteuser.WebsiteUserResponse;
 import com.sumoc.sumochampionship.repository.WebsiteUserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

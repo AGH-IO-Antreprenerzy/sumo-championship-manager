@@ -1,6 +1,6 @@
 package com.sumoc.sumochampionship.service;
 
-import com.sumoc.sumochampionship.api.dto.response.WrestlersResponse;
+import com.sumoc.sumochampionship.api.dto.wrestler.WrestlersResponse;
 import com.sumoc.sumochampionship.db.people.Club;
 import com.sumoc.sumochampionship.db.people.Gender;
 import com.sumoc.sumochampionship.db.people.WebsiteUser;

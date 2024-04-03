@@ -1,4 +1,4 @@
-package com.sumoc.sumochampionship.api.dto;
+package com.sumoc.sumochampionship.api.dto.websiteuser;
 
 import lombok.Data;
 

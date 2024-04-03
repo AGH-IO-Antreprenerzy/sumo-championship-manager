@@ -1,11 +1,11 @@
 package com.sumoc.sumochampionship.service;
 
-import com.sumoc.sumochampionship.api.dto.CategoryDto;
-import com.sumoc.sumochampionship.api.dto.LocationDto;
-import com.sumoc.sumochampionship.api.dto.SeasonDto;
-import com.sumoc.sumochampionship.api.dto.TournamentDto;
-import com.sumoc.sumochampionship.api.dto.request.TournamentRequest;
-import com.sumoc.sumochampionship.api.dto.response.AllTournamentsResponse;
+import com.sumoc.sumochampionship.api.dto.category.CategoryDto;
+import com.sumoc.sumochampionship.api.dto.tournament.LocationDto;
+import com.sumoc.sumochampionship.api.dto.season.SeasonDto;
+import com.sumoc.sumochampionship.api.dto.tournament.TournamentDto;
+import com.sumoc.sumochampionship.api.dto.tournament.TournamentRequest;
+import com.sumoc.sumochampionship.api.dto.tournament.AllTournamentsResponse;
 import com.sumoc.sumochampionship.db.season.Category;
 import com.sumoc.sumochampionship.db.season.Location;
 import com.sumoc.sumochampionship.db.season.Season;
@@ -26,7 +26,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service

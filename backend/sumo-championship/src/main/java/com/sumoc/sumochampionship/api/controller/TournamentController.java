@@ -1,8 +1,8 @@
 package com.sumoc.sumochampionship.api.controller;
 
-import com.sumoc.sumochampionship.api.dto.TournamentDto;
-import com.sumoc.sumochampionship.api.dto.request.TournamentRequest;
-import com.sumoc.sumochampionship.api.dto.response.AllTournamentsResponse;
+import com.sumoc.sumochampionship.api.dto.tournament.TournamentDto;
+import com.sumoc.sumochampionship.api.dto.tournament.TournamentRequest;
+import com.sumoc.sumochampionship.api.dto.tournament.AllTournamentsResponse;
 import com.sumoc.sumochampionship.service.TournamentService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
