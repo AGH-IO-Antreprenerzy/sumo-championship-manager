@@ -1,12 +1,12 @@
 package com.sumoc.sumochampionship.service;
 
 import com.sumoc.sumochampionship.api.dto.category.CategoryDto;
-import com.sumoc.sumochampionship.api.dto.season.SeasonDto;
+import com.sumoc.sumochampionship.api.dto.category.CategoryRequest2;
+import com.sumoc.sumochampionship.api.dto.category.helpers.WeightDetailsRequest;
+import com.sumoc.sumochampionship.api.dto.season.*;
 import com.sumoc.sumochampionship.api.dto.tournament.TournamentDto;
 import com.sumoc.sumochampionship.api.dto.category.CategoryRequest;
-import com.sumoc.sumochampionship.api.dto.season.SeasonRequest;
-import com.sumoc.sumochampionship.api.dto.season.AllSeasonResponse;
-import com.sumoc.sumochampionship.api.dto.season.SeasonDetailsResponse;
+import com.sumoc.sumochampionship.db.people.Gender;
 import com.sumoc.sumochampionship.db.season.Category;
 import com.sumoc.sumochampionship.db.season.Season;
 import com.sumoc.sumochampionship.db.season.Tournament;
@@ -24,6 +24,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -208,6 +210,83 @@ public class SeasonService {
         return categoryRequests.stream().map(CategoryRequest::fromRequest).collect(Collectors.toSet());
 
     }
+
+
+    //--------------------------------API VERSION 2--------------------------------//
+
+    public String saveSeason(SeasonRequest2 seasonRequest){
+        List<CategoryRequest2> categoryRequests = seasonRequest.getAgeCategories();
+
+        // Check logic constraints
+        if (!checkWeights(categoryRequests)){
+            return "Error! Provided gender-weight information not matched. Provide the same number of genders and " +
+                    "weights. Every weight should be greater than zero";
+        }
+
+        // Build season and Categories
+        Season season = Season.builder()
+                .name(seasonRequest.getName())
+                .endDate(seasonRequest.getEndDate())
+                .startDate(seasonRequest.getStartDate())
+                .build();
+        List<Category> categories = buildCategoriesFromRequest(categoryRequests);
+
+        if (!saveSeason(season, new HashSet<>(categories))){
+            return "Error! Server can not save season due to problem with database connection";
+        }
+
+        return "Season and Categories saved";
+
+    }
+
+
+    /*
+    Check if there number of provided genders is the same as maxWeights
+    Also check all maxWeights are greater than 0
+     */
+    private boolean checkWeights(List<CategoryRequest2> categoryRequests){
+        for(CategoryRequest2 categoryRequest: categoryRequests) {
+            List<Gender> genders = categoryRequest.getWeightsAndGender().getGenderList();
+            List<Integer> weights = categoryRequest.getWeightsAndGender().getMaxWeights();
+
+            if (genders.size() != weights.size()) {
+                return false;
+            }
+
+            for (int i = 0; i < genders.size(); i++) {
+                if (weights.get(i) < 0) return false;
+            }
+        }
+
+        return true;
+    }
+
+    /*
+    Create Category from provided user data
+     */
+    private List<Category> buildCategoriesFromRequest(List<CategoryRequest2> categoryRequests){
+        List<Category> allCategories = new ArrayList<>();
+        for(CategoryRequest2 categoryRequest : categoryRequests){
+            List<Gender> genders = categoryRequest.getWeightsAndGender().getGenderList();
+            List<Integer> weights = categoryRequest.getWeightsAndGender().getMaxWeights();
+
+            // After checking we know that there is the same number of genders and weights
+            for(int i = 0; i < genders.size(); i++){
+                Category category = Category.builder()
+                        .gender(genders.get(i))
+                        .maxWeight(weights.get(i))
+                        .minWeight(1) // Min weights MUST be provided for integration to system. TODO: Delete this
+                        .maxAge(categoryRequest.getMaxAge())
+                        .minAge(categoryRequest.getMinAge())
+                        .name(categoryRequest.getAgeName())
+                        .build();
+                allCategories.add(category);
+            }
+        }
+        return allCategories;
+    }
+
+
 
 
 }

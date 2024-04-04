@@ -1,4 +1,4 @@
-package com.sumoc.sumochampionship.api.controller;
+package com.sumoc.sumochampionship.api.controller.v1;
 
 import com.sumoc.sumochampionship.api.dto.tournament.TournamentDto;
 import com.sumoc.sumochampionship.api.dto.tournament.TournamentRequest;

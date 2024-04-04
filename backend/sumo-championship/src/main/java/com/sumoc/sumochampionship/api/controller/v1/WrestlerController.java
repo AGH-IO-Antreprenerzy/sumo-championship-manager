@@ -1,4 +1,4 @@
-package com.sumoc.sumochampionship.api.controller;
+package com.sumoc.sumochampionship.api.controller.v1;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
