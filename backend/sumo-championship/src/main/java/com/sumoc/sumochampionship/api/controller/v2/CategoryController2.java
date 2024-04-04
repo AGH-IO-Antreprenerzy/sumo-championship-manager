@@ -1,12 +1,10 @@
 package com.sumoc.sumochampionship.api.controller.v2;
 
+import com.sumoc.sumochampionship.api.dto.category.CategoriesResponse2;
 import com.sumoc.sumochampionship.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,9 +20,13 @@ public class CategoryController2 {
 
     final private CategoryService categoryService;
 
-//    @GetMapping("/to-season")
-//    public ResponseEntity<List<CategoryController2>> getCategoriesToSeason(String seasonName){
-//
-//    }
+    @GetMapping("/to-season")
+    public ResponseEntity<CategoriesResponse2> getCategoriesToSeason(
+            @RequestParam(required = true, name="season") String season,
+            @RequestParam(required = false, defaultValue = "0", name="page") int page,
+            @RequestParam(required = false, defaultValue = "100", name = "size") int pageSize){
+
+        return ResponseEntity.ok(categoryService.getAllCategoriesToSeason(season, page, pageSize));
+    }
 
 }
