@@ -45,7 +45,6 @@ public class Category {
     private Season season;
 
     // Categories for a given tournament
-    // Changed from ManyToMany to ManyToOne
     @ManyToMany
     private List<Tournament> tournament;
 
