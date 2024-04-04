@@ -1,5 +1,6 @@
 package com.sumoc.sumochampionship.service;
 
+import com.sumoc.sumochampionship.api.dto.category.CategoriesResponse2;
 import com.sumoc.sumochampionship.api.dto.category.CategoryDto;
 import com.sumoc.sumochampionship.api.dto.category.CategoriesResponse;
 import com.sumoc.sumochampionship.db.season.Category;
@@ -47,5 +48,16 @@ public class CategoryService {
         return categories.stream().map(CategoryDto::toDto).toList();
 
     }
+
+    //-----------------------------API VERSION 2-----------------------------//
+
+//    public CategoriesResponse2 getAllCategoriesToSeason(String name, int page, int pageSize){
+//        Pageable pageable = PageRequest.of(page, pageSize);
+//        Page<Category> categoryPage = categoryRepository.findCategoriesBySeasonName(name, pageable);
+//
+//        List<Category> categories = categoryPage.getContent();
+//
+//    }
+
 
 }

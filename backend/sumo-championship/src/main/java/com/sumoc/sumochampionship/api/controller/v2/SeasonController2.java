@@ -3,7 +3,6 @@ package com.sumoc.sumochampionship.api.controller.v2;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.sumoc.sumochampionship.api.dto.category.CategoryRequest2;
 import com.sumoc.sumochampionship.api.dto.season.SeasonRequest2;
 import com.sumoc.sumochampionship.service.SeasonService;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +24,7 @@ public class SeasonController2 {
 
     @PostMapping("/add")
     public ResponseEntity<JsonNode> addSeason(@RequestBody SeasonRequest2 seasonRequest){
+        System.out.println("Strat Adding Season");
         String response = seasonService.saveSeason(seasonRequest);
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode json = objectMapper.createObjectNode();

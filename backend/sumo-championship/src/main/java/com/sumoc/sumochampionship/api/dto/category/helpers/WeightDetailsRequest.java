@@ -11,6 +11,6 @@ import java.util.List;
 @Builder
 public class WeightDetailsRequest {
 
-    private List<Integer> maxWeights;
-    private List<Gender> genderList;
+    private Integer maxWeight;
+    private Gender gender;
 }

@@ -1,7 +1,7 @@
 package com.sumoc.sumochampionship.service;
 
 import com.sumoc.sumochampionship.api.dto.category.CategoryDto;
-import com.sumoc.sumochampionship.api.dto.category.CategoryRequest2;
+import com.sumoc.sumochampionship.api.dto.category.CategoryDto2;
 import com.sumoc.sumochampionship.api.dto.category.helpers.WeightDetailsRequest;
 import com.sumoc.sumochampionship.api.dto.season.*;
 import com.sumoc.sumochampionship.api.dto.tournament.TournamentDto;
@@ -215,7 +215,7 @@ public class SeasonService {
     //--------------------------------API VERSION 2--------------------------------//
 
     public String saveSeason(SeasonRequest2 seasonRequest){
-        List<CategoryRequest2> categoryRequests = seasonRequest.getAgeCategories();
+        List<CategoryDto2> categoryRequests = seasonRequest.getAgeCategories();
 
         // Check logic constraints
         if (!checkWeights(categoryRequests)){
@@ -244,17 +244,12 @@ public class SeasonService {
     Check if there number of provided genders is the same as maxWeights
     Also check all maxWeights are greater than 0
      */
-    private boolean checkWeights(List<CategoryRequest2> categoryRequests){
-        for(CategoryRequest2 categoryRequest: categoryRequests) {
-            List<Gender> genders = categoryRequest.getWeightsAndGender().getGenderList();
-            List<Integer> weights = categoryRequest.getWeightsAndGender().getMaxWeights();
+    private boolean checkWeights(List<CategoryDto2> categoryRequests){
+        for(CategoryDto2 categoryRequest: categoryRequests) {
+            List<WeightDetailsRequest> weights = categoryRequest.getWeightsAndGender();
 
-            if (genders.size() != weights.size()) {
-                return false;
-            }
-
-            for (int i = 0; i < genders.size(); i++) {
-                if (weights.get(i) < 0) return false;
+            for (int i = 0; i < weights.size(); i++) {
+                if (weights.get(i).getMaxWeight() < 0) return false;
             }
         }
 
@@ -264,17 +259,16 @@ public class SeasonService {
     /*
     Create Category from provided user data
      */
-    private List<Category> buildCategoriesFromRequest(List<CategoryRequest2> categoryRequests){
+    private List<Category> buildCategoriesFromRequest(List<CategoryDto2> categoryRequests){
         List<Category> allCategories = new ArrayList<>();
-        for(CategoryRequest2 categoryRequest : categoryRequests){
-            List<Gender> genders = categoryRequest.getWeightsAndGender().getGenderList();
-            List<Integer> weights = categoryRequest.getWeightsAndGender().getMaxWeights();
+        for(CategoryDto2 categoryRequest : categoryRequests){
+            List<WeightDetailsRequest> weightsAndGender = categoryRequest.getWeightsAndGender();
 
             // After checking we know that there is the same number of genders and weights
-            for(int i = 0; i < genders.size(); i++){
+            for(int i = 0; i < weightsAndGender.size(); i++){
                 Category category = Category.builder()
-                        .gender(genders.get(i))
-                        .maxWeight(weights.get(i))
+                        .gender(weightsAndGender.get(i).getGender())
+                        .maxWeight(weightsAndGender.get(i).getMaxWeight())
                         .minWeight(1) // Min weights MUST be provided for integration to system. TODO: Delete this
                         .maxAge(categoryRequest.getMaxAge())
                         .minAge(categoryRequest.getMinAge())
