@@ -1,7 +1,10 @@
 package com.sumoc.sumochampionship.api.dto.wrestler;
 
+import com.sumoc.sumochampionship.api.dto.enrollment.EnrollDto;
+import com.sumoc.sumochampionship.api.dto.tournament.TournamentDto;
 import com.sumoc.sumochampionship.db.people.Gender;
 import com.sumoc.sumochampionship.db.people.Wrestler;
+import com.sumoc.sumochampionship.db.season.Category;
 import com.sumoc.sumochampionship.db.season.Tournament;
 import com.sumoc.sumochampionship.db.season.WrestlersEnrollment;
 import lombok.AllArgsConstructor;
@@ -10,8 +13,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -24,12 +30,24 @@ public class WrestlerDetails {
     private Gender gender;
     private LocalDate birthday;
     private Long clubId;
-    private List<Long> tournamentIds;
+    private List<EnrollDto> enrollments;
 
-    public static WrestlerDetails mapToDto(Wrestler wrestler){
-        Set<WrestlersEnrollment> enrollments = wrestler.getEnrollments();
-        List<Tournament> tournaments =  enrollments.stream().map(WrestlersEnrollment::getTournament).toList();
-        List<Long> tournamentsIds = tournaments.stream().map(Tournament::getId).toList();
+    public static WrestlerDetails mapToDto(Wrestler wrestler, List<WrestlersEnrollment> enrollments){
+        HashMap<Tournament, List<Category>> categoriesToTournament = new HashMap<>();
+
+        for (WrestlersEnrollment enrollment: enrollments){
+            Tournament tournament = enrollment.getTournament();
+            Category category = enrollment.getCategory();
+
+            categoriesToTournament.computeIfAbsent(tournament, k -> new ArrayList<Category>());
+
+            categoriesToTournament.get(tournament).add(category);
+        }
+
+        List<EnrollDto> enrollDtos = new ArrayList<>();
+        for(Tournament tournament: categoriesToTournament.keySet()){
+            enrollDtos.add(EnrollDto.mapToDto(tournament,categoriesToTournament.get(tournament)));
+        }
 
         return WrestlerDetails.builder()
                 .id(wrestler.getId())
@@ -38,7 +56,7 @@ public class WrestlerDetails {
                 .gender(wrestler.getGender())
                 .birthday(wrestler.getBirthday())
                 .clubId(wrestler.getClub().getId())
-                .tournamentIds(tournamentsIds)
+                .enrollments(enrollDtos)
                 .build();
     }
 

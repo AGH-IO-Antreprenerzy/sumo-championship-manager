@@ -7,7 +7,9 @@ import com.sumoc.sumochampionship.api.dto.wrestler.WrestlersResponse;
 import com.sumoc.sumochampionship.db.people.Club;
 import com.sumoc.sumochampionship.db.people.WebsiteUser;
 import com.sumoc.sumochampionship.db.people.Wrestler;
+import com.sumoc.sumochampionship.db.season.WrestlersEnrollment;
 import com.sumoc.sumochampionship.repository.ClubRepository;
+import com.sumoc.sumochampionship.repository.WrestlerEnrollmentRepository;
 import com.sumoc.sumochampionship.repository.WrestlerRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -28,6 +31,7 @@ import java.util.Set;
 public class WrestlerService {
     private final WrestlerRepository wrestlerRepository;
     private final ClubRepository clubRepository;
+    private final WrestlerEnrollmentRepository wrestlerEnrollmentRepository;
 
     /*
     Using Repository collect all Wrestlers belong to WebsiteUser(Trainer)
@@ -95,7 +99,34 @@ public class WrestlerService {
             throw  new EntityNotFoundException("Wrestler with id = " + id + " is not found");
         }
 
-        return WrestlerDetails.mapToDto(wrestler.get());
+        List<WrestlersEnrollment> enrollments = wrestlerEnrollmentRepository
+                .findAllByWrestlerAndTournament_ContestEndAfter(wrestler.get(), LocalDate.now());
+
+        return WrestlerDetails.mapToDto(wrestler.get(), enrollments);
+    }
+
+    public String modifyWrestler(Long id, WrestlerRequest wrestlerRequest){
+        Optional<Wrestler> wrestlerOptional = wrestlerRepository.findById(id);
+
+        if (wrestlerOptional.isEmpty()){
+            return "Error! Not find wrestler with id = " + id;
+        }
+        Wrestler wrestler = wrestlerOptional.get();
+
+        if (!wrestler.getClub().getId().equals(wrestlerRequest.getClubId())){
+            Optional<Club> clubOptional = clubRepository.findById(wrestlerRequest.getClubId());
+
+            if (clubOptional.isEmpty()) return "Error! Club with id = " + wrestlerRequest.getClubId() +" does not exists";
+            wrestler.setClub(clubOptional.get());
+        }
+
+        wrestler.setLastname(wrestlerRequest.getLastname());
+        wrestler.setFirstname(wrestlerRequest.getFirstname());
+        wrestler.setGender(wrestlerRequest.getGender());
+        wrestler.setBirthday(wrestlerRequest.getBirthday());
+        wrestlerRepository.save(wrestler);
+        return "Success! Wrestler modified";
+
     }
 
 }

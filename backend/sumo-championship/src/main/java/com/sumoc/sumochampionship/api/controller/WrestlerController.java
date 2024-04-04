@@ -79,5 +79,18 @@ public class WrestlerController {
         return ResponseEntity.ok(wrestlerDetails);
     }
 
+    @PutMapping("/modify")
+    public ResponseEntity<JsonNode> modifyWrestler(@RequestParam Long id,
+                                                   @RequestBody WrestlerRequest wrestlerRequest){
+        String response = wrestlerService.modifyWrestler(id, wrestlerRequest);
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode json = objectMapper.createObjectNode();
+        json.put("response", response);
+
+        if (response.startsWith("Error!")){
+            return ResponseEntity.badRequest().body(json);
+        }
+        return ResponseEntity.ok(json);
+    }
 
 }

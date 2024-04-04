@@ -36,13 +36,13 @@ public class TournamentService {
     private final CategoryRepository categoryRepository;
 
     public ResponseEntity<String> saveTournament(TournamentRequest tournamentRequest) {
-        System.out.println("Start service");
+
         Tournament tournament;
         Set<Category> categories = getCategoriesFromRequest(tournamentRequest);
-        System.out.println("Got categories");
+
         try {
             tournament = getTournamentFromRequest(tournamentRequest);
-            System.out.println("Tournament got");
+
         } catch (EntityNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -118,10 +118,13 @@ public class TournamentService {
             // Save location
             locationRepository.save(tournament.getLocation());
 
-            // Not need to save categories because they are already saved
-
             // Save Tournament
             tournamentRepository.save(tournament);
+            // TODO: Is it nessesary
+//            for(Category category: tournament.getCategories()){
+//                category.setTournament(tournament);
+//                categoryRepository.save(category);
+//            }
 
             return true;
         } catch (DataAccessException e) {
