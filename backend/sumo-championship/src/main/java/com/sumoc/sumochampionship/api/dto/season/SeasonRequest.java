@@ -1,7 +1,7 @@
-package com.sumoc.sumochampionship.api.dto.request;
+package com.sumoc.sumochampionship.api.dto.season;
 
 
-import com.sumoc.sumochampionship.api.dto.CategoryDto;
+import com.sumoc.sumochampionship.api.dto.category.CategoryRequest;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

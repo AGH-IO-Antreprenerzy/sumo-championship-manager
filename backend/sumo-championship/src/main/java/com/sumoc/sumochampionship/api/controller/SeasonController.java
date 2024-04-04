@@ -1,9 +1,9 @@
 package com.sumoc.sumochampionship.api.controller;
 
-import com.sumoc.sumochampionship.api.dto.SeasonDto;
-import com.sumoc.sumochampionship.api.dto.request.SeasonRequest;
-import com.sumoc.sumochampionship.api.dto.response.AllSeasonResponse;
-import com.sumoc.sumochampionship.api.dto.response.SeasonDetailsResponse;
+import com.sumoc.sumochampionship.api.dto.season.SeasonDto;
+import com.sumoc.sumochampionship.api.dto.season.SeasonRequest;
+import com.sumoc.sumochampionship.api.dto.season.AllSeasonResponse;
+import com.sumoc.sumochampionship.api.dto.season.SeasonDetailsResponse;
 import com.sumoc.sumochampionship.service.SeasonService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,6 @@
-package com.sumoc.sumochampionship.api.dto;
+package com.sumoc.sumochampionship.api.dto.tournament;
 
-import com.sumoc.sumochampionship.db.season.Location;
-import com.sumoc.sumochampionship.db.season.Season;
+import com.sumoc.sumochampionship.api.dto.season.SeasonDto;
 import com.sumoc.sumochampionship.db.season.Tournament;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +8,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor

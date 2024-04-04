@@ -1,8 +1,8 @@
 package com.sumoc.sumochampionship.service;
 
-import com.sumoc.sumochampionship.api.dto.LocationDto;
-import com.sumoc.sumochampionship.api.dto.TournamentDto;
-import com.sumoc.sumochampionship.api.dto.request.TournamentRequest;
+import com.sumoc.sumochampionship.api.dto.tournament.LocationDto;
+import com.sumoc.sumochampionship.api.dto.tournament.TournamentDto;
+import com.sumoc.sumochampionship.api.dto.tournament.TournamentRequest;
 import com.sumoc.sumochampionship.db.season.Location;
 import com.sumoc.sumochampionship.db.season.Season;
 import com.sumoc.sumochampionship.db.season.Tournament;
@@ -10,22 +10,16 @@ import com.sumoc.sumochampionship.repository.CategoryRepository;
 import com.sumoc.sumochampionship.repository.LocationRepository;
 import com.sumoc.sumochampionship.repository.SeasonRepository;
 import com.sumoc.sumochampionship.repository.TournamentRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

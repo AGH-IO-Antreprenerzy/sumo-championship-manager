@@ -1,11 +1,11 @@
 package com.sumoc.sumochampionship.service;
 
-import com.sumoc.sumochampionship.api.dto.CategoryDto;
-import com.sumoc.sumochampionship.api.dto.LocationDto;
-import com.sumoc.sumochampionship.api.dto.SeasonDto;
-import com.sumoc.sumochampionship.api.dto.TournamentDto;
-import com.sumoc.sumochampionship.api.dto.request.TournamentRequest;
-import com.sumoc.sumochampionship.api.dto.response.AllTournamentsResponse;
+import com.sumoc.sumochampionship.api.dto.category.CategoryDto;
+import com.sumoc.sumochampionship.api.dto.tournament.LocationDto;
+import com.sumoc.sumochampionship.api.dto.season.SeasonDto;
+import com.sumoc.sumochampionship.api.dto.tournament.TournamentDto;
+import com.sumoc.sumochampionship.api.dto.tournament.TournamentRequest;
+import com.sumoc.sumochampionship.api.dto.tournament.AllTournamentsResponse;
 import com.sumoc.sumochampionship.db.season.Category;
 import com.sumoc.sumochampionship.db.season.Location;
 import com.sumoc.sumochampionship.db.season.Season;
@@ -26,7 +26,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -37,13 +36,13 @@ public class TournamentService {
     private final CategoryRepository categoryRepository;
 
     public ResponseEntity<String> saveTournament(TournamentRequest tournamentRequest) {
-        System.out.println("Start service");
+
         Tournament tournament;
         Set<Category> categories = getCategoriesFromRequest(tournamentRequest);
-        System.out.println("Got categories");
+
         try {
             tournament = getTournamentFromRequest(tournamentRequest);
-            System.out.println("Tournament got");
+
         } catch (EntityNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -119,10 +118,13 @@ public class TournamentService {
             // Save location
             locationRepository.save(tournament.getLocation());
 
-            // Not need to save categories because they are already saved
-
             // Save Tournament
             tournamentRepository.save(tournament);
+            // TODO: Is it nessesary
+//            for(Category category: tournament.getCategories()){
+//                category.setTournament(tournament);
+//                categoryRepository.save(category);
+//            }
 
             return true;
         } catch (DataAccessException e) {

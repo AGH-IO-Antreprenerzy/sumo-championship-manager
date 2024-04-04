@@ -1,4 +1,4 @@
-package com.sumoc.sumochampionship.api.dto;
+package com.sumoc.sumochampionship.api.dto.tournament;
 
 import com.sumoc.sumochampionship.db.season.Location;
 import lombok.AllArgsConstructor;

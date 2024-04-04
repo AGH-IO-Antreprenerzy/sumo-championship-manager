@@ -1,7 +1,7 @@
-package com.sumoc.sumochampionship.api.dto.response;
+package com.sumoc.sumochampionship.api.dto.season;
 
-import com.sumoc.sumochampionship.api.dto.CategoryDto;
-import com.sumoc.sumochampionship.api.dto.TournamentDto;
+import com.sumoc.sumochampionship.api.dto.category.CategoryDto;
+import com.sumoc.sumochampionship.api.dto.tournament.TournamentDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

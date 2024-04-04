@@ -1,4 +1,4 @@
-package com.sumoc.sumochampionship.api.dto;
+package com.sumoc.sumochampionship.api.dto.category;
 
 import com.sumoc.sumochampionship.db.people.Gender;
 import com.sumoc.sumochampionship.db.season.Category;

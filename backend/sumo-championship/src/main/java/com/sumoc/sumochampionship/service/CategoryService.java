@@ -1,7 +1,7 @@
 package com.sumoc.sumochampionship.service;
 
-import com.sumoc.sumochampionship.api.dto.CategoryDto;
-import com.sumoc.sumochampionship.api.dto.response.CategoriesResponse;
+import com.sumoc.sumochampionship.api.dto.category.CategoryDto;
+import com.sumoc.sumochampionship.api.dto.category.CategoriesResponse;
 import com.sumoc.sumochampionship.db.season.Category;
 import com.sumoc.sumochampionship.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;

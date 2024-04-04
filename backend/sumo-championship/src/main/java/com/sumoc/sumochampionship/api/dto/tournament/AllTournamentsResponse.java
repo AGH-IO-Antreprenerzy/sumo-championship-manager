@@ -1,6 +1,6 @@
-package com.sumoc.sumochampionship.api.dto.response;
+package com.sumoc.sumochampionship.api.dto.tournament;
 
-import com.sumoc.sumochampionship.api.dto.SeasonDto;
+import com.sumoc.sumochampionship.api.dto.tournament.TournamentDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,8 +11,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class AllSeasonResponse {
-    List<SeasonDto> seasonDtoList;
+public class AllTournamentsResponse {
+    List<TournamentDto> tournamentDtoList;
     private int pageNo;
     private int pageSize;
     private int totalPages;

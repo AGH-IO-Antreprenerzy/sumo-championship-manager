@@ -1,6 +1,6 @@
-package com.sumoc.sumochampionship.api.dto.response;
+package com.sumoc.sumochampionship.api.dto.wrestler;
 
-import com.sumoc.sumochampionship.api.dto.WrestlersDto;
+import com.sumoc.sumochampionship.api.dto.wrestler.WrestlersDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
