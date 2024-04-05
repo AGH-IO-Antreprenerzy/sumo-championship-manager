@@ -46,6 +46,7 @@ public class SecurityConfig {
                                 .requestMatchers("/api/v1/auth/**").permitAll()
 //                                .requestMatchers("/api/v1/season/add").hasRole("ADMIN")
                                 .requestMatchers("/api/v1/**").permitAll()
+                                .requestMatchers("api/v2/**").permitAll() // Changed because api/v2 is implemented
                                 // TODO: allow access to endpoints only for allowed roles
                                 .anyRequest().authenticated()
                 )
