@@ -67,7 +67,7 @@ public class TournamentController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/exportContestans")
+    @GetMapping("/exportContestants")
     public ResponseEntity<byte[]> exportContestants(@RequestParam Long tournamentId) {
         List<WrestlerEnrollmentDto> wrestlerEnrollmentDtos = wrestlerEnrollmentService.getWrestlerEnrollments(tournamentId);
 
