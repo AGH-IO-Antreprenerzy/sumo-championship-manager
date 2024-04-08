@@ -69,6 +69,10 @@ public class TournamentController {
 
     @GetMapping("/exportContestants")
     public ResponseEntity<byte[]> exportContestants(@RequestParam Long tournamentId) {
+        if (!this.tournamentService.checkTournamentExist(tournamentId)) {
+            return ResponseEntity.badRequest().body(new byte[0]);
+        }
+
         List<WrestlerEnrollmentDto> wrestlerEnrollmentDtos = wrestlerEnrollmentService.getWrestlerEnrollments(tournamentId);
 
         HttpHeaders headers = new HttpHeaders();
