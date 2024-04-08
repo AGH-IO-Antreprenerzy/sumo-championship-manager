@@ -14,6 +14,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class TournamentDto {
+    private Long id;
     private String name;
     private LocationDto location;
     private SeasonDto season;
@@ -24,6 +25,7 @@ public class TournamentDto {
 
     public static TournamentDto mapToDto(Tournament tournament){
         return TournamentDto.builder()
+                .id(tournament.getId())
                 .name(tournament.getName())
                 .location(LocationDto.mapToDto(tournament.getLocation()))
                 .season(SeasonDto.mapToDto(tournament.getSeason()))
