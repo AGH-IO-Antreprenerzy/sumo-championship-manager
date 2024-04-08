@@ -1,6 +1,6 @@
 # Sumo Championship Manager
 
-![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white) ![Spring Boot](https://img.shields.io/badge/SpringBoot-6DB33F?style=for-the-badge&logo=Spring&logoColor=white) ![Maven](https://img.shields.io/badge/Maven-C71A36?style=for-the-badge&logo=apache-maven) ![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white) ![Spring Boot](https://img.shields.io/badge/SpringBoot-6DB33F?style=for-the-badge&logo=Spring&logoColor=white) ![Maven](https://img.shields.io/badge/Maven-C71A36?style=for-the-badge&logo=apache-maven) ![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black) ![Docker](https://img.shields.io/badge/Docker-1D63ED?style=for-the-badge&logo=docker&logoColor=white)
 
 
 ### About
@@ -15,7 +15,17 @@ System for sumo championship management. Created as a project for Software Engin
 
 ### Build and run
 
-#### Backend
+#### With Docker
+
+Copy `default.env` into `.env`, then set correct values and execute:
+
+```sh
+docker-compose --env-file .env up --build
+```
+
+#### Without Docker
+
+##### Backend
 
 Basic run with Maven (without tests):
 
@@ -25,7 +35,7 @@ mvn clean install -DskipTests exec:java -Dexec.mainClass=com.sumoc.sumochampions
 
 *Caution: You need to set the variables!*
 
-#### Frontend
+##### Frontend
 
 1. [Install yarn](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable):
 ```sh
