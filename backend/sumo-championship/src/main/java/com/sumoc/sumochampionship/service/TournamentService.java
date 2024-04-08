@@ -113,6 +113,10 @@ public class TournamentService {
 
     }
 
+    public boolean checkTournamentExist(Long id){
+        return tournamentRepository.existsById(id);
+    }
+
     private boolean saveTournament(Tournament tournament){
         try{
             // Save location

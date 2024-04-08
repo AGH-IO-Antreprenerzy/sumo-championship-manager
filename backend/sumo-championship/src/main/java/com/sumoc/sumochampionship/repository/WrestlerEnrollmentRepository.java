@@ -13,4 +13,5 @@ public interface WrestlerEnrollmentRepository extends JpaRepository<WrestlersEnr
 
     List<WrestlersEnrollment> findAllByWrestlerAndTournament_ContestEndAfter(Wrestler wrestler, LocalDate date);
 
+    List<WrestlersEnrollment> findAllByTournament_Id(Long tournamentId);
 }
