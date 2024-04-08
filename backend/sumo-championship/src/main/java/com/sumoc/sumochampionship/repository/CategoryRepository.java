@@ -2,6 +2,7 @@ package com.sumoc.sumochampionship.repository;
 
 import com.sumoc.sumochampionship.db.season.Category;
 import com.sumoc.sumochampionship.db.season.Season;
+import com.sumoc.sumochampionship.db.season.Tournament;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

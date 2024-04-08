@@ -35,7 +35,6 @@ public class CategoryDto2 {
         this.maxAge = maxAge;
         this.weightsAndGender = weightsAndGender;
     }
-
     public static List<CategoryDto2> mapListToDto(List<Category> categories){
         HashMap<String, List<WeightDetailsRequest>> ageCategoryToWeights = new HashMap<>();
         HashMap<String, Pair<Integer, Integer>> categoryNameToAges = new HashMap<>();
