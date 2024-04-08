@@ -5,7 +5,10 @@ import com.sumoc.sumochampionship.api.dto.category.CategoryDto;
 import com.sumoc.sumochampionship.api.dto.category.CategoriesResponse;
 import com.sumoc.sumochampionship.api.dto.category.CategoryDto2;
 import com.sumoc.sumochampionship.db.season.Category;
+import com.sumoc.sumochampionship.db.season.Tournament;
 import com.sumoc.sumochampionship.repository.CategoryRepository;
+import com.sumoc.sumochampionship.repository.TournamentRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,12 +16,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final TournamentRepository tournamentRepository;
 
     /*
     Get categories that belong to Season.
@@ -48,6 +53,18 @@ public class CategoryService {
 
         return categories.stream().map(CategoryDto::toDto).toList();
 
+    }
+
+    public List<CategoryDto2> getTournamentCategories(Long tournamentId){
+
+        Optional<Tournament> tournamentOptional = tournamentRepository.findById(tournamentId);
+        if (tournamentOptional.isEmpty()){
+            throw new EntityNotFoundException("Tournament with id = " + tournamentId + " does not exists");
+        }
+
+        List<Category> categories = tournamentOptional.get().getCategories().stream().toList();
+
+        return CategoryDto2.mapListToDto(categories);
     }
 
     //-----------------------------API VERSION 2-----------------------------//
