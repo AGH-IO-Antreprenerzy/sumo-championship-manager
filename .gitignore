@@ -26,4 +26,8 @@ replay_pid*
 # workspace, system, IDE
 .idea/*
 .DS_Store
+.vscode/*
+.history/*
 
+# sensitive information
+.env
