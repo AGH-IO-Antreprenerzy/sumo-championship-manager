@@ -133,4 +133,5 @@ class TournamentServiceTest {
         TournamentDto tournamentDto = tournamentService.getTournament(1);
         assertEquals("Tournament 01", tournamentDto.getName());
     }
+
 }

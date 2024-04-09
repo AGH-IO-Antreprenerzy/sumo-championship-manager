@@ -6,8 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Set;
 
 /**
@@ -41,5 +43,11 @@ public class Wrestler {
     @OneToMany(mappedBy = "wrestler")
     private Set<WrestlersEnrollment> enrollments;
 
+
+    public boolean availableForCategory(Integer minAge, Integer maxAge){
+        long age = ChronoUnit.YEARS.between(birthday, LocalDate.now());
+
+        return minAge <= age && age <= maxAge;
+    }
 
 }
