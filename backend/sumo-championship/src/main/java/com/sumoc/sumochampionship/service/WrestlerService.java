@@ -49,8 +49,8 @@ public class WrestlerService {
         Set<Club> ownedClubs = user.getOwnedClubs();
         Page<Wrestler> wrestlerPage = wrestlerRepository.findWrestlerByClubIn(ownedClubs, pageable);
 
-        List<Wrestler> listOfPokemon = wrestlerPage.getContent();
-        List<WrestlersDto> content = listOfPokemon.stream().map(WrestlersDto::mapToDto).toList();
+        List<Wrestler> listOfWrestlers = wrestlerPage.getContent();
+        List<WrestlersDto> content = listOfWrestlers.stream().map(WrestlersDto::mapToDto).toList();
 
         return WrestlersResponse.builder()
                 .wrestlersInfo(content)
