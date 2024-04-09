@@ -9,6 +9,7 @@ import com.sumoc.sumochampionship.service.ClubService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import com.sumoc.sumochampionship.api.dto.club.ClubDto;
 import com.sumoc.sumochampionship.db.people.WebsiteUser;
 import com.sumoc.sumochampionship.service.ClubService;
@@ -28,6 +29,7 @@ public class ClubController {
 
     private final ClubService clubService;
 
+
     @PostMapping("/add")
     public ResponseEntity<JsonNode> addClub(@RequestBody ClubRequest clubRequest) {
         String response = clubService.addClub(clubRequest);
@@ -41,32 +43,34 @@ public class ClubController {
         return ResponseEntity.ok(json);
     }
 
-         /*
-        TODO: Test it after implementing login / register.
-        Get All clubs that can be accessed by user (example: Admin may access all clubs)
-     */
-        @GetMapping("/to-user")
-        public ResponseEntity<List<ClubDto>> getClubsToUser(@AuthenticationPrincipal WebsiteUser user){
-            if (user == null){
-                return ResponseEntity.status(401).build();
-            }
-            return ResponseEntity.ok(clubService.getAllClubsToUser(user));
+    /*
+   TODO: Test it after implementing login / register.
+   Get All clubs that can be accessed by user (example: Admin may access all clubs)
+*/
+    @GetMapping("/to-user")
+    public ResponseEntity<List<ClubDto>> getClubsToUser(@AuthenticationPrincipal WebsiteUser user) {
+        if (user == null) {
+            return ResponseEntity.status(401).build();
         }
+        return ResponseEntity.ok(clubService.getAllClubsToUser(user));
+    }
+
 
     /*
     Get club to wrestler
      */
-        @GetMapping("/to-wrestler")
-        public ResponseEntity<ClubDto> getClubToWrestler(@RequestParam Long wrestlerId){
-            ClubDto club = null;
+    @GetMapping("/to-wrestler")
+    public ResponseEntity<ClubDto> getClubToWrestler(@RequestParam Long wrestlerId) {
+        ClubDto club = null;
 
-            try{
-                club = clubService.getClubToWrestler(wrestlerId);
-            }catch (EntityNotFoundException e){
-                return ResponseEntity.notFound().build();
-            }
+        try {
+            club = clubService.getClubToWrestler(wrestlerId);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
 
-            return ResponseEntity.ok(club);
+        return ResponseEntity.ok(club);
+
 
     }
 }
