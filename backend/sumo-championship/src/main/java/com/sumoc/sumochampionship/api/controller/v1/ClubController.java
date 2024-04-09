@@ -42,11 +42,14 @@ public class ClubController {
     }
 
          /*
-    TODO: Test it after implementing login / register.
-    Get All clubs that can be accessed by user (example: Admin may access all clubs)
+        TODO: Test it after implementing login / register.
+        Get All clubs that can be accessed by user (example: Admin may access all clubs)
      */
         @GetMapping("/to-user")
         public ResponseEntity<List<ClubDto>> getClubsToUser(@AuthenticationPrincipal WebsiteUser user){
+            if (user == null){
+                return ResponseEntity.status(401).build();
+            }
             return ResponseEntity.ok(clubService.getAllClubsToUser(user));
         }
 

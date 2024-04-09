@@ -64,22 +64,26 @@ public class WrestlerEnrollmentService {
     private boolean mayWrestlerEnroll(WrestlerEnrollmentRequest request){
         Optional<Tournament> tournamentOptional = tournamentRepository.findById(request.getTournamentId());
 
-        if (tournamentOptional.isEmpty()) return false;
+        if (tournamentOptional.isEmpty())
+            return false;
 
         Optional<Wrestler> wrestlerOptional = wrestlerRepository.findById(request.getWrestlerId());
 
-        if (wrestlerOptional.isEmpty()) return false;
+        if (wrestlerOptional.isEmpty())
+            return false;
         Wrestler wrestler = wrestlerOptional.get();
 
         for(Long categoryId: request.getCategoriesId()){
             Optional<Category> categoryOptional = categoryRepository.findById(categoryId);
 
-            if(categoryOptional.isEmpty()) return false;
+            if(categoryOptional.isEmpty())
+                return false;
             Category category = categoryOptional.get();
 
             // Check age
-            long age = ChronoUnit.YEARS.between(LocalDate.now(), wrestler.getBirthday());
-            if(!(age >= category.getMinAge() && age <= category.getMaxAge())) return false;
+
+            if(!wrestler.availableForCategory(category.getMinAge(), category.getMaxAge()))
+                return false;
         }
 
         return true;

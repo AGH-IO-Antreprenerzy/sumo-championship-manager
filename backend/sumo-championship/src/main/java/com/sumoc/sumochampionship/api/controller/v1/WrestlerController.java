@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.sumoc.sumochampionship.api.dto.wrestler.WrestlerDetails;
 import com.sumoc.sumochampionship.api.dto.wrestler.WrestlerRequest;
+import com.sumoc.sumochampionship.api.dto.wrestler.WrestlersDto;
 import com.sumoc.sumochampionship.api.dto.wrestler.WrestlersResponse;
 import com.sumoc.sumochampionship.db.people.WebsiteUser;
 import com.sumoc.sumochampionship.service.WrestlerService;
@@ -16,6 +17,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Controller responsible for manipulating request given by Website Users
@@ -91,6 +94,26 @@ public class WrestlerController {
             return ResponseEntity.badRequest().body(json);
         }
         return ResponseEntity.ok(json);
+    }
+
+    @GetMapping("/fit-to-category")
+    public ResponseEntity<List<WrestlersDto>> filterWrestlerToClub(
+            @AuthenticationPrincipal WebsiteUser user,
+            @RequestParam(name = "categoryId") Long categoryId){
+
+        // User is not logged
+        if (user == null){
+            return ResponseEntity.status(401).build();
+        }
+
+        List<WrestlersDto> response = null;
+        try{
+            response = wrestlerService.filterWrestler(user, categoryId);
+        }catch (EntityNotFoundException e){
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(response);
     }
 
 }

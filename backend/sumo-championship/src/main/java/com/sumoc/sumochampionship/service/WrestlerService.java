@@ -5,9 +5,12 @@ import com.sumoc.sumochampionship.api.dto.wrestler.WrestlersDto;
 import com.sumoc.sumochampionship.api.dto.wrestler.WrestlerRequest;
 import com.sumoc.sumochampionship.api.dto.wrestler.WrestlersResponse;
 import com.sumoc.sumochampionship.db.people.Club;
+import com.sumoc.sumochampionship.db.people.Gender;
 import com.sumoc.sumochampionship.db.people.WebsiteUser;
 import com.sumoc.sumochampionship.db.people.Wrestler;
+import com.sumoc.sumochampionship.db.season.Category;
 import com.sumoc.sumochampionship.db.season.WrestlersEnrollment;
+import com.sumoc.sumochampionship.repository.CategoryRepository;
 import com.sumoc.sumochampionship.repository.ClubRepository;
 import com.sumoc.sumochampionship.repository.WrestlerEnrollmentRepository;
 import com.sumoc.sumochampionship.repository.WrestlerRepository;
@@ -32,6 +35,7 @@ public class WrestlerService {
     private final WrestlerRepository wrestlerRepository;
     private final ClubRepository clubRepository;
     private final WrestlerEnrollmentRepository wrestlerEnrollmentRepository;
+    private final CategoryRepository categoryRepository;
 
     /*
     Using Repository collect all Wrestlers belong to WebsiteUser(Trainer)
@@ -126,7 +130,31 @@ public class WrestlerService {
         wrestler.setBirthday(wrestlerRequest.getBirthday());
         wrestlerRepository.save(wrestler);
         return "Success! Wrestler modified";
+    }
 
+    /*
+    Get all Wrestler that may be accessed by Website User and that fit to Category
+     */
+    public List<WrestlersDto> filterWrestler(WebsiteUser user, Long categoryId){
+        Optional<Category> categoryOptional = categoryRepository.findById(categoryId);
+
+        if (categoryOptional.isEmpty()){
+            throw new EntityNotFoundException("Category with id = " + categoryId + " not found in database");
+        }
+
+        Category category = categoryOptional.get();
+        Set<Club> userClubs = user.getOwnedClubs();
+
+        List<Wrestler> clubWrestlers = wrestlerRepository.findAllByClubIn(userClubs);
+
+        // Filter
+        List<WrestlersDto> availableWrestlers = clubWrestlers.stream()
+                .filter(wrestler -> wrestler.availableForCategory(category.getMinAge(), category.getMaxAge()))
+                .filter(wrestler -> wrestler.getGender() == category.getGender() || category.getGender() == Gender.ALL)
+                .map(WrestlersDto::mapToDto)
+                .toList();
+
+        return availableWrestlers;
     }
 
 }

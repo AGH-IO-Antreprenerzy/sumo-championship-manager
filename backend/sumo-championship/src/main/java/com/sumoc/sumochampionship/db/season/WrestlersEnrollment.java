@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 public class WrestlersEnrollment {
 
     @Id
+    @GeneratedValue
     private Long id;
 
     @ManyToOne
