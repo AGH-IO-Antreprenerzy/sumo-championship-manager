@@ -7,6 +7,8 @@ import MinMaxField from '../molecules/MinMaxField';
 import Checkbox from '../Atoms/Checkbox';
 import TextField from '../molecules/TextField';
 import Tile from '../Atoms/Tile';
+import AgeCategoryFrom from '../molecules/AgeCategoryFrom';
+import { set } from 'zod';
 type props = {
   onUpdate: (categories: Category[]) => void;
 };
@@ -79,61 +81,9 @@ const CategoryForm: React.FC<props> = ({ onUpdate }) => {
     return gender;
   };
 
-  const addCategory = () => {
-    if (checkCategoryFormErrors() > 1) {
-      return;
-    }
-
-    if (!checkIfNameIsUnique(categories, categoryName)) {
-      alert('Category name must be unique');
-      return;
-    }
-    const newCategories = [
-      {
-        name: categoryName,
-        gender: getGender(),
-        minAge,
-        maxAge,
-        minWeight,
-        maxWeight,
-      },
-      ...categories,
-    ];
+  const handleAgeSave = (newCategories: Category[]) => {
     setCategories(newCategories);
-    resetCategoryForm();
-    onUpdate(newCategories);
-  };
-
-  const editCategory = () => {
-    if (checkCategoryFormErrors() > 1) {
-      return;
-    }
-
-    if (
-      categories[editedCategoryNumber].name !== categoryName &&
-      !checkIfNameIsUnique(categories, categoryName)
-    ) {
-      alert('Category name must be unique');
-      return;
-    }
-
-    const newCategories: Category[] = categories.map((category, index) => {
-      if (index === editedCategoryNumber) {
-        return {
-          name: categoryName,
-          gender: getGender(),
-          minAge,
-          maxAge,
-          minWeight,
-          maxWeight,
-        };
-      }
-      return category;
-    });
-
-    resetCategoryForm();
-    setCategories(newCategories);
-    onUpdate(newCategories);
+    setEditedCategoryNumber(-1);
   };
 
   const handleDelete = (category: Category) => {
@@ -147,8 +97,6 @@ const CategoryForm: React.FC<props> = ({ onUpdate }) => {
     setCategoryName(category.name);
     setMinAge(category.minAge);
     setMaxAge(category.maxAge);
-    setMinWeight(category.minWeight);
-    setMaxWeight(category.maxWeight);
   };
 
   const handleEditCancel = () => {
@@ -158,61 +106,12 @@ const CategoryForm: React.FC<props> = ({ onUpdate }) => {
   return (
     <Tile className="categories categoriesLayout">
       <div style={{ flex: 1 }}>
-        <p className="subtitle mb30">Categories</p>
-        <TextField
-          label="Category name"
-          onChange={(e) => setCategoryName(e.target.value)}
-          value={categoryName}
-          errorMessage={
-            errorPoints % errorPointsValues.categoryName === 0
-              ? 'You need to provide a category name'
-              : undefined
-          }
-        />
-        <div className="gender">
-          <p className="heading">Gender:</p>
-          <div className="checkboxes">
-            <Checkbox ref={femaleCheckboxRef} label="Female" />
-            <Checkbox ref={maleCheckboxRef} label="Male" />
-          </div>
-        </div>
-
-        <div className="age">
-          <p className="heading">Age:</p>
-          <MinMaxField
-            minValue={minAge}
-            maxValue={maxAge}
-            onMinChange={setMinAge}
-            onMaxChange={setMaxAge}
-            errorMessage={
-              errorPoints % errorPointsValues.age === 0
-                ? 'You need to provide valid min and max age range'
-                : undefined
-            }
-          />
-        </div>
-
-        <div className="weight">
-          <p className="heading">Weight:</p>
-          <MinMaxField
-            minValue={minWeight}
-            maxValue={maxWeight}
-            onMinChange={setMinWeight}
-            onMaxChange={setMaxWeight}
-            errorMessage={
-              errorPoints % errorPointsValues.weight === 0
-                ? 'You need to provide valid min and max weight range'
-                : undefined
-            }
-          />
-        </div>
-
-        <Button
-          value={isEdited ? 'Save' : 'Add category'}
-          onClick={isEdited ? editCategory : addCategory}
-          style={{
-            width: '100%',
-          }}
+        <p className="subtitle mb10">Categories</p>
+        <AgeCategoryFrom
+          isEdited={isEdited}
+          onSave={handleAgeSave}
+          editedCategoryNumber={editedCategoryNumber}
+          categories={categories}
         />
       </div>
 

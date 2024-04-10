@@ -25,11 +25,9 @@ const CategoryTable: React.FC<props> = ({
       return (
         <CategoryItem
           name={category.name}
-          gender={category.gender}
           minAge={category.minAge}
           maxAge={category.maxAge}
-          minWeight={category.minWeight}
-          maxWeight={category.maxWeight}
+          weightCategories={category.weightCategories}
           key={index.toString()}
           onDelete={() => {
             if (onEditCancel) onEditCancel();
@@ -56,9 +54,7 @@ const CategoryTable: React.FC<props> = ({
         >
           Name
         </div>
-        <div className="headerField">Gender</div>
         <div className="headerField">Age</div>
-        <div className="headerField">Weight</div>
         {showOptions && <div className="headerField">Options</div>}
       </div>
 

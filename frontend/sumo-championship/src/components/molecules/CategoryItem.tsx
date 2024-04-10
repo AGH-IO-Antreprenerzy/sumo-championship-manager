@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import './../../styles/Atoms.css';
 import IconButton from '../Atoms/IconButton';
-import { Gender } from '../../types/Seasons';
+import { Gender, WeightCategory } from '../../types/Seasons';
 import capitalizeFirstLetter from '../../utils/stringMethods';
 
 interface props {
   key?: string;
   name: string;
-  gender: Gender;
   minAge: number;
   maxAge: number;
-  minWeight: number;
-  maxWeight: number;
+  weightCategories: WeightCategory[];
   onEdit: () => void;
   onEditCancel: () => void;
   onDelete?: () => void;
@@ -21,11 +19,9 @@ interface props {
 const CategoryItem: React.FC<props> = ({
   key,
   name,
-  gender,
   minAge,
   maxAge,
-  minWeight,
-  maxWeight,
+  weightCategories,
   onEdit,
   onEditCancel,
   onDelete,
@@ -45,20 +41,17 @@ const CategoryItem: React.FC<props> = ({
 
   useEffect(() => {
     setIsEdited(false);
-  }, [name, gender, minAge, maxAge, minWeight, maxWeight]);
+  }, [name, minAge, maxAge, weightCategories]);
 
   return (
     <div key={key} className="categoryItem">
       <div className="field" style={{ flex: 3, justifyContent: 'start' }}>
         {name}
       </div>
-      <div className="field">{capitalizeFirstLetter(gender)}</div>
       <div className="field">
         {minAge} - {maxAge}
       </div>
-      <div className="field">
-        {minWeight} - {maxWeight}
-      </div>
+
       {showOptions && (
         <div className="field">
           {isEdited ? (
