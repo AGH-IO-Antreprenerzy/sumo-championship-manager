@@ -68,6 +68,8 @@ public class WrestlerEnrollmentService {
         if (tournamentOptional.isEmpty())
             return false;
 
+        Tournament tournament = tournamentOptional.get();
+
         Optional<Wrestler> wrestlerOptional = wrestlerRepository.findById(request.getWrestlerId());
 
         if (wrestlerOptional.isEmpty())
@@ -85,7 +87,8 @@ public class WrestlerEnrollmentService {
 
             // Check age
 
-            if(!wrestler.availableForCategory(category.getMinAge(), category.getMaxAge()))
+            if(!wrestler.availableForTournamentCategory(category.getMinAge(), category.getMaxAge(),
+                    tournament.getContestStart()))
                 return false;
 
         }

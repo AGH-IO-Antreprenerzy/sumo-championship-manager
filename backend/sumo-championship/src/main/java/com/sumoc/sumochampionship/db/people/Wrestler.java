@@ -50,4 +50,10 @@ public class Wrestler {
         return minAge <= age && age <= maxAge;
     }
 
+    public boolean availableForTournamentCategory(Integer minAge, Integer maxAge, LocalDate tournamentStart){
+        long age = ChronoUnit.YEARS.between(birthday, tournamentStart);
+
+        return minAge <= age && age <= maxAge;
+    }
+
 }

@@ -10,6 +10,7 @@ import com.sumoc.sumochampionship.repository.CategoryRepository;
 import com.sumoc.sumochampionship.repository.LocationRepository;
 import com.sumoc.sumochampionship.repository.SeasonRepository;
 import com.sumoc.sumochampionship.repository.TournamentRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -132,6 +133,32 @@ class TournamentServiceTest {
 
         TournamentDto tournamentDto = tournamentService.getTournament(1);
         assertEquals("Tournament 01", tournamentDto.getName());
+    }
+
+    @Test
+    public void checkDateTest(){
+        // Arrange
+        Tournament tournament = Tournament.builder()
+                .registerStart(LocalDate.of(2024, 4, 11))
+                .registerEnd(LocalDate.of(2024, 4, 12))
+                .contestStart(LocalDate.of(2024, 4, 20))
+                .contestEnd(LocalDate.of(2024, 4, 22))
+                .build();
+
+        // Act
+        boolean good = tournamentService.checkDate(tournament, LocalDate.of(2024, 3, 10),
+                LocalDate.of(2024, 10, 24));
+
+        boolean bad1 = tournamentService.checkDate(tournament, LocalDate.of(2024, 5, 10),
+                LocalDate.of(2024, 10, 24));
+
+        boolean bad2 = tournamentService.checkDate(tournament, LocalDate.of(2024, 3, 10),
+                LocalDate.of(2024, 4, 8));
+
+        // Assert
+        Assertions.assertTrue(good);
+        Assertions.assertFalse(bad1);
+        Assertions.assertFalse(bad2);
     }
 
 }
