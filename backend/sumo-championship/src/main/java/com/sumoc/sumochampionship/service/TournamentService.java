@@ -49,7 +49,7 @@ public class TournamentService {
         if (!notNullCheck(tournament)) {
             return ResponseEntity.badRequest().body("Invalid data. All parameters can not be null");
         }
-        if (!checkDate(tournament)) {
+        if (!checkDate(tournament, tournament.getSeason().getStartDate(), tournament.getSeason().getEndDate())) {
             return ResponseEntity.badRequest().body("Invalid data provided. Start of the contest should be " +
                     "before the end of the contest and start of the registration should be before the contest start");
         }
@@ -142,10 +142,15 @@ public class TournamentService {
                 tournament.getRegisterStart() != null && tournament.getRegisterEnd() != null;
     }
 
-    private boolean checkDate(Tournament tournament){
+    public boolean checkDate(Tournament tournament, LocalDate seasonStart, LocalDate seasonEnd){
         return tournament.getContestStart().isBefore(tournament.getContestEnd()) &&
                 tournament.getRegisterStart().isBefore(tournament.getRegisterEnd()) &&
-                tournament.getRegisterStart().isBefore(tournament.getContestStart());
+                tournament.getRegisterStart().isBefore(tournament.getContestStart()) &&
+                tournament.getContestStart().isAfter(seasonStart) &&
+                tournament.getContestStart().isBefore(seasonEnd) &&
+                tournament.getContestEnd().isBefore(seasonEnd) &&
+                tournament.getRegisterStart().isAfter(seasonStart) &&
+                tournament.getRegisterEnd().isBefore(seasonEnd);
     }
 
     private Tournament getTournamentFromRequest(TournamentRequest tournamentRequest) throws EntityNotFoundException {
