@@ -6,10 +6,7 @@ import com.sumoc.sumochampionship.api.dto.season.SeasonDto;
 import com.sumoc.sumochampionship.api.dto.tournament.TournamentDto;
 import com.sumoc.sumochampionship.api.dto.tournament.TournamentRequest;
 import com.sumoc.sumochampionship.api.dto.tournament.AllTournamentsResponse;
-import com.sumoc.sumochampionship.db.season.Category;
-import com.sumoc.sumochampionship.db.season.Location;
-import com.sumoc.sumochampionship.db.season.Season;
-import com.sumoc.sumochampionship.db.season.Tournament;
+import com.sumoc.sumochampionship.db.season.*;
 import com.sumoc.sumochampionship.repository.CategoryRepository;
 import com.sumoc.sumochampionship.repository.LocationRepository;
 import com.sumoc.sumochampionship.repository.SeasonRepository;
@@ -46,6 +43,11 @@ public class TournamentService {
         } catch (EntityNotFoundException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+
+        if (!Country.exists(tournamentRequest.getLocation().getCountry())){
+            return ResponseEntity.badRequest().body("Error! Nationality not supported");
+        }
+
         if (!notNullCheck(tournament)) {
             return ResponseEntity.badRequest().body("Invalid data. All parameters can not be null");
         }
