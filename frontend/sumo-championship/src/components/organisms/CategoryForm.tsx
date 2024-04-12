@@ -208,7 +208,7 @@ const CategoryForm: React.FC<props> = ({ onUpdate }) => {
         </div>
 
         <Button
-          value={isEdited ? 'Save' : 'Add category'}
+          name={isEdited ? 'Save' : 'Add category'}
           onClick={isEdited ? editCategory : addCategory}
           style={{
             width: '100%',

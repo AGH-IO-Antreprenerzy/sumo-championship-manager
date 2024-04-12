@@ -262,7 +262,7 @@ const AddTournamentPage = () => {
         />
       </div>
       <Button
-        value="Add tournament"
+        name="Add tournament"
         style={{ marginTop: '20px' }}
         onClick={handleAddTournament}
       />

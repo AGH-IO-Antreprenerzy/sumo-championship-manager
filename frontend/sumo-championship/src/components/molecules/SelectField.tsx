@@ -5,7 +5,7 @@ interface props {
   options: string[];
   name: string;
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
-  defaultOption?: string;
+  value: string;
   errorMessage? : string;
 }
 
@@ -13,7 +13,7 @@ const SelectField: React.FC<props> = ({
   options,
   name,
   onChange,
-  defaultOption,
+  value,
   errorMessage
 }) => {
   return (
@@ -25,8 +25,7 @@ const SelectField: React.FC<props> = ({
         name={name}
         className="selectField"
         onChange={onChange}
-        value={defaultOption}
-        defaultValue={""}
+        value={value}
       >
         <option disabled value="">{`Select ${name}`}</option>
         {options.map((option, id) => (

@@ -56,7 +56,7 @@ const CurrentTournamentsPage: FunctionComponent = () => {
     <div className="page">
       <div className="pageTop">
         <p className="title">Current Tournaments:</p>
-        <Button value="Add Tournament +" onClick={handleAddSeason} />
+        <Button name="Add Tournament +" onClick={handleAddSeason} />
       </div>
 
       <Tile>

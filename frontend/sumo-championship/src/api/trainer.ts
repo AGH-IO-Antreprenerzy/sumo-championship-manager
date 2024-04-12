@@ -13,7 +13,7 @@ interface TrainerToAdd{
 
 export const addTrainer = async (trainer: TrainerToAdd) => {
     console.log(trainer)
-    const body = JSON.stringify(trainer)
+    // const body = JSON.stringify(trainer)
 
-    api.post("v1/trainer/add", body)()
+    // api.post("v1/trainer/add", body)()
 }

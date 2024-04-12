@@ -19,7 +19,7 @@ const Home: FunctionComponent = () => {
             Click here to check out incoming tournaments
           </p>
           <Button
-            value="Let's fight!"
+            name="Let's fight!"
             onClick={() => {
               navigate(ROUTES.TOURNAMENTS);
             }}

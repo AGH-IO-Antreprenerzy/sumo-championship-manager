@@ -48,7 +48,7 @@ const AllSeasonsPage: FunctionComponent = () => {
     <div className="page">
       <div className="pageTop">
         <p className="title">Current Seasons:</p>
-        <Button value="Add Season" onClick={handleAddSeason} />
+        <Button name="Add Season" onClick={handleAddSeason} />
       </div>
 
       <SeasonList seasons={seasons} />

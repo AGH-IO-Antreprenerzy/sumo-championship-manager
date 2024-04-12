@@ -7,6 +7,8 @@ import { getClubs } from '../../../api/club';
 import { addTrainer } from '../../../api/trainer';
 import { useNavigate } from 'react-router-dom';
 import ROUTES from '../../../routes/routes';
+import Button from '../../Atoms/Button';
+import "./addTrainerForm.css"
 
 const AddTrainerForm = () => {
     const navigate = useNavigate()
@@ -77,7 +79,7 @@ const AddTrainerForm = () => {
         }
 
         if (password === ""){
-            setNameError("You need to provide a password")
+            setPasswordError("You need to provide a password")
             isValid = false
         }
 
@@ -164,6 +166,7 @@ const AddTrainerForm = () => {
                 }}
                 options={allCountries}
                 errorMessage={countryError}
+                value={country}
             />
             <SelectField name='Role'
                 onChange={e => setRole(e.target.value as Role)}
@@ -172,13 +175,19 @@ const AddTrainerForm = () => {
                     Role.National
                 ]}
                 errorMessage={roleError}
+                value={role ?? ""}
             />
             { role === Role.Club && <SelectField
                 name='Club'
                 onChange={e => setClub(e.target.value)}
                 options={clubsPerCountry}
                 errorMessage={clubError}
+                value={club}
             />}
+            <Button
+                name='Add trainer'
+                onClick={handleSubmit}
+            />
         </div>
     );
 
