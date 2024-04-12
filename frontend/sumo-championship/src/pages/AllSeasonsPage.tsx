@@ -8,6 +8,8 @@ import PageSwitcher from '../components/molecules/PageSwitcher';
 import { AllSeasons } from '../api/season';
 import { Season } from '../types/Seasons';
 import ActivityIndicator from '../components/Atoms/ActivityIndicator';
+import { useUser } from '../contexts/UserContext';
+import { Role } from '../api/login';
 
 const AllSeasonsPage: FunctionComponent = () => {
   const navigate = useNavigate();
@@ -32,6 +34,8 @@ const AllSeasonsPage: FunctionComponent = () => {
     setIsLoading(false);
   };
 
+  const {user} = useUser();
+
   useEffect(() => {
     getSeasons(0);
   }, []);
@@ -48,7 +52,7 @@ const AllSeasonsPage: FunctionComponent = () => {
     <div className="page">
       <div className="pageTop">
         <p className="title">Current Seasons:</p>
-        <Button name="Add Season" onClick={handleAddSeason} />
+        {user.role === Role.Admin && <Button name="Add Season" onClick={handleAddSeason} />}
       </div>
 
       <SeasonList seasons={seasons} />

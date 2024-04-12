@@ -9,11 +9,14 @@ import CategoryTable from '../components/organisms/CategoryTable';
 import TournamentList from '../components/molecules/TournamentList';
 import Button from '../components/Atoms/Button';
 import ROUTES from '../routes/routes';
+import { useUser } from '../contexts/UserContext';
+import { Role } from '../api/login';
 
 const SeasonPage: React.FC = () => {
   const navigate = useNavigate();
   const { name } = useParams();
   const [seasonInfo, setSeasonInfo] = useState<DetailedSeason | null>(null);
+  const {user} = useUser()
 
   const getSeasonInfo = useCallback(async () => {
     try {
@@ -71,7 +74,8 @@ const SeasonPage: React.FC = () => {
         <Tile>
           <div className="pageTop">
             <p className="subtitle mb20">Tournaments:</p>
-            <Button name="Add Tournament +" onClick={handleAddTournament} />
+            {user.role === Role.Admin && 
+            <Button name="Add Tournament +" onClick={handleAddTournament} />}
           </div>
           <TournamentList tournaments={seasonInfo?.tournaments || []} />
         </Tile>

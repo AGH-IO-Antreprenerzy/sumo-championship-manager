@@ -8,13 +8,18 @@ import { PaginatedTournaments, Tournament } from '../types/Tournament';
 import TournamentList from '../components/molecules/TournamentList';
 import Tile from '../components/Atoms/Tile';
 import ActivityIndicator from '../components/Atoms/ActivityIndicator';
+import { useUser } from '../contexts/UserContext';
+import { Role } from '../api/login';
 
 const CurrentTournamentsPage: FunctionComponent = () => {
   const navigate = useNavigate();
+  const {user} = useUser();
+  
   const [tournaments, setTournaments] = useState<Tournament[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+
 
   const handleAddSeason = () => {
     navigate(ROUTES.TOURNAMENTS_ADD);
@@ -56,7 +61,7 @@ const CurrentTournamentsPage: FunctionComponent = () => {
     <div className="page">
       <div className="pageTop">
         <p className="title">Current Tournaments:</p>
-        <Button name="Add Tournament +" onClick={handleAddSeason} />
+        {user.role === Role.Admin && <Button name="Add Tournament +" onClick={handleAddSeason} />}
       </div>
 
       <Tile>

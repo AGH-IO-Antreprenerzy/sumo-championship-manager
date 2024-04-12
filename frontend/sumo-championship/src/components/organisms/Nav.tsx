@@ -40,7 +40,7 @@ const Nav: React.FC = () => {
     {
       name: "Add trainer",
       navigate: () => navigate(ROUTES.ADDTRAINER),
-      roles: [] //put admin here
+      roles: [Role.Admin]
     },
   ]
 
