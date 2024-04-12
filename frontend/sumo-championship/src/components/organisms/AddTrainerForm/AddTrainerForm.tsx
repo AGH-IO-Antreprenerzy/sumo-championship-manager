@@ -6,6 +6,7 @@ import SelectField from '../../molecules/SelectField';
 import { getClubs } from '../../../api/club';
 import { addTrainer } from '../../../api/trainer';
 import { useNavigate } from 'react-router-dom';
+import ROUTES from '../../../routes/routes';
 
 const AddTrainerForm = () => {
     const navigate = useNavigate()
