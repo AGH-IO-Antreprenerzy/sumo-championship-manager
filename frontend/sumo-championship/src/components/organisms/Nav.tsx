@@ -18,6 +18,7 @@ const Nav: React.FC = () => {
         alt="Logo"
         className="nav-image"
         style={{ height: 64 }}
+        onClick={() => navigate(ROUTES.HOME)}
       />
       <div className={`options-parent ${menuOpen ? 'open' : ''}`}>
         <div className="option" onClick={() => navigate(ROUTES.HOME)}>
