@@ -1,7 +1,7 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 import Button from '../components/Atoms/Button';
 import { useNavigate } from 'react-router-dom';
-import ROUTES from '../routes/ROUTES';
+import ROUTES from '../routes/routes';
 import api from '../api/api';
 import SeasonList from '../components/molecules/SeasonList';
 import PageSwitcher from '../components/molecules/PageSwitcher';

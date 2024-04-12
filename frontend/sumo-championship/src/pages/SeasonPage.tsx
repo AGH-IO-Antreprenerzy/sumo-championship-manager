@@ -8,7 +8,7 @@ import { isDateBetween } from '../utils/dateUtils';
 import CategoryTable from '../components/organisms/CategoryTable';
 import TournamentList from '../components/molecules/TournamentList';
 import Button from '../components/Atoms/Button';
-import ROUTES from '../routes/ROUTES';
+import ROUTES from '../routes/routes';
 
 const SeasonPage: React.FC = () => {
   const navigate = useNavigate();

@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import Tile from '../components/Atoms/Tile';
 import Button from '../components/Atoms/Button';
 import { useNavigate } from 'react-router-dom';
-import ROUTES from '../routes/ROUTES';
+import ROUTES from '../routes/routes';
 
 const Home: FunctionComponent = () => {
   const navigate = useNavigate();

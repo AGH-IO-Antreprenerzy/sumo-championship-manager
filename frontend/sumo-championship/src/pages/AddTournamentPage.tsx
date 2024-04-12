@@ -11,7 +11,7 @@ import { CategoryDto, Gender, getCategoriesForSeason } from '../api/category';
 import TournamentCategoriesInformation from '../components/organisms/AddTournamentForms/TournamentCategoriesInformation';
 import Button from '../components/Atoms/Button';
 import { useNavigate, useParams } from 'react-router-dom';
-import ROUTES from '../routes/ROUTES';
+import ROUTES from '../routes/routes';
 import { addTournament } from '../api/tournament';
 
 export interface CategoriesPerSex {

@@ -3,7 +3,7 @@ import './../styles/Pages.css';
 import Button from '../components/Atoms/Button';
 import TextField from '../components/molecules/TextField';
 import { useNavigate } from 'react-router-dom';
-import ROUTES from '../routes/ROUTES';
+import ROUTES from '../routes/routes';
 import { Category } from '../types/Seasons';
 import CategoryForm from '../components/organisms/CategoryForm';
 import Tile from '../components/Atoms/Tile';
