@@ -3,7 +3,7 @@ import { Tournament } from './Tournament';
 type Gender = 'FEMALE' | 'MALE' | 'ALL';
 
 type WeightCategory = {
-  name: string;
+  maxWeight: number;
   gender: Gender;
 };
 

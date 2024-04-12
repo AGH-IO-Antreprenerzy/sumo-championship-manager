@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import React, { useEffect, useState } from 'react';
 import './../../styles/Molecules.css';
-import ValueField from './ValueField';
 import TextField from './TextField';
-import Checkbox from '../Atoms/Checkbox';
 import MinMaxField from './MinMaxField';
 import Button from '../Atoms/Button';
 import SubtitleWithIcon from '../Atoms/SubtitleWithIcon';

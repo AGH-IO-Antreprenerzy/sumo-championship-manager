@@ -8,7 +8,7 @@ import Checkbox from '../Atoms/Checkbox';
 import TextField from '../molecules/TextField';
 import Tile from '../Atoms/Tile';
 import AgeCategoryFrom from '../molecules/AgeCategoryFrom';
-import { set } from 'zod';
+import WeightCategoryFrom from '../molecules/WeightCategoryFrom';
 type props = {
   onUpdate: (categories: Category[]) => void;
 };
@@ -38,50 +38,7 @@ const CategoryForm: React.FC<props> = ({ onUpdate }) => {
   const femaleCheckboxRef = useRef<HTMLInputElement>(null);
   const maleCheckboxRef = useRef<HTMLInputElement>(null);
 
-  const resetCategoryForm = () => {
-    setCategoryName('');
-    setMinAge(6);
-    setMaxAge(100);
-    setMinWeight(40);
-    setMaxWeight(200);
-    setErrorPoints(1);
-    setEditedCategoryNumber(-1);
-  };
-
-  const checkCategoryFormErrors = () => {
-    let points = 1;
-    if (!categoryName) {
-      points *= errorPointsValues.categoryName;
-    }
-
-    if (minAge > maxAge) {
-      points *= errorPointsValues.age;
-    }
-
-    if (minWeight > maxWeight) {
-      points *= errorPointsValues.weight;
-    }
-
-    setErrorPoints(points);
-    return points;
-  };
-
-  const getGender = () => {
-    let gender: Gender = 'ALL';
-    if (
-      !!femaleCheckboxRef.current?.checked &&
-      !!maleCheckboxRef.current?.checked
-    ) {
-      gender = 'ALL';
-    } else if (femaleCheckboxRef.current?.checked) {
-      gender = 'FEMALE';
-    } else if (maleCheckboxRef.current?.checked) {
-      gender = 'MALE';
-    }
-    return gender;
-  };
-
-  const handleAgeSave = (newCategories: Category[]) => {
+  const handleSave = (newCategories: Category[]) => {
     setCategories(newCategories);
     setEditedCategoryNumber(-1);
   };
@@ -107,12 +64,21 @@ const CategoryForm: React.FC<props> = ({ onUpdate }) => {
     <Tile className="categories categoriesLayout">
       <div style={{ flex: 1 }}>
         <p className="subtitle mb10">Categories</p>
-        <AgeCategoryFrom
-          isEdited={isEdited}
-          onSave={handleAgeSave}
-          editedCategoryNumber={editedCategoryNumber}
-          categories={categories}
-        />
+        <div className="categoryForms">
+          <AgeCategoryFrom
+            isEdited={isEdited}
+            onSave={handleSave}
+            editedCategoryNumber={editedCategoryNumber}
+            categories={categories}
+          />
+          <hr />
+          <WeightCategoryFrom
+            isEdited={isEdited}
+            onSave={handleSave}
+            editedCategoryNumber={editedCategoryNumber}
+            categories={categories}
+          />
+        </div>
       </div>
 
       <div style={{ flex: 2 }}>
