@@ -1,11 +1,9 @@
 package com.sumoc.sumochampionship.service;
 
 import com.sumoc.sumochampionship.api.dto.category.CategoryDto;
-import com.sumoc.sumochampionship.api.dto.tournament.LocationDto;
+import com.sumoc.sumochampionship.api.dto.category.CategoryDto2;
+import com.sumoc.sumochampionship.api.dto.tournament.*;
 import com.sumoc.sumochampionship.api.dto.season.SeasonDto;
-import com.sumoc.sumochampionship.api.dto.tournament.TournamentDto;
-import com.sumoc.sumochampionship.api.dto.tournament.TournamentRequest;
-import com.sumoc.sumochampionship.api.dto.tournament.AllTournamentsResponse;
 import com.sumoc.sumochampionship.db.season.*;
 import com.sumoc.sumochampionship.repository.CategoryRepository;
 import com.sumoc.sumochampionship.repository.LocationRepository;
@@ -22,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -113,6 +112,30 @@ public class TournamentService {
                 .build();
 
 
+    }
+
+    public TournamentDetailsResponse getTournamentDetails(Long tournamentId){
+        Optional<Tournament> tournamentOptional = tournamentRepository.findById(tournamentId);
+
+        if (tournamentOptional.isEmpty()){
+            throw new EntityNotFoundException("Error! Tournament with id = " + tournamentId + " not found");
+        }
+        Tournament tournament = tournamentOptional.get();
+
+        List<Category> categories = tournament.getCategories().stream().toList();
+        List<CategoryDto2> categoryDto2s = CategoryDto2.mapListToDto(categories);
+
+        return TournamentDetailsResponse.builder()
+                .ageCategories(categoryDto2s)
+                .id(tournamentId)
+                .seasonName(tournament.getSeason().getName())
+                .name(tournament.getName())
+                .contestEnd(tournament.getContestEnd())
+                .contestStart(tournament.getContestStart())
+                .registerEnd(tournament.getRegisterEnd())
+                .registerStart(tournament.getRegisterStart())
+                .location(LocationDto.mapToDto(tournament.getLocation()))
+                .build();
     }
 
     public boolean checkTournamentExist(Long id){
