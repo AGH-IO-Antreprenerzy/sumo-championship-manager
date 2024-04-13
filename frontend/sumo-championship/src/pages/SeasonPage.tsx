@@ -23,7 +23,6 @@ const SeasonPage: React.FC = () => {
       setSeasonInfo(seasonInfo);
     } catch (error) {
       setSeasonInfo(null);
-      alert('XD');
     }
   }, [name]);
 
