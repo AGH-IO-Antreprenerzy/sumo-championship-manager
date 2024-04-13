@@ -14,7 +14,6 @@ const errorPointsValues = {
 };
 
 type props = {
-  isEdited: boolean;
   editedCategoryNumber: number;
   onSave: (categories: Category[]) => void;
   categories: Category[];
@@ -25,7 +24,6 @@ const checkIfNameIsUnique = (array: Category[], name: string) => {
 };
 
 const AgeCategoryFrom: React.FC<props> = ({
-  isEdited,
   onSave,
   categories,
   editedCategoryNumber,
@@ -34,6 +32,7 @@ const AgeCategoryFrom: React.FC<props> = ({
   const [errorPoints, setErrorPoints] = useState(1);
   const [minAge, setMinAge] = useState(6);
   const [maxAge, setMaxAge] = useState(100);
+  const isEdited = editedCategoryNumber > -1;
 
   const resetCategoryForm = () => {
     setCategoryName('');

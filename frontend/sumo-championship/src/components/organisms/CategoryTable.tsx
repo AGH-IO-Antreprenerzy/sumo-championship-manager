@@ -11,6 +11,7 @@ type props = {
   onEditCancel?: () => void;
   onUpdate?: (newCategories: Category[]) => void;
   style?: React.CSSProperties;
+  editedCategoryNumber?: number;
 };
 
 const CategoryTable: React.FC<props> = ({
@@ -19,6 +20,7 @@ const CategoryTable: React.FC<props> = ({
   onDelete,
   onEdit,
   onEditCancel,
+  editedCategoryNumber,
   onUpdate,
   style,
 }) => {
@@ -63,11 +65,13 @@ const CategoryTable: React.FC<props> = ({
             onWeightCategoryDelete(index, weightCategory)
           }
           showOptions={showOptions}
+          isEdited={editedCategoryNumber === index}
         />
       );
     });
   }, [
     categories,
+    editedCategoryNumber,
     onDelete,
     onEdit,
     onEditCancel,

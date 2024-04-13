@@ -6,21 +6,14 @@ import Button from '../Atoms/Button';
 import SubtitleWithIcon from '../Atoms/SubtitleWithIcon';
 import { Category } from '../../types/Seasons';
 import SelectField from './SelectField';
-import RadioButton from '../Atoms/RadioButton';
 import Checkbox from '../Atoms/Checkbox';
 
 type props = {
-  isEdited: boolean;
-  editedCategoryNumber: number;
   onSave: (newCategories: Category[]) => void;
   categories: Category[];
 };
 
-const WeightCategoryFrom: React.FC<props> = ({
-  isEdited,
-  onSave,
-  categories,
-}) => {
+const WeightCategoryFrom: React.FC<props> = ({ onSave, categories }) => {
   const [categoryName, setCategoryName] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -79,9 +72,13 @@ const WeightCategoryFrom: React.FC<props> = ({
       return;
     }
 
+    const gender = getGender();
+
     if (
       categories[ageCategoryIndex].weightCategories.some(
-        (weightCategory) => weightCategory.maxWeight === maxWeight,
+        (weightCategory) =>
+          weightCategory.gender === gender &&
+          weightCategory.maxWeight === maxWeight,
       )
     ) {
       setErrorMessage('Weight category already exists');
@@ -91,7 +88,7 @@ const WeightCategoryFrom: React.FC<props> = ({
     const newCategories = [...categories];
     newCategories[ageCategoryIndex].weightCategories.push({
       maxWeight,
-      gender: getGender(),
+      gender,
     });
 
     resetCategoryForm();
@@ -130,7 +127,7 @@ const WeightCategoryFrom: React.FC<props> = ({
 
       <p className="error">{errorMessage}</p>
       <Button
-        value={isEdited ? 'Save' : 'Add weight category'}
+        value={'Add weight category'}
         onClick={addCategory}
         style={{
           width: '100%',

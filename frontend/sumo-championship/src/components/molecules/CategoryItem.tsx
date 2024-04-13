@@ -10,6 +10,7 @@ interface props {
   minAge: number;
   maxAge: number;
   weightCategories: WeightCategory[];
+  isEdited: boolean;
   onEdit: () => void;
   onEditCancel: () => void;
   onDelete?: () => void;
@@ -23,13 +24,13 @@ const CategoryItem: React.FC<props> = ({
   minAge,
   maxAge,
   weightCategories,
+  isEdited,
   onEdit,
   onEditCancel,
   onDelete,
   onWeightCategoryDelete,
   showOptions,
 }) => {
-  const [isEdited, setIsEdited] = useState(false);
   const [femaleCategories, setFemaleCategories] = useState<WeightCategory[]>(
     [],
   );
@@ -37,20 +38,6 @@ const CategoryItem: React.FC<props> = ({
   const [allGenderCategories, setAllGenderCategories] = useState<
     WeightCategory[]
   >([]);
-
-  const handleEdit = () => {
-    onEdit();
-    setIsEdited(true);
-  };
-
-  const handleCancel = () => {
-    onEditCancel();
-    setIsEdited(false);
-  };
-
-  useEffect(() => {
-    setIsEdited(false);
-  }, [name, minAge, maxAge, weightCategories, weightCategories.length]);
 
   useEffect(() => {
     setFemaleCategories(
@@ -78,11 +65,11 @@ const CategoryItem: React.FC<props> = ({
           <div className="field">
             {isEdited ? (
               <div className="actions">
-                <IconButton name="cross" size={16} onClick={handleCancel} />
+                <IconButton name="cross" size={16} onClick={onEditCancel} />
               </div>
             ) : (
               <div className="actions">
-                <IconButton name="edit" size={20} onClick={handleEdit} />
+                <IconButton name="edit" size={20} onClick={onEdit} />
                 <IconButton name="trash" size={20} onClick={onDelete} />
               </div>
             )}

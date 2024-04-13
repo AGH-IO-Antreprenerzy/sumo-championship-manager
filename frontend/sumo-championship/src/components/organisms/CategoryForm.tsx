@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './../../styles/Organisms.css';
 import { Category } from '../../types/Seasons';
 import CategoryTable from './CategoryTable';
@@ -12,7 +12,6 @@ type props = {
 const CategoryForm: React.FC<props> = ({ onUpdate }) => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [editedCategoryNumber, setEditedCategoryNumber] = useState(-1);
-  const isEdited = editedCategoryNumber > -1;
 
   const handleSave = (newCategories: Category[]) => {
     setCategories(newCategories);
@@ -33,24 +32,22 @@ const CategoryForm: React.FC<props> = ({ onUpdate }) => {
     setEditedCategoryNumber(-1);
   };
 
+  useEffect(() => {
+    onUpdate(categories);
+  }, [categories, onUpdate]);
+
   return (
     <Tile className="categories categoriesLayout">
       <div style={{ flex: 1 }}>
         <p className="subtitle mb10">Categories</p>
         <div className="categoryForms">
           <AgeCategoryFrom
-            isEdited={isEdited}
             onSave={handleSave}
             editedCategoryNumber={editedCategoryNumber}
             categories={categories}
           />
           <hr />
-          <WeightCategoryFrom
-            isEdited={isEdited}
-            onSave={handleSave}
-            editedCategoryNumber={editedCategoryNumber}
-            categories={categories}
-          />
+          <WeightCategoryFrom onSave={handleSave} categories={categories} />
         </div>
       </div>
 
@@ -60,6 +57,7 @@ const CategoryForm: React.FC<props> = ({ onUpdate }) => {
           onDelete={handleDelete}
           onEdit={handleEdit}
           onEditCancel={handleEditCancel}
+          editedCategoryNumber={editedCategoryNumber}
           onUpdate={handleSave}
           showOptions
         />
