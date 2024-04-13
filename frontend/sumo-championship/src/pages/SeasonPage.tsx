@@ -20,6 +20,7 @@ const SeasonPage: React.FC = () => {
       const seasonInfo = await api.get<DetailedSeason>('v1/season/details', {
         name,
       })();
+      console.log('X');
       setSeasonInfo(seasonInfo);
     } catch (error) {
       setSeasonInfo(null);
@@ -32,7 +33,7 @@ const SeasonPage: React.FC = () => {
 
   useEffect(() => {
     getSeasonInfo();
-  }, [getSeasonInfo, name]);
+  }, []);
 
   return (
     <div className="page seasonPage">

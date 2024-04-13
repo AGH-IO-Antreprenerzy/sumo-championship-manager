@@ -23,7 +23,7 @@ const CategoryItem: React.FC<props> = ({
   name,
   minAge,
   maxAge,
-  weightCategories = [],
+  weightCategories,
   isEdited,
   onEdit,
   onEditCancel,
@@ -65,12 +65,12 @@ const CategoryItem: React.FC<props> = ({
           <div className="field">
             {isEdited ? (
               <div className="actions">
-                <IconButton name="cross" size={16} onClick={onEditCancel} />
+                <IconButton name="FaPlus" size={16} onClick={onEditCancel} />
               </div>
             ) : (
               <div className="actions">
-                <IconButton name="edit" size={20} onClick={onEdit} />
-                <IconButton name="trash" size={20} onClick={onDelete} />
+                <IconButton name="FaEdit" size={20} onClick={onEdit} />
+                <IconButton name="FaTrashAlt" size={20} onClick={onDelete} />
               </div>
             )}
           </div>

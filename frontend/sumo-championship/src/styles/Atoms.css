@@ -166,6 +166,7 @@
 .subtitleWithIcon {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   column-gap: 10px;
   font-size: 20px;
   margin-bottom: 10px;
@@ -205,5 +206,5 @@ input[type='radio'] {
   padding: 2px 5px;
   border-radius: 100px;
   display: flex;
-  column-gap: 5px;
+  column-gap: 2px;
 }

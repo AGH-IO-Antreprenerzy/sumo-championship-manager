@@ -117,7 +117,7 @@ const AgeCategoryFrom: React.FC<props> = ({
 
   return (
     <div className="categoryForm">
-      <SubtitleWithIcon icon="age" text="Age Category" />
+      <SubtitleWithIcon icon="FaUsers" text="Age Category" />
       <TextField
         label="Category name"
         onChange={(e) => setCategoryName(e.target.value)}

@@ -1,20 +1,17 @@
 import React from 'react';
 import './../../styles/Atoms.css';
-import Icon from './Icon';
+import FaIcon from './FaIcon';
+import * as FaIcons from 'react-icons/fa';
 
 interface props {
-  icon: string;
+  icon: keyof typeof FaIcons;
   text: string;
 }
 
 const SubtitleWithIcon: React.FC<props> = ({ icon, text }) => {
   return (
     <div className="subtitleWithIcon">
-      <Icon
-        src={require(`./../../assets/icons/${icon}.png`)}
-        alt={icon}
-        size={16}
-      />
+      <FaIcon name={icon} size={16} />
       <p>{text}</p>
     </div>
   );

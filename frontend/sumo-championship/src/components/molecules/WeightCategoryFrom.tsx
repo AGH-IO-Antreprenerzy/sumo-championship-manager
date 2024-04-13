@@ -97,7 +97,7 @@ const WeightCategoryFrom: React.FC<props> = ({ onSave, categories }) => {
 
   return (
     <div className="categoryForm">
-      <SubtitleWithIcon icon="weight" text="Weight Category" />
+      <SubtitleWithIcon icon="FaWeightHanging" text="Weight Category" />
 
       <SelectField
         name="Age category"
