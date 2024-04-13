@@ -7,6 +7,7 @@ import com.sumoc.sumochampionship.api.dto.club.ClubRequest;
 import com.sumoc.sumochampionship.db.people.Club;
 import com.sumoc.sumochampionship.db.people.WebsiteUser;
 import com.sumoc.sumochampionship.db.people.Wrestler;
+import com.sumoc.sumochampionship.db.season.Country;
 import com.sumoc.sumochampionship.repository.ClubRepository;
 import com.sumoc.sumochampionship.repository.WrestlerRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -28,6 +29,11 @@ public class ClubService {
 
     public String addClub(ClubRequest clubRequest) {
         Optional<Club> clubOptional = clubRepository.findByName(clubRequest.getName());
+
+        if (!Country.exists(clubRequest.getNationality())){
+            return "Error! Nationality " + clubRequest.getNationality() + " not supported by our system";
+        }
+
         if (clubOptional.isPresent()) {
             return "Error! Club already exists";
         }
