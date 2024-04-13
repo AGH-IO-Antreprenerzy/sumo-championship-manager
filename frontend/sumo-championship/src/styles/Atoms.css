@@ -190,5 +190,20 @@ input[type='radio'] {
   justify-content: space-between;
   column-gap: 5px;
   margin-left: 10px;
-  font-size: 16spx;
+  font-size: 16px;
+}
+
+.h6 {
+  line-height: 20px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.tag {
+  background-color: #f37316;
+  color: white;
+  padding: 2px 5px;
+  border-radius: 100px;
+  display: flex;
+  column-gap: 5px;
 }

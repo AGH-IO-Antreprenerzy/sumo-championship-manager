@@ -1,7 +1,7 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import './../../styles/Organisms.css';
 import CategoryItem from '../molecules/CategoryItem';
-import { Category } from '../../types/Seasons';
+import { Category, WeightCategory } from '../../types/Seasons';
 
 type props = {
   categories: Category[];
@@ -9,6 +9,7 @@ type props = {
   onDelete?: (category: Category) => void;
   onEdit?: (category: Category) => void;
   onEditCancel?: () => void;
+  onUpdate?: (newCategories: Category[]) => void;
   style?: React.CSSProperties;
 };
 
@@ -18,8 +19,29 @@ const CategoryTable: React.FC<props> = ({
   onDelete,
   onEdit,
   onEditCancel,
+  onUpdate,
   style,
 }) => {
+  const onWeightCategoryDelete = useCallback(
+    (ageCategoryIndex: number, weightCategory: WeightCategory) => {
+      const newCategories = [...categories];
+      if (!onUpdate || !newCategories[ageCategoryIndex]) {
+        return;
+      }
+
+      newCategories[ageCategoryIndex].weightCategories = newCategories[
+        ageCategoryIndex
+      ].weightCategories.filter((category) => {
+        return !(
+          category.gender === weightCategory.gender &&
+          category.maxWeight === weightCategory.maxWeight
+        );
+      });
+      onUpdate?.(newCategories);
+    },
+    [categories, onUpdate],
+  );
+
   const categoriesList = useMemo(() => {
     return categories.map((category, index) => {
       return (
@@ -37,11 +59,21 @@ const CategoryTable: React.FC<props> = ({
             if (onEdit) onEdit(category);
           }}
           onEditCancel={() => onEditCancel && onEditCancel()}
+          onWeightCategoryDelete={(weightCategory) =>
+            onWeightCategoryDelete(index, weightCategory)
+          }
           showOptions={showOptions}
         />
       );
     });
-  }, [categories, onDelete, onEdit, onEditCancel, showOptions]);
+  }, [
+    categories,
+    onDelete,
+    onEdit,
+    onEditCancel,
+    onWeightCategoryDelete,
+    showOptions,
+  ]);
 
   return (
     <div className="categoriesTable" style={style}>

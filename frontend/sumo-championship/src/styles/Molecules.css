@@ -31,14 +31,30 @@
 }
 
 .categoryItem {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  height: 50px;
-  padding-left: 10px;
-  background-color: white;
+  .heading {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    padding-left: 10px;
+  }
+
+  .body {
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+    font-size: 14px;
+  }
+
+  .weightCategories {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    flex: 1;
+  }
 
   .field {
     flex: 1;
@@ -189,4 +205,19 @@
   flex-direction: column;
   justify-content: space-between;
   row-gap: 40px;
+}
+
+.weightCategoryList {
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
+  align-items: center;
+
+  .list {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1;
+    column-gap: 5px;
+    row-gap: 5px;
+  }
 }

@@ -7,6 +7,7 @@ import SubtitleWithIcon from '../Atoms/SubtitleWithIcon';
 import { Category } from '../../types/Seasons';
 import SelectField from './SelectField';
 import RadioButton from '../Atoms/RadioButton';
+import Checkbox from '../Atoms/Checkbox';
 
 type props = {
   isEdited: boolean;
@@ -41,14 +42,6 @@ const WeightCategoryFrom: React.FC<props> = ({
       return true;
     }
 
-    if (
-      femaleCheckboxRef.current?.checked === false &&
-      maleCheckboxRef.current?.checked === false
-    ) {
-      setErrorMessage('Please select gender');
-      return true;
-    }
-
     if (!maxWeight) {
       setErrorMessage('Please set max weight');
       return true;
@@ -58,20 +51,24 @@ const WeightCategoryFrom: React.FC<props> = ({
   };
 
   const getGender = () => {
+    if (
+      femaleCheckboxRef.current?.checked &&
+      maleCheckboxRef.current?.checked
+    ) {
+      return 'ALL';
+    }
     if (femaleCheckboxRef.current?.checked) {
       return 'FEMALE';
     }
     if (maleCheckboxRef.current?.checked) {
       return 'MALE';
     }
-    return 'MALE';
+    return 'ALL';
   };
 
   const addCategory = () => {
-    if (checkCategoryFormErrors() || !maxWeight) {
+    if (checkCategoryFormErrors()) {
       return;
-    } else {
-      resetCategoryForm();
     }
 
     const ageCategoryIndex = categories.findIndex(
@@ -96,8 +93,8 @@ const WeightCategoryFrom: React.FC<props> = ({
       maxWeight,
       gender: getGender(),
     });
-    console.log(newCategories);
 
+    resetCategoryForm();
     onSave(newCategories);
   };
 
@@ -118,8 +115,8 @@ const WeightCategoryFrom: React.FC<props> = ({
       <div className="gender">
         <p className="heading">Gender:</p>
         <div className="checkboxes">
-          <RadioButton ref={femaleCheckboxRef} label="Female" name="gender" />
-          <RadioButton ref={maleCheckboxRef} label="Male" name="gender" />
+          <Checkbox ref={femaleCheckboxRef} label="Female" name="gender" />
+          <Checkbox ref={maleCheckboxRef} label="Male" name="gender" />
         </div>
       </div>
 
