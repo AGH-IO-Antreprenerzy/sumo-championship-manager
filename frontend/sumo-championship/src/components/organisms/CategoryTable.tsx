@@ -48,7 +48,7 @@ const CategoryTable: React.FC<props> = ({
     return categories.map((category, index) => {
       return (
         <CategoryItem
-          name={category.name}
+          name={category.ageName}
           minAge={category.minAge}
           maxAge={category.maxAge}
           weightCategories={category.weightsAndGender}

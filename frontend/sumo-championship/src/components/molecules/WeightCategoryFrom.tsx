@@ -21,7 +21,7 @@ const WeightCategoryFrom: React.FC<props> = ({ onSave, categories }) => {
   const femaleCheckboxRef = useRef<HTMLInputElement>(null);
   const maleCheckboxRef = useRef<HTMLInputElement>(null);
 
-  const ageCategoriesNames = categories.map((category) => category.name);
+  const ageCategoriesNames = categories.map((category) => category.ageName);
 
   const resetCategoryForm = () => {
     setCategoryName('');
@@ -65,7 +65,7 @@ const WeightCategoryFrom: React.FC<props> = ({ onSave, categories }) => {
     }
 
     const ageCategoryIndex = categories.findIndex(
-      (category) => category.name === categoryName,
+      (category) => category.ageName === categoryName,
     );
 
     if (ageCategoryIndex < 0) {

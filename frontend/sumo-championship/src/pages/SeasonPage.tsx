@@ -17,13 +17,14 @@ const SeasonPage: React.FC = () => {
 
   const getSeasonInfo = useCallback(async () => {
     try {
-      const seasonInfo = await api.get<DetailedSeason>('v1/season/details', {
+      const seasonInfo = await api.get<DetailedSeason>('v2/season/details', {
         name,
       })();
-      console.log('X');
+      console.log(seasonInfo);
       setSeasonInfo(seasonInfo);
     } catch (error) {
       setSeasonInfo(null);
+      alert('XD');
     }
   }, [name]);
 
@@ -62,7 +63,7 @@ const SeasonPage: React.FC = () => {
         <Tile className="categories">
           <p className="subtitle mb10">Categories</p>
           <CategoryTable
-            categories={seasonInfo?.categories || []}
+            categories={seasonInfo?.ageCategories || []}
             showOptions={false}
             style={{ height: 300 }}
           />

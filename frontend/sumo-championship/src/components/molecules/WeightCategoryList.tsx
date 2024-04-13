@@ -8,12 +8,14 @@ type props = {
   name: string;
   categories: WeightCategory[];
   onDelete: (weight: number) => void;
+  showOptions?: boolean;
 };
 
 const WeightCategoryList: React.FC<props> = ({
   name,
   categories,
   onDelete,
+  showOptions = false,
 }) => {
   return (
     <div className="weightCategoryList">
@@ -24,9 +26,13 @@ const WeightCategoryList: React.FC<props> = ({
               <RemovableTag
                 key={`${name}${category.maxWeight}`}
                 name={`<${category.maxWeight}kg`}
-                onDelete={() => {
-                  onDelete(category.maxWeight);
-                }}
+                onDelete={
+                  showOptions
+                    ? () => {
+                        onDelete(category.maxWeight);
+                      }
+                    : undefined
+                }
               />
             ))
           : '-'}

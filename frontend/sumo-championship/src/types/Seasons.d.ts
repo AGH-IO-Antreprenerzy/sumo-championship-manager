@@ -8,7 +8,7 @@ type WeightCategory = {
 };
 
 type Category = {
-  name: string;
+  ageName: string;
   minAge: number;
   maxAge: number;
   weightsAndGender: WeightCategory[];
@@ -21,7 +21,7 @@ type Season = {
 };
 
 type DetailedSeason = Season & {
-  categories: Category[];
+  ageCategories: Category[];
   status: 'ACTIVE' | 'INACTIVE';
   tournaments: Tournament[];
 };

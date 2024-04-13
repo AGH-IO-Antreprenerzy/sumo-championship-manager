@@ -20,7 +20,7 @@ type props = {
 };
 
 const checkIfNameIsUnique = (array: Category[], name: string) => {
-  return !array.some((category) => category.name === name);
+  return !array.some((category) => category.ageName === name);
 };
 
 const AgeCategoryFrom: React.FC<props> = ({
@@ -66,7 +66,7 @@ const AgeCategoryFrom: React.FC<props> = ({
     }
     const newCategories: Category[] = [
       {
-        name: categoryName,
+        ageName: categoryName,
         minAge,
         maxAge,
         weightsAndGender: [],
@@ -83,7 +83,7 @@ const AgeCategoryFrom: React.FC<props> = ({
     }
 
     if (
-      categories[editedCategoryNumber].name !== categoryName &&
+      categories[editedCategoryNumber].ageName !== categoryName &&
       !checkIfNameIsUnique(categories, categoryName)
     ) {
       alert('Category name must be unique');
@@ -93,7 +93,7 @@ const AgeCategoryFrom: React.FC<props> = ({
     const newCategories: Category[] = categories.map((category, index) => {
       if (index === editedCategoryNumber) {
         return {
-          name: categoryName,
+          ageName: categoryName,
           minAge,
           maxAge,
           weightsAndGender: category.weightsAndGender,
@@ -109,7 +109,7 @@ const AgeCategoryFrom: React.FC<props> = ({
   useEffect(() => {
     if (isEdited) {
       const category = categories[editedCategoryNumber];
-      setCategoryName(category.name);
+      setCategoryName(category.ageName);
       setMinAge(category.minAge);
       setMaxAge(category.maxAge);
     }

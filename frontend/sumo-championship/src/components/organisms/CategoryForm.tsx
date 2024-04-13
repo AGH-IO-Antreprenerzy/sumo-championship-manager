@@ -19,12 +19,12 @@ const CategoryForm: React.FC<props> = ({ onUpdate }) => {
   };
 
   const handleDelete = (category: Category) => {
-    setCategories(categories.filter((c) => c.name !== category.name));
+    setCategories(categories.filter((c) => c.ageName !== category.ageName));
   };
 
   const handleEdit = (category: Category) => {
     setEditedCategoryNumber(
-      categories.findIndex((c) => c.name === category.name),
+      categories.findIndex((c) => c.ageName === category.ageName),
     );
   };
 

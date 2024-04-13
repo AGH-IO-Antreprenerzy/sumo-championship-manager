@@ -85,6 +85,7 @@ const CategoryItem: React.FC<props> = ({
             onDelete={(maxWeight) => {
               onWeightCategoryDelete?.({ gender: 'FEMALE', maxWeight });
             }}
+            showOptions={showOptions}
           />
           <WeightCategoryList
             name="Male"
@@ -92,6 +93,7 @@ const CategoryItem: React.FC<props> = ({
             onDelete={(maxWeight) => {
               onWeightCategoryDelete?.({ gender: 'MALE', maxWeight });
             }}
+            showOptions={showOptions}
           />
           <WeightCategoryList
             name="All"
@@ -99,6 +101,7 @@ const CategoryItem: React.FC<props> = ({
             onDelete={(maxWeight) => {
               onWeightCategoryDelete?.({ gender: 'ALL', maxWeight });
             }}
+            showOptions={showOptions}
           />
         </div>
       </div>

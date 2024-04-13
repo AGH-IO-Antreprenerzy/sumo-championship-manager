@@ -11,13 +11,15 @@ const RemovableTag: React.FC<props> = ({ name, onDelete }) => {
   return (
     <div className="tag">
       <p>{name}</p>
-      <IconButton
-        name="FaPlus"
-        size={16}
-        onClick={onDelete}
-        color="white"
-        iconSttyle={{ rotate: '45deg' }}
-      />
+      {onDelete && (
+        <IconButton
+          name="FaPlus"
+          size={16}
+          onClick={onDelete}
+          color="white"
+          iconSttyle={{ rotate: '45deg' }}
+        />
+      )}
     </div>
   );
 };
