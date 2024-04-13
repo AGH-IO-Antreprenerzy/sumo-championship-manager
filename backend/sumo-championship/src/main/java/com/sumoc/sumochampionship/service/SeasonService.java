@@ -237,7 +237,7 @@ public class SeasonService {
 
         return "Season and Categories saved";
     }
-
+    
     public SeasonDetailsResponse2 getSeasonDetails2(String name){
         Season season = seasonRepository.findByName(name);
 
