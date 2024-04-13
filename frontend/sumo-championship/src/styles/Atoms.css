@@ -208,3 +208,7 @@ input[type='radio'] {
   display: flex;
   column-gap: 2px;
 }
+
+.semiBold {
+  font-weight: 600;
+}

@@ -1,18 +1,15 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Tile from '../components/Atoms/Tile';
 import DetailItem from '../components/Atoms/DetailItem';
 import api from '../api/api';
-import { DetailedSeason } from '../types/Seasons';
 import { isDateBetween } from '../utils/dateUtils';
 import CategoryTable from '../components/organisms/CategoryTable';
-import TournamentList from '../components/molecules/TournamentList';
 import Button from '../components/Atoms/Button';
-import ROUTES from '../routes/ROUTES';
 import { DetailedTournament } from '../types/Tournament';
+import ChampionsPerCategoryTable from '../components/organisms/ChampionsPerCategoryTable/ChampionsPerCategoryTable';
 
 const TournamentPage: React.FC = () => {
-  const navigate = useNavigate();
   const { id } = useParams();
   const [tournamentInfo, setTournamentInfo] =
     useState<DetailedTournament | null>(null);
@@ -30,7 +27,7 @@ const TournamentPage: React.FC = () => {
     } catch (error) {
       setTournamentInfo(null);
     }
-  }, []);
+  }, [id]);
 
   const getStatus = () => {
     if (
@@ -114,6 +111,36 @@ const TournamentPage: React.FC = () => {
           <div className="pageTop">
             <p className="subtitle mb20">Registered champions</p>
           </div>
+
+          <ChampionsPerCategoryTable
+            categories={tournamentInfo?.ageCategories ?? []}
+            champions={[
+              {
+                firstname: 'John',
+                lastname: 'Doe',
+                categoryId: 1,
+                clubName: 'Club 1',
+                gender: 'MALE',
+                id: 1,
+              },
+              {
+                firstname: 'John',
+                lastname: 'Doe',
+                categoryId: 1,
+                clubName: 'Club 1',
+                gender: 'MALE',
+                id: 1,
+              },
+              {
+                firstname: 'John',
+                lastname: 'Doe',
+                categoryId: 1,
+                clubName: 'Club 1',
+                gender: 'MALE',
+                id: 1,
+              },
+            ]}
+          />
         </Tile>
       </div>
     </div>
