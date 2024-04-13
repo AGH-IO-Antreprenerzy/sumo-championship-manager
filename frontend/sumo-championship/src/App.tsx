@@ -4,7 +4,7 @@ import Nav from './components/organisms/Nav';
 import Contact from './pages/Contact';
 import Home from './pages/Home';
 import LoginPage from './pages/LoginPage';
-import ROUTES from './routes/routes';
+import ROUTES from './routes/allRoutes';
 import { useUser } from './contexts/UserContext';
 import AddSeason from './pages/AddSeason';
 import SeasonPage from './pages/SeasonPage';

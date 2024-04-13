@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../../styles/Nav.css';
 import { useUser } from '../../contexts/UserContext';
 import { Role } from '../../api/login';
-import ROUTES from '../../routes/routes';
+import ROUTES from '../../routes/allRoutes';
 
 const Nav: React.FC = () => {
   const navigate = useNavigate();
