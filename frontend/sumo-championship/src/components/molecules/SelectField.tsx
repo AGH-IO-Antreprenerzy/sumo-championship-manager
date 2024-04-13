@@ -7,6 +7,8 @@ interface props {
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   value: string;
   errorMessage? : string;
+  placeholder?: string;
+  defaultOption? :string
 }
 
 const SelectField: React.FC<props> = ({
@@ -14,7 +16,9 @@ const SelectField: React.FC<props> = ({
   name,
   onChange,
   value,
-  errorMessage
+  errorMessage,
+  placeholder,
+  defaultOption
 }) => {
   return (
     <div className="textField_container">
@@ -25,9 +29,13 @@ const SelectField: React.FC<props> = ({
         name={name}
         className="selectField"
         onChange={onChange}
-        value={value}
+        value={defaultOption ?? value}
       >
-        <option disabled value="">{`Select ${name}`}</option>
+        {placeholder && (
+          <option value="" disabled selected>
+            {placeholder}
+          </option>
+        )}
         {options.map((option, id) => (
           <option key={id} value={option}>
             {option}

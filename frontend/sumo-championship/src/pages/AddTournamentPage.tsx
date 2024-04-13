@@ -11,7 +11,7 @@ import { getCategoriesForSeason, mapCategoriesByGender } from '../api/category';
 import TournamentCategoriesInformation from '../components/organisms/AddTournamentForms/TournamentCategoriesInformation';
 import Button from '../components/Atoms/Button';
 import { useNavigate, useParams } from 'react-router-dom';
-import ROUTES from '../routes/routes';
+import ROUTES from '../routes/allRoutes';
 import { addTournament } from '../api/tournament';
 import { ChoosableAgeCategory, Gender } from '../types/Category';
 import Tile from '../components/Atoms/Tile';

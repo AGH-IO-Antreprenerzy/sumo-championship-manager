@@ -8,7 +8,7 @@ import { isDateBetween } from '../utils/dateUtils';
 import CategoryTable from '../components/organisms/CategoryTable';
 import TournamentList from '../components/molecules/TournamentList';
 import Button from '../components/Atoms/Button';
-import ROUTES from '../routes/routes';
+import ROUTES from '../routes/allRoutes';
 import { useUser } from '../contexts/UserContext';
 import { Role } from '../api/login';
 
@@ -20,7 +20,7 @@ const SeasonPage: React.FC = () => {
 
   const getSeasonInfo = useCallback(async () => {
     try {
-      const seasonInfo = await api.get<DetailedSeason>('v1/season/details', {
+      const seasonInfo = await api.get<DetailedSeason>('v2/season/details', {
         name,
       })();
       setSeasonInfo(seasonInfo);
@@ -35,7 +35,7 @@ const SeasonPage: React.FC = () => {
 
   useEffect(() => {
     getSeasonInfo();
-  }, [getSeasonInfo, name]);
+  }, [getSeasonInfo]);
 
   return (
     <div className="page seasonPage">
@@ -64,7 +64,7 @@ const SeasonPage: React.FC = () => {
         <Tile className="categories">
           <p className="subtitle mb10">Categories</p>
           <CategoryTable
-            categories={seasonInfo?.categories || []}
+            categories={seasonInfo?.ageCategories || []}
             showOptions={false}
             style={{ height: 300 }}
           />
