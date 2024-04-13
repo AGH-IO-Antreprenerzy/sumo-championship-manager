@@ -5,7 +5,7 @@ import { WeightCategory } from '../../types/Seasons';
 import WeightCategoryList from './WeightCategoryList';
 
 interface props {
-  key?: string;
+  keyValue?: string;
   name: string;
   minAge: number;
   maxAge: number;
@@ -19,7 +19,7 @@ interface props {
 }
 
 const CategoryItem: React.FC<props> = ({
-  key,
+  keyValue,
   name,
   minAge,
   maxAge,
@@ -52,7 +52,7 @@ const CategoryItem: React.FC<props> = ({
   }, [weightCategories, weightCategories.length]);
 
   return (
-    <div key={key} className="categoryItem">
+    <div key={keyValue} className="categoryItem">
       <div className="heading">
         <div className="field" style={{ flex: 3, justifyContent: 'start' }}>
           {name}

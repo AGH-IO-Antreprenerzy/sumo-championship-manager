@@ -33,7 +33,7 @@ const SeasonPage: React.FC = () => {
 
   useEffect(() => {
     getSeasonInfo();
-  }, []);
+  }, [getSeasonInfo]);
 
   return (
     <div className="page seasonPage">
