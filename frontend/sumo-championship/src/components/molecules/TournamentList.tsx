@@ -3,6 +3,8 @@ import './../../styles/Molecules.css';
 
 import TournamentItem from './TournamentItem';
 import { Tournament } from '../../types/Tournament';
+import { useNavigate } from 'react-router-dom';
+import ROUTES from '../../routes/ROUTES';
 
 type props = {
   tournaments: Tournament[];
@@ -11,6 +13,8 @@ type props = {
 };
 
 const TournamentList: React.FC<props> = ({ tournaments, grid, style }) => {
+  const navigate = useNavigate();
+
   if (tournaments.length === 0) {
     return <p>No tournaments available</p>;
   }
@@ -28,6 +32,11 @@ const TournamentList: React.FC<props> = ({ tournaments, grid, style }) => {
           location={tournament.location.city}
           registrationDate={tournament.registerStart}
           usedOnGrid={grid}
+          onClick={() =>
+            navigate(
+              ROUTES.TOURNAMENT_PAGE.replace(':id', String(tournament.id)),
+            )
+          }
         />
       ))}
     </div>
