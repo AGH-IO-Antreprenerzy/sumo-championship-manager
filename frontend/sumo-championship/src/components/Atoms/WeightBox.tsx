@@ -1,19 +1,20 @@
 import React from 'react';
 import './../../styles/Atoms.css';
 import IconButton from './IconButton';
+import { ChoosableWeightCategory } from '../../types/Category';
 
 interface props{
-    value: string | number,
-    onRemove: () => void
+    value: ChoosableWeightCategory,
+    onClick: () => void
 }
 
-const WeightBox: React.FC<props> = ({value, onRemove}) => {
+const WeightCategoryBox: React.FC<props> = ({value, onClick}) => {
     return (
-        <div className='weightBox'>
-            <div> {`< ${value} kg`}</div>
-            <IconButton name='cross' size={16} onClick={onRemove}/>
+        <div className='weightBox' style={{backgroundColor: value.isChoosen ? "#f37316" : "#a3a3a3"}}>
+            <div> {`< ${value.maxWeight} kg`}</div>
+            <IconButton name={value.isChoosen ? 'cross' : 'plus'} size={16} onClick={onClick}/>
         </div>
     );
 };
 
-export default WeightBox;
+export default WeightCategoryBox;

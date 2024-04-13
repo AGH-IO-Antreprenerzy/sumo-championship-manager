@@ -36,11 +36,16 @@ export const addTournament = async (general: GeneralInformation, male: Categorie
 }
 
 const mapCategoriesToIds = (categories: CategoriesPerSex): number[] => {
-    if (!categories.isChoosen) return []
-    return categories
-        .categories
-        .filter(cat => cat.isChoosen)
-        .map(cat => cat.id)
+    return []
+    
+    //TODO: ADJUST THE LOGIC HERE
+    
+    
+    // if (!categories.isChoosen) return []
+    // return categories
+    //     .categories
+    //     .filter(cat => cat.isChoosen)
+    //     .map(cat => cat.id)
 }
 
 interface addTournamentDto {
