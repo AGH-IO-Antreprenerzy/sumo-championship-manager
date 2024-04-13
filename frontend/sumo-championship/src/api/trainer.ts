@@ -1,4 +1,3 @@
-import api from "./api";
 import { Role } from "./login";
 
 interface TrainerToAdd{
