@@ -167,6 +167,7 @@ const AddTrainerForm = () => {
                 options={allCountries}
                 errorMessage={countryError}
                 value={country}
+                placeholder='Select Country'
             />
             <SelectField name='Role'
                 onChange={e => setRole(e.target.value as Role)}
@@ -176,6 +177,7 @@ const AddTrainerForm = () => {
                 ]}
                 errorMessage={roleError}
                 value={role ?? ""}
+                placeholder='Select Role'
             />
             { role === Role.Club && <SelectField
                 name='Club'

@@ -131,6 +131,7 @@ const GeneralTrounamentInformation: React.FC<props> = ({
         }
         options={seasonNames}
         value={values.seasonName}
+        placeholder='Select season'
       />
     </div>
   );
