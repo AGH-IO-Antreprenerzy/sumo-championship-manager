@@ -236,7 +236,30 @@ public class SeasonService {
         }
 
         return "Season and Categories saved";
+    }
 
+    public SeasonDetailsResponse2 getSeasonDetails2(String name){
+        Season season = seasonRepository.findByName(name);
+
+        if (season == null){
+            throw new EntityNotFoundException("Season with name " + name + " not found");
+        }
+        List<Category> categories = categoryRepository.findCategoriesBySeason(season);
+        List<CategoryDto2> categoriesdto = CategoryDto2.mapListToDto(categories);
+
+        List<Tournament> tournaments = tournamentRepository.findAllBySeason(season);
+
+        // Map Tournaments to Dto and set season to null to not duplicate data across the web
+        List<TournamentDto> tournamentDtos = tournaments.stream()
+                .map(TournamentDto::mapToDto).toList();
+
+        return SeasonDetailsResponse2.builder()
+                .start(season.getStartDate())
+                .end(season.getEndDate())
+                .ageCategories(categoriesdto)
+                .tournaments(tournamentDtos)
+                .name(season.getName())
+                .build();
     }
 
 
