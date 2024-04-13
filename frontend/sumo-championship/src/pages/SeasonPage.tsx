@@ -20,7 +20,6 @@ const SeasonPage: React.FC = () => {
       const seasonInfo = await api.get<DetailedSeason>('v2/season/details', {
         name,
       })();
-      console.log(seasonInfo);
       setSeasonInfo(seasonInfo);
     } catch (error) {
       setSeasonInfo(null);
