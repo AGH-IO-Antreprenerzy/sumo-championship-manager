@@ -11,7 +11,7 @@ import { getCategoriesForSeason, mapCategoriesByGender } from '../api/category';
 import TournamentCategoriesInformation from '../components/organisms/AddTournamentForms/TournamentCategoriesInformation';
 import Button from '../components/Atoms/Button';
 import { useNavigate, useParams } from 'react-router-dom';
-import ROUTES from '../routes/ROUTES';
+import ROUTES from '../routes/routes';
 import { addTournament } from '../api/tournament';
 import { ChoosableAgeCategory, Gender } from '../types/Category';
 
@@ -262,7 +262,7 @@ const AddTournamentPage = () => {
         />
       </div>
       <Button
-        value="Add tournament"
+        name="Add tournament"
         style={{ marginTop: '20px' }}
         onClick={handleAddTournament}
       />

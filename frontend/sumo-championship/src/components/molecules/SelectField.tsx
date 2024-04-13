@@ -5,14 +5,16 @@ interface props {
   options: string[];
   name: string;
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
-  defaultOption?: string;
+  value: string;
+  errorMessage? : string;
 }
 
 const SelectField: React.FC<props> = ({
   options,
   name,
   onChange,
-  defaultOption,
+  value,
+  errorMessage
 }) => {
   return (
     <div className="textField_container">
@@ -23,14 +25,16 @@ const SelectField: React.FC<props> = ({
         name={name}
         className="selectField"
         onChange={onChange}
-        value={defaultOption}
+        value={value}
       >
+        <option disabled value="">{`Select ${name}`}</option>
         {options.map((option, id) => (
           <option key={id} value={option}>
             {option}
           </option>
         ))}
       </select>
+      <div className="error"> {errorMessage && `*${errorMessage}`} </div>
     </div>
   );
 };
