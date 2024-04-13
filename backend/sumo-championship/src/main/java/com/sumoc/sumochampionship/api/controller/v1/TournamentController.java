@@ -1,6 +1,7 @@
 package com.sumoc.sumochampionship.api.controller.v1;
 
 import com.sumoc.sumochampionship.api.dto.enrollment.WrestlerEnrollmentDto;
+import com.sumoc.sumochampionship.api.dto.tournament.TournamentDetailsResponse;
 import com.sumoc.sumochampionship.api.dto.tournament.TournamentDto;
 import com.sumoc.sumochampionship.api.dto.tournament.TournamentRequest;
 import com.sumoc.sumochampionship.api.dto.tournament.AllTournamentsResponse;
@@ -82,6 +83,17 @@ public class TournamentController {
         byte[] csvBytes = csvGeneratorUtil.generateCsvBytes(wrestlerEnrollmentDtos);
 
         return new ResponseEntity<>(csvBytes, headers, HttpStatus.OK);
+    }
 
+    @GetMapping("details")
+    public ResponseEntity<TournamentDetailsResponse> getTournamentDetails(@RequestParam Long tournamentId){
+        TournamentDetailsResponse tournamentDetailsResponse = null;
+        try{
+            tournamentDetailsResponse = tournamentService.getTournamentDetails(tournamentId);
+        }catch (EntityNotFoundException e){
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(tournamentDetailsResponse);
     }
 }
