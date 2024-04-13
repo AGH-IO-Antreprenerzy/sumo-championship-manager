@@ -128,6 +128,7 @@ public class TournamentService {
         return TournamentDetailsResponse.builder()
                 .ageCategories(categoryDto2s)
                 .id(tournamentId)
+                .seasonName(tournament.getSeason().getName())
                 .name(tournament.getName())
                 .contestEnd(tournament.getContestEnd())
                 .contestStart(tournament.getContestStart())

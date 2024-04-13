@@ -17,6 +17,8 @@ public class TournamentDetailsResponse {
     private Long id;
     private String name;
 
+    private String seasonName;
+
     private LocalDate registerStart;
     private LocalDate registerEnd;
 
