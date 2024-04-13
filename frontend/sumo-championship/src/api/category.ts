@@ -5,7 +5,7 @@ import { ChoosableAgeCategory, Gender } from "../types/Category";
 export const getCategoriesForSeason = async (season: string): Promise<ChoosableAgeCategory[]> => {
     const response = await api.getPaginated("v2/category/to-season", 100, {season})(0)
     const parsedResponse = categoriesSchema.parse(response);
-    return mapIdToCategory(parsedResponse.categories);
+    return mapCategoryToChoosableCategory(parsedResponse.categories);
 }
 
 export const mapCategoriesByGender = (categories: ChoosableAgeCategory[], gender: Gender): ChoosableAgeCategory[] => {
@@ -18,13 +18,13 @@ export const mapCategoriesByGender = (categories: ChoosableAgeCategory[], gender
     }))
 }
 
-export const mapIdToCategory = (categories: CategoryDto[]): ChoosableAgeCategory[]  => {
+export const mapCategoryToChoosableCategory = (categories: CategoryDto[]): ChoosableAgeCategory[]  => {
     return categories.map(cat => ({
         ageName: cat.ageName,
         maxAge: cat.maxAge,
         minAge: cat.minAge,
-        categories: cat.weightsAndGender.map((weightCat, index) => ({
-            id: cat.id[index],
+        categories: cat.weightsAndGender.map(weightCat => ({
+            id: weightCat.categoryId,
             maxWeight: weightCat.maxWeight,
             gender: weightCat.gender,
             isChoosen: true
@@ -34,12 +34,12 @@ export const mapIdToCategory = (categories: CategoryDto[]): ChoosableAgeCategory
 }
 
 const weightAndGenderSchema = z.object({
+    categoryId: z.number(),
     maxWeight: z.number(),
     gender: z.nativeEnum(Gender)
 })
 
 const categorySchema = z.object({
-    id: z.array(z.number()),
     ageName: z.string(),
     minAge: z.number(),
     maxAge: z.number(),

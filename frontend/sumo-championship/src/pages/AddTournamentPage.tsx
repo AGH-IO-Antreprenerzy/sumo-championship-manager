@@ -220,8 +220,13 @@ const AddTournamentPage = () => {
       await addTournament(generalInformation, maleCategories, femaleCategories);
       navigate(ROUTES.SEASON_PAGE.replace(":name", generalInformation.seasonName));
     } catch (ex: unknown) {
-      console.log(ex);
-      alert('Something went wrong');
+      if (ex instanceof Error){
+        alert(`Something went wrong: ${ex.message}`);
+      }
+
+      if (ex instanceof Response){
+        alert(`Something went wrong: ${await ex.text()}`)
+      }
     }
   };
 

@@ -9,6 +9,8 @@ export const addTournament = async (general: GeneralInformation, male: Categorie
     categories.push(...mapCategoriesToIds(male))
     categories.push(...mapCategoriesToIds(female))
 
+    if (categories.length === 0) throw new Error("Cannot add tournament without any category");
+
     const body: addTournamentDto = {
         name: general.name,
         location: {
@@ -26,7 +28,7 @@ export const addTournament = async (general: GeneralInformation, male: Categorie
         categoryIds: categories
     }
 
-    fetch(BASE_TOURNAMENT_URL + "/add", {
+    return fetch(BASE_TOURNAMENT_URL + "/add", {
         method: "POST",
         body: JSON.stringify(body),
         headers: {
@@ -36,16 +38,15 @@ export const addTournament = async (general: GeneralInformation, male: Categorie
 }
 
 const mapCategoriesToIds = (categories: CategoriesPerSex): number[] => {
-    return []
-    
-    //TODO: ADJUST THE LOGIC HERE
-    
-    
-    // if (!categories.isChoosen) return []
-    // return categories
-    //     .categories
-    //     .filter(cat => cat.isChoosen)
-    //     .map(cat => cat.id)
+    if (!categories.isChoosen) return []
+    const filteredAgeCategories =  categories.categories.filter(cat => cat.isChoosen)
+    const categoriesIds = []
+
+    for (const category of filteredAgeCategories){
+        categoriesIds.push(...category.categories.filter(cat => cat.isChoosen))
+    }
+
+    return categoriesIds.map(cat => cat.id);
 }
 
 interface addTournamentDto {

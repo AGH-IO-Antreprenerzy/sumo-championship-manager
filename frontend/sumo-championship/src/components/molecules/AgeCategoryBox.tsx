@@ -14,7 +14,7 @@ const WeightCategoriesContainer: React.FC<props> = ({ageCategory, toggleWeightCa
         <div className='categories'>
             <div className='generalContainer'>
                 <div> {`${ageCategory.ageName} ${ageCategory.minAge} - ${ageCategory.maxAge} y old`}</div>
-                <input type='checkbox' onChange={(e) => onCheckboxToggle(ageCategory.ageName, e.target.checked)}/>
+                <input type='checkbox' checked={ageCategory.isChoosen} onChange={(e) => onCheckboxToggle(ageCategory.ageName, e.target.checked)}/>
             </div>
             <div className='weightsContainer'>
                 {ageCategory.categories.map( (category, i) => (<WeightCategoryBox
