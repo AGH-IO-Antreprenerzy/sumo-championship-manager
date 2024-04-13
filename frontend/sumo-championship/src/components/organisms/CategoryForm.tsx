@@ -3,8 +3,8 @@ import './../../styles/Organisms.css';
 import { Category } from '../../types/Seasons';
 import CategoryTable from './CategoryTable';
 import Tile from '../Atoms/Tile';
-import AgeCategoryFrom from '../molecules/AgeCategoryFrom';
-import WeightCategoryFrom from '../molecules/WeightCategoryFrom';
+import AgeCategoryFrom from '../molecules/CategoryForm/AgeCategoryFrom';
+import WeightCategoryFrom from '../molecules/CategoryForm/WeightCategoryFrom';
 type props = {
   onUpdate: (categories: Category[]) => void;
 };
