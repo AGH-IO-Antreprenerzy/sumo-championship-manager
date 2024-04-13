@@ -26,7 +26,7 @@ const PageSwitcher: React.FC<props> = ({
   return (
     <div className="pageSwitcher" style={style}>
       <IconButton
-        name="left-arrow"
+        name="FaAngleLeft"
         size={20}
         style={iconStyle}
         disabled={totalPages === 0 || currentPage === 0}
@@ -36,7 +36,7 @@ const PageSwitcher: React.FC<props> = ({
         {totalPages === 0 ? 0 : currentPage + 1}
       </p>
       <IconButton
-        name="right-arrow"
+        name="FaAngleRight"
         size={20}
         style={iconStyle}
         disabled={totalPages === 0 || currentPage === totalPages - 1}

@@ -3,12 +3,13 @@ import './../../styles/Molecules.css';
 
 type props = {
   label: string;
-  value: number;
+  value?: number | null;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-
   type?: 'text' | 'number';
   style?: React.CSSProperties;
   small?: boolean;
+  min?: number;
+  max?: number;
 };
 
 const ValueField: React.FC<props> = ({
@@ -18,6 +19,8 @@ const ValueField: React.FC<props> = ({
   type = 'number',
   style,
   small = false,
+  min,
+  max,
 }) => {
   return (
     <div className="valueField_container" style={style}>
@@ -28,10 +31,10 @@ const ValueField: React.FC<props> = ({
         type={type}
         className={small ? 'inputSmall' : 'input'}
         name={`input_${label}`}
-        value={value}
+        value={value ?? undefined}
         onChange={onChange}
-        min={0}
-        max={1000}
+        min={min ?? 0}
+        max={max ?? 1000}
       />
     </div>
   );
