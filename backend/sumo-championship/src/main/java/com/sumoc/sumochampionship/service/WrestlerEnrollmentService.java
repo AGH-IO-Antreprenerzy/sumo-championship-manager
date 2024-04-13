@@ -1,7 +1,11 @@
 package com.sumoc.sumochampionship.service;
 
 import com.sumoc.sumochampionship.api.dto.enrollment.WrestlerEnrollmentDto;
+import com.sumoc.sumochampionship.api.dto.wrestlerenrollment.WrestlerEnrollmentDto2;
 import com.sumoc.sumochampionship.api.dto.wrestlerenrollment.WrestlerEnrollmentRequest;
+import com.sumoc.sumochampionship.api.dto.wrestlerenrollment.WrestlerEnrollmentResponse;
+import com.sumoc.sumochampionship.db.people.Club;
+import com.sumoc.sumochampionship.db.people.WebsiteUser;
 import com.sumoc.sumochampionship.db.people.Wrestler;
 import com.sumoc.sumochampionship.db.season.Category;
 import com.sumoc.sumochampionship.db.season.Tournament;
@@ -14,10 +18,10 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -60,6 +64,30 @@ public class WrestlerEnrollmentService {
         return "Wrestlers enrolled";
     }
 
+    public WrestlerEnrollmentResponse getWrestlerToTrainerAndTournament(WebsiteUser trainer, Long tournamentId){
+        Optional<Tournament> tournamentOptional = tournamentRepository.findById(tournamentId);
+
+        if (tournamentOptional.isEmpty())
+            throw new EntityNotFoundException("Tournament with id = " + tournamentId + " not found");
+
+        List<WrestlersEnrollment> we = wrestlerEnrollmentRepository.findAllByTournament_Id(tournamentId);
+        List<WrestlerEnrollmentDto2> wrestlers = we.stream()
+                .map(enroll -> {
+                    return WrestlerEnrollmentDto2.mapToDto(enroll.getWrestler(), enroll.getCategory());
+                })
+                .toList();
+
+        Set<Club> trainersClubs = trainer.getOwnedClubs();
+        Set<Long> clubIds = trainersClubs.stream().map(Club::getId).collect(Collectors.toSet());
+
+        List<WrestlerEnrollmentDto2> trainersWrestlers = wrestlers.stream()
+                .filter(we2 -> {return clubIds.contains(we2.getWrestler().getClubId());})
+                .toList();
+
+        return WrestlerEnrollmentResponse.builder()
+                .enrollments(trainersWrestlers)
+                .build();
+    }
 
     private boolean mayWrestlerEnroll(WrestlerEnrollmentRequest request){
         Optional<Tournament> tournamentOptional = tournamentRepository.findById(request.getTournamentId());
