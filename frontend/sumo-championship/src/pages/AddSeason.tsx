@@ -35,18 +35,17 @@ const AddSeason: React.FC = () => {
       name,
       startDate,
       endDate,
-      categories,
+      ageCategories: categories,
     };
 
     try {
-      await api.post('v1/season/add', newSeason)();
+      await api.post('v2/season/add', newSeason)();
       navigate(ROUTES.SEASONS);
     } catch (error) {
+      console.error(error);
       alert('Failed to add season');
       return;
     }
-
-    console.log('Add season', newSeason);
   };
 
   const handleCancel = () => {
