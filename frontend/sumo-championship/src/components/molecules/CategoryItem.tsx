@@ -23,7 +23,7 @@ const CategoryItem: React.FC<props> = ({
   name,
   minAge,
   maxAge,
-  weightCategories,
+  weightCategories = [],
   isEdited,
   onEdit,
   onEditCancel,

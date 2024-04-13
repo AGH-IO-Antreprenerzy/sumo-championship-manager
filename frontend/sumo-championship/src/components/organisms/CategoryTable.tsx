@@ -31,9 +31,9 @@ const CategoryTable: React.FC<props> = ({
         return;
       }
 
-      newCategories[ageCategoryIndex].weightCategories = newCategories[
+      newCategories[ageCategoryIndex].weightsAndGender = newCategories[
         ageCategoryIndex
-      ].weightCategories.filter((category) => {
+      ].weightsAndGender.filter((category) => {
         return !(
           category.gender === weightCategory.gender &&
           category.maxWeight === weightCategory.maxWeight
@@ -51,7 +51,7 @@ const CategoryTable: React.FC<props> = ({
           name={category.name}
           minAge={category.minAge}
           maxAge={category.maxAge}
-          weightCategories={category.weightCategories}
+          weightCategories={category.weightsAndGender}
           key={index.toString()}
           onDelete={() => {
             if (onEditCancel) onEditCancel();

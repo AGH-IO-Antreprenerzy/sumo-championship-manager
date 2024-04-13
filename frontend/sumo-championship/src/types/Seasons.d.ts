@@ -11,7 +11,7 @@ type Category = {
   name: string;
   minAge: number;
   maxAge: number;
-  weightCategories: WeightCategory[];
+  weightsAndGender: WeightCategory[];
 };
 
 type Season = {

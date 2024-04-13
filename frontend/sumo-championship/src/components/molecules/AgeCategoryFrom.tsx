@@ -69,7 +69,7 @@ const AgeCategoryFrom: React.FC<props> = ({
         name: categoryName,
         minAge,
         maxAge,
-        weightCategories: [],
+        weightsAndGender: [],
       },
       ...categories,
     ];
@@ -96,7 +96,7 @@ const AgeCategoryFrom: React.FC<props> = ({
           name: categoryName,
           minAge,
           maxAge,
-          weightCategories: category.weightCategories,
+          weightsAndGender: category.weightsAndGender,
         };
       }
       return category;

@@ -75,7 +75,7 @@ const WeightCategoryFrom: React.FC<props> = ({ onSave, categories }) => {
     const gender = getGender();
 
     if (
-      categories[ageCategoryIndex].weightCategories.some(
+      categories[ageCategoryIndex].weightsAndGender.some(
         (weightCategory) =>
           weightCategory.gender === gender &&
           weightCategory.maxWeight === maxWeight,
@@ -86,7 +86,7 @@ const WeightCategoryFrom: React.FC<props> = ({ onSave, categories }) => {
     }
 
     const newCategories = [...categories];
-    newCategories[ageCategoryIndex].weightCategories.push({
+    newCategories[ageCategoryIndex].weightsAndGender.push({
       maxWeight,
       gender,
     });
