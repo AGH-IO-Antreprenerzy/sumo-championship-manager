@@ -14,6 +14,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import ROUTES from '../routes/routes';
 import { addTournament } from '../api/tournament';
 import { ChoosableAgeCategory, Gender } from '../types/Category';
+import Tile from '../components/Atoms/Tile';
 
 export interface CategoriesPerSex {
   isChoosen: boolean;
@@ -233,33 +234,42 @@ const AddTournamentPage = () => {
   return (
     <div className="page">
       <h1 style={{ fontSize: '50px' }}>Add tournament</h1>
+      <br/>
       <div className="addTournamentPage">
-        <GeneralTrounamentInformation
-          values={generalInformation}
-          errors={generalInformationErrors}
-          changeValues={setGeneralInformation}
-          defaultSeason={name}
-        />
-        <TournamentCategoriesInformation
-          label="Men Competition"
-          values={maleCategories.categories}
-          toggleWeightCategory={toggleMaleCategory}
-          onPerSexCheckboxToggle={(value: boolean) =>
-            setMaleCategories((prev) => ({ ...prev, isChoosen: value }))
-          }
-          onPerAgeCheckboxToggle={setChoosenForMaleAgeCategories}
-          isPerSexCheckboxChecked={maleCategories.isChoosen}
-        />
-        <TournamentCategoriesInformation
-          label="Women Competition"
-          values={femaleCategories.categories}
-          toggleWeightCategory={toggleFemaleCategory}
-          onPerSexCheckboxToggle={(value: boolean) =>
-            setFemaleCategories((prev) => ({ ...prev, isChoosen: value }))
-          }
-          onPerAgeCheckboxToggle={setChoosenForFemaleAgeCategories}
-          isPerSexCheckboxChecked={femaleCategories.isChoosen}
-        />
+        <Tile>
+          <GeneralTrounamentInformation
+            values={generalInformation}
+            errors={generalInformationErrors}
+            changeValues={setGeneralInformation}
+            defaultSeason={name}
+          />
+        </Tile>
+        <Tile>
+          <TournamentCategoriesInformation
+            label="Men Competition"
+            values={maleCategories.categories}
+            toggleWeightCategory={toggleMaleCategory}
+            onPerSexCheckboxToggle={(value: boolean) =>
+              setMaleCategories((prev) => ({ ...prev, isChoosen: value }))
+            }
+            onPerAgeCheckboxToggle={setChoosenForMaleAgeCategories}
+            isPerSexCheckboxChecked={maleCategories.isChoosen}
+          />
+        </Tile>
+        <Tile>
+          <TournamentCategoriesInformation
+            label="Women Competition"
+            values={femaleCategories.categories}
+            toggleWeightCategory={toggleFemaleCategory}
+            onPerSexCheckboxToggle={(value: boolean) =>
+              setFemaleCategories((prev) => ({ ...prev, isChoosen: value }))
+            }
+            onPerAgeCheckboxToggle={setChoosenForFemaleAgeCategories}
+            isPerSexCheckboxChecked={femaleCategories.isChoosen}
+          />
+        </Tile>
+        
+        
       </div>
       <Button
         name="Add tournament"
