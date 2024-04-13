@@ -7,8 +7,7 @@ interface props {
   onClick: () => void;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-const Button: React.FC<props> = ({ name: value, style, onClick = () => {} }) => {
+const Button: React.FC<props> = ({ name: value, style, onClick }) => {
   return (
     <button className="button" style={style} onClick={onClick}>
       {value}
