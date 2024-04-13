@@ -22,35 +22,29 @@ public class CategoryDto2 {
     /*
       DTO made for implementing new categories logics after meeting with clients
      */
-    private List<Long> id;
     private String ageName;
     private Integer minAge;
     private Integer maxAge;
     private List<WeightDetailsRequest> weightsAndGender;
 
-    public CategoryDto2(String ageName, Integer minAge, Integer maxAge, List<WeightDetailsRequest> weightsAndGender) {
-        this.id = null;
-        this.ageName = ageName;
-        this.minAge = minAge;
-        this.maxAge = maxAge;
-        this.weightsAndGender = weightsAndGender;
-    }
+
     public static List<CategoryDto2> mapListToDto(List<Category> categories){
         HashMap<String, List<WeightDetailsRequest>> ageCategoryToWeights = new HashMap<>();
         HashMap<String, Pair<Integer, Integer>> categoryNameToAges = new HashMap<>();
-        HashMap<String, List<Long>> categoryNameToId = new HashMap<>();
+
 
         for(Category category: categories){
             ageCategoryToWeights.computeIfAbsent(category.getName(), k -> new ArrayList<>());
-            categoryNameToId.computeIfAbsent(category.getName(), k -> new ArrayList<>());
+
 
             ageCategoryToWeights.get(category.getName()).add(WeightDetailsRequest
                                                             .builder()
+                                                            .categoryId(category.getId())
                                                             .gender(category.getGender())
                                                             .maxWeight(category.getMaxWeight())
                                                             .build());
 
-            categoryNameToId.get(category.getName()).add(category.getId());
+
 
             categoryNameToAges.put(category.getName(),
                     new Pair<Integer, Integer>(category.getMinAge(), category.getMaxAge()));
@@ -60,7 +54,6 @@ public class CategoryDto2 {
 
         for(String name: ageCategoryToWeights.keySet()){
             categoriesToReturn.add(CategoryDto2.builder()
-                                                .id(categoryNameToId.get(name))
                                                 .ageName(name)
                                                 .minAge(categoryNameToAges.get(name).a)
                                                 .maxAge(categoryNameToAges.get(name).b)
