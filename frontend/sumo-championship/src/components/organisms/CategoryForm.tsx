@@ -49,14 +49,6 @@ const CategoryForm: React.FC<props> = ({ onUpdate }) => {
           <hr />
           <WeightCategoryFrom onSave={handleSave} categories={categories} />
         </div>
-
-        <Button
-          name={isEdited ? 'Save' : 'Add category'}
-          onClick={isEdited ? editCategory : addCategory}
-          style={{
-            width: '100%',
-          }}
-        />
       </div>
 
       <div style={{ flex: 2 }}>

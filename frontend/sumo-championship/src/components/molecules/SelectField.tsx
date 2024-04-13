@@ -8,6 +8,7 @@ interface props {
   value: string;
   errorMessage? : string;
   placeholder?: string;
+  defaultOption? :string
 }
 
 const SelectField: React.FC<props> = ({
@@ -15,8 +16,9 @@ const SelectField: React.FC<props> = ({
   name,
   onChange,
   value,
-  errorMessage
+  errorMessage,
   placeholder,
+  defaultOption
 }) => {
   return (
     <div className="textField_container">
