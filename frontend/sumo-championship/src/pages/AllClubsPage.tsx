@@ -1,8 +1,9 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 import Button from '../components/Atoms/Button';
 import { useNavigate, useParams } from 'react-router-dom';
-import ROUTES from '../routes/ROUTES';
+import ROUTES from '../routes/allRoutes';
 import api from '../api/api';
+import { getClubsForCountry } from '../api/club';
 import ClubList from '../components/molecules/ClubList';
 import Tile from '../components/Atoms/Tile';
 import ActivityIndicator from '../components/Atoms/ActivityIndicator';
@@ -24,13 +25,11 @@ const AllClubsPage: FunctionComponent = () => {
   const getClubs = async () => {
     try {
       setIsLoading(true);
-      const clubs = await api.get<Club[]>(
-        'v1/club/from-country',
-        {countryName},
-      )();
-
-      setClubs(clubs);
-      setIsLoading(false);
+      if (countryName ){
+        const clubs = await getClubsForCountry(countryName);
+        setClubs(clubs);
+        setIsLoading(false);
+      }
     } catch (e) {
       console.error(e);
     }
@@ -52,7 +51,7 @@ const AllClubsPage: FunctionComponent = () => {
     <div className="page">
       <div className="pageTop">
         <p className="title">Clubs:</p>
-        <Button value="Add Club +" onClick={handleAddClub} />
+        <Button name="Add Club +" onClick={handleAddClub} />
       </div>
 
       <Tile>

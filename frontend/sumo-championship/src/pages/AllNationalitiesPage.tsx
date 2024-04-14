@@ -1,8 +1,8 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 import Button from '../components/Atoms/Button';
 import { useNavigate } from 'react-router-dom';
-import ROUTES from '../routes/ROUTES';
-import api from '../api/api';
+import ROUTES from '../routes/allRoutes';
+import { getAllCountries } from '../api/country';
 import NationalitiesList from '../components/molecules/NationalitiesList';
 import Tile from '../components/Atoms/Tile';
 import ActivityIndicator from '../components/Atoms/ActivityIndicator';
@@ -18,11 +18,8 @@ const AllNationalitiesPage: FunctionComponent = () => {
   const getNationalities = async () => {
     try {
       setIsLoading(true);
-      const nationalities = await api.get<string[]>(
-        'v1/country/all',
-        {},
-      )();
-
+      const nationalities = await getAllCountries();
+      
       setNationalities(nationalities);
       setIsLoading(false);
     } catch (e) {
@@ -46,7 +43,7 @@ const AllNationalitiesPage: FunctionComponent = () => {
     <div className="page">
       <div className="pageTop">
         <p className="title">Nationalities:</p>
-        <Button value="Add Club +" onClick={handleAddClub} />
+        <Button name="Add Club +" onClick={handleAddClub} />
       </div>
 
       <Tile>

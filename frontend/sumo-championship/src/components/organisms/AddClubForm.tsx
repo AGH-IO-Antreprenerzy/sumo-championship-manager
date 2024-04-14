@@ -31,7 +31,7 @@ const AddClubForm: React.FC = () => {
   }, []);
 
   const handleSubmit = async () => {
-    if (!name || !country) {
+    if (!name || !country || country=='Choose country') {
       if (!name) setErrorMessage('Name is required');
       if (!country) setErrorMessage('Country is required');
         return;
@@ -73,7 +73,7 @@ const AddClubForm: React.FC = () => {
                 setCountry(e.target.value)
                 setErrorMessage('')
             }}
-            options={countries}
+            options={['Choose country', ...countries]}
           />
         </div>
         <p className="error">{errorMessage}</p>

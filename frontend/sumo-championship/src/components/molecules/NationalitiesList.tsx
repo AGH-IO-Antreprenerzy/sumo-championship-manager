@@ -1,6 +1,6 @@
 import React from 'react';
 import './../../styles/Molecules.css';
-import ROUTES from '../../routes/ROUTES';
+import ROUTES from '../../routes/allRoutes';
 import { useNavigate } from 'react-router-dom';
 
 import NationalityItem from './NationalityItem';
@@ -30,7 +30,7 @@ const NationalitiesList: React.FC<props> = ({ nationalities, grid, style }) => {
           name={nationality.name}
           usedOnGrid={grid}
           onClick={() => {
-            navigate(ROUTES.CLUBS.replace(':countryName', nationality.name));
+            navigate(ROUTES.CLUBS.replace(':countryName', nationality.name.toUpperCase()));
           }}
         />
       ))}
