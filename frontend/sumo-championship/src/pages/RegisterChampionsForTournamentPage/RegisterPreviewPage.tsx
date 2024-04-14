@@ -46,7 +46,7 @@ const RegisterPreviewPage = ({
     }));
 
     try {
-      await api.post('v1/wrestler-enrollment/enroll-wresstlers', body)();
+      await api.post('v1/wrestler-enrollment/enroll-wrestlers', body)();
     } catch (error) {
       console.error(error);
       alert('Something went wrong');
