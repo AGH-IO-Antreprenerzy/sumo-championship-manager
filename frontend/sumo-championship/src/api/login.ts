@@ -5,7 +5,7 @@ import { BASE_SUMO_URL, checkIsOk } from "./generalUtils";
 export const postLogin = (loginInfo: loginInformation): Promise<UserDto> => {
     const body = JSON.stringify(loginInfo)
 
-    return fetch(`${BASE_SUMO_URL}/auth/login`, {
+    return fetch(`${BASE_SUMO_URL}/authentication/jwt`, {
         method: "POST",
         headers: {
             "Content-type": "application/json"
@@ -28,8 +28,9 @@ const UserSchema = z.object({
     id: z.number(),
     firstname: z.string(),
     lastname: z.string(),
+    token: z.string(),
     email: z.string().email(),
-    userRole: z.nativeEnum(Role)
+    role: z.nativeEnum(Role)
 });
 
 type UserDto = z.infer<typeof UserSchema>;
