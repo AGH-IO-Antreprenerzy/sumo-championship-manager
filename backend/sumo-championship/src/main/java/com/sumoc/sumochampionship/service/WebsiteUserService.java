@@ -6,6 +6,8 @@ import com.sumoc.sumochampionship.repository.WebsiteUserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +31,12 @@ public class WebsiteUserService {
         }
 
         return ResponseEntity.ok().body("User added");
+    }
+
+
+    public UserDetails loadUserByEmail(String email) throws UsernameNotFoundException {
+        return websiteUserRepository.findByEmail(email).
+                orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
     private WebsiteUser getWebsiteUserFromRequest(WebsiteUserRequest websiteUserRequest) {
