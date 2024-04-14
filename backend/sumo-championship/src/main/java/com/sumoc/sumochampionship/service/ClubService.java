@@ -59,4 +59,7 @@ public class ClubService {
         return ClubDto.mapToDto(wrestler.getClub());
     }
 
+    public List<ClubDto> getAllClubsToCountry(String countryName) {
+        return clubRepository.findByNationality(countryName).stream().map(ClubDto::mapToDto).toList();
+    }
 }
