@@ -30,7 +30,7 @@ const Nav: React.FC = () => {
         <div className="option" onClick={() => navigate(ROUTES.TOURNAMENTS)}>
           Tournaments
         </div>
-        <div className="option" onClick={() => navigate(ROUTES.CLUBS)}>
+        <div className="option" onClick={() => navigate(ROUTES.NATIONALITIES)}>
           Clubs
         </div>
         <div className="option" onClick={() => navigate(ROUTES.CONTACT)}>

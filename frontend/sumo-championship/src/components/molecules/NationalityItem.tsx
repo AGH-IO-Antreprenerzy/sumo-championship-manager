@@ -8,7 +8,7 @@ type props = {
   usedOnGrid?: boolean;
 };
 
-const ClubItem: React.FC<props> = ({
+const NationalityItem: React.FC<props> = ({
   name,
   onClick,
   usedOnGrid = false,
@@ -17,7 +17,7 @@ const ClubItem: React.FC<props> = ({
 
   return (
     <div
-      className="clubItem"
+      className="nationalityItem"
       onClick={onClick}
       style={
         usedOnGrid
@@ -29,12 +29,12 @@ const ClubItem: React.FC<props> = ({
       }
     >
       <img
-        src={require('./../../assets/images/clubPlaceholder.png')}
-        alt="Club preview image"
-        className="clubItem_image"
+        src={require('./../../assets/images/nationalityPlaceholder.png')}
+        alt="Nationality preview image"
+        className="nationalityItem_image"
       />
 
-      <div className="clubItem_content">
+      <div className="nationalityItem_content">
         <p
           className="heading"
           style={{
@@ -48,4 +48,4 @@ const ClubItem: React.FC<props> = ({
   );
 };
 
-export default ClubItem;
+export default NationalityItem;
