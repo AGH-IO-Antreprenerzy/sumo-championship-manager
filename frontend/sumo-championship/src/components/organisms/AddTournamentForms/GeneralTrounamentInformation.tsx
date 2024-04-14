@@ -8,6 +8,7 @@ import {
 } from '../../../types/Tournaments';
 import SelectField from '../../molecules/SelectField';
 import ValueField from '../../molecules/ValueField';
+import { getAllCountries } from '../../../api/country';
 
 interface props {
   values: GeneralInformation;
@@ -22,6 +23,7 @@ const GeneralTrounamentInformation: React.FC<props> = ({
   changeValues,
   defaultSeason,
 }) => {
+  const [allCountries, setAllCountries] = useState<string[]>([])
   const [seasonNames, setSeasonNames] = useState<string[]>([]);
 
   useEffect(() => {
@@ -38,6 +40,8 @@ const GeneralTrounamentInformation: React.FC<props> = ({
     };
 
     getSeasonNames();
+    getAllCountries()
+    .then(setAllCountries)
   }, [changeValues, defaultSeason]);
 
   return (
@@ -70,11 +74,12 @@ const GeneralTrounamentInformation: React.FC<props> = ({
         type="date"
         errorMessage={errors.contestEnd}
       />
-      <TextField
-        label="Country"
+      <SelectField
+        name="Country"
         onChange={(e) =>
           changeValues((prev) => ({ ...prev, country: e.target.value }))
         }
+        options={allCountries}
         value={values.country}
         errorMessage={errors.country}
       />
@@ -126,6 +131,7 @@ const GeneralTrounamentInformation: React.FC<props> = ({
         }
         options={seasonNames}
         value={values.seasonName}
+        placeholder='Select season'
       />
     </div>
   );
