@@ -30,7 +30,7 @@ public class ClubService {
     public String addClub(ClubRequest clubRequest) {
         Optional<Club> clubOptional = clubRepository.findByName(clubRequest.getName());
 
-        if (!Country.exists(clubRequest.getNationality())){
+        if (!Country.exists(String.valueOf(clubRequest.getNationality()))){
             return "Error! Nationality " + clubRequest.getNationality() + " not supported by our system";
         }
 
@@ -60,6 +60,6 @@ public class ClubService {
     }
 
     public List<ClubDto> getAllClubsToCountry(String countryName) {
-        return clubRepository.findByNationality(countryName).stream().map(ClubDto::mapToDto).toList();
+        return clubRepository.findByNationality(Country.valueOf(countryName)).stream().map(ClubDto::mapToDto).toList();
     }
 }

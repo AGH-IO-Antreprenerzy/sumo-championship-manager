@@ -2,6 +2,7 @@ package com.sumoc.sumochampionship.repository;
 
 import com.sumoc.sumochampionship.db.people.Club;
 import com.sumoc.sumochampionship.db.people.WebsiteUser;
+import com.sumoc.sumochampionship.db.season.Country;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,5 +15,5 @@ public interface ClubRepository extends JpaRepository<Club, Long> {
 
     Optional<Club> findById(Long id);
     Optional<Club> findByName(String clubName);
-    List<Club> findByNationality(String nationality);
+    List<Club> findByNationality(Country nationality);
 }
