@@ -16,11 +16,13 @@ public class WrestlerEnrollmentDto2 {
 
     private WrestlersDto wrestler;
     private Long categoryId;
+    private String categoryName;
 
     public static WrestlerEnrollmentDto2 mapToDto(Wrestler wrestler, Category category){
         return WrestlerEnrollmentDto2.builder()
                 .wrestler(WrestlersDto.mapToDto(wrestler))
                 .categoryId(category.getId())
+                .categoryName(category.getName())
                 .build();
     }
 }
