@@ -125,7 +125,7 @@ const GeneralTrounamentInformation: React.FC<props> = ({
           changeValues((prev) => ({ ...prev, seasonName: e.target.value }))
         }
         options={seasonNames}
-        defaultOption={defaultSeason}
+        value={values.seasonName}
       />
     </div>
   );

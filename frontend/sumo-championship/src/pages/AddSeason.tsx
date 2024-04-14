@@ -3,7 +3,7 @@ import './../styles/Pages.css';
 import Button from '../components/Atoms/Button';
 import TextField from '../components/molecules/TextField';
 import { useNavigate } from 'react-router-dom';
-import ROUTES from '../routes/ROUTES';
+import ROUTES from '../routes/allRoutes';
 import { Category } from '../types/Seasons';
 import CategoryForm from '../components/organisms/CategoryForm';
 import Tile from '../components/Atoms/Tile';
@@ -85,7 +85,7 @@ const AddSeason: React.FC = () => {
     <div className="page">
       <div className="pageTop">
         <p className="title">Add season</p>
-        <Button value="Cancel" onClick={handleCancel} />
+        <Button name="Cancel" onClick={handleCancel} />
       </div>
       <div className="addSeasonForm ">
         <Tile className="generalInfo">
@@ -132,7 +132,7 @@ const AddSeason: React.FC = () => {
         <CategoryForm onUpdate={handleCategoriesUpdate} />
       </div>
       <div className="addSeason_footer">
-        <Button onClick={addSeason} value="Add season" style={{ width: 200 }} />
+        <Button onClick={addSeason} name="Add season" style={{ width: 200 }} />
       </div>
     </div>
   );

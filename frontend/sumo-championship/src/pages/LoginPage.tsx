@@ -7,7 +7,7 @@ const LoginPage: React.FC = () => {
     <div className="page loginPageLayout">
       <img src={require('./../assets/icons/sumo.png')} alt="sumo" />
       <Tile style={{ position: 'absolute' }}>
-        <p className="subtitle mb20">Log in form</p>
+        <p className="subtitle mb20">Log in</p>
         <LoginForm />
       </Tile>
       <img src={require('./../assets/icons/sumo.png')} alt="sumoIcon" />

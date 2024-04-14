@@ -11,7 +11,7 @@ import { CategoryDto, Gender, getCategoriesForSeason } from '../api/category';
 import TournamentCategoriesInformation from '../components/organisms/AddTournamentForms/TournamentCategoriesInformation';
 import Button from '../components/Atoms/Button';
 import { useNavigate, useParams } from 'react-router-dom';
-import ROUTES from '../routes/ROUTES';
+import ROUTES from '../routes/allRoutes';
 import { addTournament } from '../api/tournament';
 
 export interface CategoriesPerSex {
@@ -223,7 +223,7 @@ const AddTournamentPage = () => {
 
     try {
       await addTournament(generalInformation, maleCategories, femaleCategories);
-      navigate(ROUTES.HOME); //TODO: navigate to tournaments after page is created
+      navigate(ROUTES.HOME);
     } catch (ex: unknown) {
       console.log(ex);
       alert('Something went wrong');
@@ -262,7 +262,7 @@ const AddTournamentPage = () => {
         />
       </div>
       <Button
-        value="Add tournament"
+        name="Add tournament"
         style={{ marginTop: '20px' }}
         onClick={handleAddTournament}
       />
