@@ -16,4 +16,6 @@ public class WebsiteUserRequest {
     String lastname;
     String password;
     UserRole userRole;
+    String club; // Optional field for club
+    String country; // Optional field for country
 }
