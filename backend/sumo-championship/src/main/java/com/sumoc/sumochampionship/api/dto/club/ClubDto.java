@@ -1,6 +1,7 @@
 package com.sumoc.sumochampionship.api.dto.club;
 
 import com.sumoc.sumochampionship.db.people.Club;
+import com.sumoc.sumochampionship.db.season.Country;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +15,7 @@ public class ClubDto {
 
     private Long id;
     private String name;
-    private String nationality;
+    private Country nationality;
 
 
 

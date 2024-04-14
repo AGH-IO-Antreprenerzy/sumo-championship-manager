@@ -1,6 +1,7 @@
 package com.sumoc.sumochampionship.service;
 
 import com.sumoc.sumochampionship.api.dto.enrollment.WrestlerEnrollmentDto;
+import com.sumoc.sumochampionship.api.dto.wrestler.WrestlersDto;
 import com.sumoc.sumochampionship.api.dto.wrestlerenrollment.WrestlerEnrollmentDto2;
 import com.sumoc.sumochampionship.api.dto.wrestlerenrollment.WrestlerEnrollmentRequest;
 import com.sumoc.sumochampionship.api.dto.wrestlerenrollment.WrestlerEnrollmentResponse;
@@ -10,10 +11,7 @@ import com.sumoc.sumochampionship.db.people.Wrestler;
 import com.sumoc.sumochampionship.db.season.Category;
 import com.sumoc.sumochampionship.db.season.Tournament;
 import com.sumoc.sumochampionship.db.season.WrestlersEnrollment;
-import com.sumoc.sumochampionship.repository.CategoryRepository;
-import com.sumoc.sumochampionship.repository.TournamentRepository;
-import com.sumoc.sumochampionship.repository.WrestlerEnrollmentRepository;
-import com.sumoc.sumochampionship.repository.WrestlerRepository;
+import com.sumoc.sumochampionship.repository.*;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,6 +28,7 @@ public class WrestlerEnrollmentService {
     private final TournamentRepository tournamentRepository;
     private final WrestlerRepository wrestlerRepository;
     private final CategoryRepository categoryRepository;
+    private final ClubRepository clubRepository;
 
     public List<WrestlerEnrollmentDto> getWrestlerEnrollments(Long tournamentId) throws EntityNotFoundException {
         List<WrestlersEnrollment> wrestlerEnrollments = wrestlerEnrollmentRepository.findAllByTournament_Id(tournamentId);
@@ -87,6 +86,27 @@ public class WrestlerEnrollmentService {
         return WrestlerEnrollmentResponse.builder()
                 .enrollments(trainersWrestlers)
                 .build();
+    }
+
+    public WrestlerEnrollmentResponse getAllWrestlersToTournament(Long tournamentId){
+        Optional<Tournament> tournamentOptional = tournamentRepository.findById(tournamentId);
+
+        if (tournamentOptional.isEmpty())
+            throw new EntityNotFoundException("Tournament with id = " + tournamentId + " not found");
+
+        List<WrestlersEnrollment> we = wrestlerEnrollmentRepository.findAllByTournament_Id(tournamentId);
+
+        WrestlersDto.clubRepository = clubRepository;
+        List<WrestlerEnrollmentDto2> wrestlers = we.stream()
+                .map(enroll -> {
+                    return WrestlerEnrollmentDto2.mapToDto(enroll.getWrestler(), enroll.getCategory());
+                })
+                .toList();
+
+        return WrestlerEnrollmentResponse.builder()
+                .enrollments(wrestlers)
+                .build();
+
     }
 
     private boolean mayWrestlerEnroll(WrestlerEnrollmentRequest request){

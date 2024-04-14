@@ -50,5 +50,16 @@ public class WrestlerEnrollmentController {
         return ResponseEntity.ok(wer);
     }
 
+    @GetMapping("/all/to-tournament")
+    public ResponseEntity<WrestlerEnrollmentResponse> getAllWrestlersToTournament(@RequestParam Long tournamentId){
+        WrestlerEnrollmentResponse wer = null;
+        try{
+            wer = wrestlerEnrollmentService.getAllWrestlersToTournament(tournamentId);
+        }catch (EntityNotFoundException e){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(wer);
+    }
+
 
 }

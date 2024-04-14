@@ -140,7 +140,7 @@ const AgeCategoryFrom: React.FC<props> = ({
         }
       />
       <Button
-        value={isEdited ? 'Save' : 'Add age category'}
+        name={isEdited ? 'Save' : 'Add age category'}
         onClick={isEdited ? editCategory : addCategory}
         style={{
           width: '100%',

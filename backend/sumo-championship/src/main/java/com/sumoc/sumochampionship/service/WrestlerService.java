@@ -50,7 +50,10 @@ public class WrestlerService {
         Page<Wrestler> wrestlerPage = wrestlerRepository.findWrestlerByClubIn(ownedClubs, pageable);
 
         List<Wrestler> listOfWrestlers = wrestlerPage.getContent();
+        WrestlersDto.clubRepository = clubRepository;
         List<WrestlersDto> content = listOfWrestlers.stream().map(WrestlersDto::mapToDto).toList();
+
+        WrestlersDto.clubRepository = clubRepository;
 
         return WrestlersResponse.builder()
                 .wrestlersInfo(content)
@@ -147,6 +150,7 @@ public class WrestlerService {
 
         List<Wrestler> clubWrestlers = wrestlerRepository.findAllByClubIn(userClubs);
 
+        WrestlersDto.clubRepository = clubRepository;
         // Filter
         List<WrestlersDto> availableWrestlers = clubWrestlers.stream()
                 .filter(wrestler -> wrestler.availableForCategory(category.getMinAge(), category.getMaxAge()))
@@ -155,6 +159,20 @@ public class WrestlerService {
                 .toList();
 
         return availableWrestlers;
+    }
+
+    public List<WrestlersDto> getAllWrestlersToClub(Long clubId){
+        Optional<Club> optionalClub = clubRepository.findById(clubId);
+
+        if (optionalClub.isEmpty()){
+            throw new EntityNotFoundException("Club with id = " + clubId + " not found in database");
+        }
+
+
+        List<Wrestler> wrestlers = wrestlerRepository.findAllByClubIn(Set.of(optionalClub.get()));
+        WrestlersDto.clubRepository = clubRepository;
+        return wrestlers.stream().map(WrestlersDto::mapToDto).toList();
+
     }
 
 }

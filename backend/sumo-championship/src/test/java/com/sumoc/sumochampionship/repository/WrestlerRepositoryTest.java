@@ -1,6 +1,7 @@
 package com.sumoc.sumochampionship.repository;
 
 import com.sumoc.sumochampionship.db.people.*;
+import com.sumoc.sumochampionship.db.season.Country;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 
@@ -156,17 +157,17 @@ class WrestlerRepositoryTest {
     private List<Club> contextClubs(){
         Club club1 = Club.builder()
                 .name("club1")
-                .nationality("Poland")
+                .nationality(Country.POLAND)
                 .build();
 
         Club club2 = Club.builder()
                 .name("club2")
-                .nationality("Poland")
+                .nationality(Country.POLAND)
                 .build();
 
         Club club3 = Club.builder()
                 .name("club3")
-                .nationality("England")
+                .nationality(Country.UNITED_KINGDOM)
                 .build();
 
         List<Club> clubs = List.of(club1, club2, club3);
