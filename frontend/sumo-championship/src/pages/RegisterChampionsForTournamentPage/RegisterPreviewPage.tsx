@@ -42,7 +42,7 @@ const RegisterPreviewPage = ({
     const body = enrolledChampions.map((champion) => ({
       tournamentId: tournamentInfo?.id,
       wrestlerId: champion.id,
-      categoryId: champion.categoryId,
+      categoryId: [champion.categoryId],
     }));
 
     try {
