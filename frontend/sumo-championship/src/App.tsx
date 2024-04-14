@@ -12,7 +12,7 @@ import AllSeasonsPage from './pages/AllSeasonsPage';
 import CurrentTournamentsPage from './pages/CurrentTournamentsPage';
 import AddTournamentPage from './pages/AddTournamentPage';
 import TournamentPage from './pages/TournamentPage';
-import RegisterChampionsForTournamentPage from './pages/RegisterChampionsForTournamentPage';
+import RegisterChampionsForTournamentPage from './pages/RegisterChampionsForTournamentPage/RegisterChampionsForTournamentPage';
 import { Role } from './api/login';
 import AddTrainer from './pages/AddTrainer/AddTrainer';
 

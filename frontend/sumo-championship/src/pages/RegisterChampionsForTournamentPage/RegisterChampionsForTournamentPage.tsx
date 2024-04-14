@@ -1,30 +1,26 @@
 import { FunctionComponent, useCallback, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import api from '../api/api';
-import ActivityIndicator from '../components/Atoms/ActivityIndicator';
-import Button from '../components/Atoms/Button';
-import Tile from '../components/Atoms/Tile';
-import ChampionTable from '../components/organisms/ChampionTable/ChampionTable';
-import { WeightCategory } from '../types/Seasons';
-import capitalizeFirstLetter from '../utils/stringMethods';
-import { AssignedChampion } from '../types/Champion';
-import { DetailedTournament } from '../types/Tournament';
-import SelectField from '../components/molecules/SelectField';
-import TextField from '../components/molecules/TextField';
-import { Club } from '../types/Club';
-
-type CategoryStep = {
-  categoryId: number;
-  ageCategory: string;
-  weightCategory: WeightCategory;
-  champions: AssignedChampion[];
-};
+import { useNavigate, useParams } from 'react-router-dom';
+import api from '../../api/api';
+import ActivityIndicator from '../../components/Atoms/ActivityIndicator';
+import Button from '../../components/Atoms/Button';
+import Tile from '../../components/Atoms/Tile';
+import ChampionTable from '../../components/organisms/ChampionTable/ChampionTable';
+import capitalizeFirstLetter from '../../utils/stringMethods';
+import { AssignedChampion } from '../../types/Champion';
+import { DetailedTournament } from '../../types/Tournament';
+import SelectField from '../../components/molecules/SelectField';
+import TextField from '../../components/molecules/TextField';
+import { Club } from '../../types/Club';
+import { CategoryStep } from './types';
+import RegisterPreviewPage from './RegisterPreviewPage';
+import ROUTES from '../../routes/allRoutes';
 
 type WrestlersInfoResponse = {
   wrestlersInfo: AssignedChampion[];
 };
 
 const RegisterChampionsForTournamentPage: FunctionComponent = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [tournamentInfo, setTournamentInfo] =
     useState<DetailedTournament | null>(null);
@@ -42,6 +38,8 @@ const RegisterChampionsForTournamentPage: FunctionComponent = () => {
   const [searchValue, setSearchValue] = useState('');
   const [clubs, setClubs] = useState<Club[]>([]);
   const [selectedClub, setSelectedClub] = useState<Club | null>(null);
+
+  const [shouldShowPreview, setShouldShowPreview] = useState(false);
 
   const getTournamentInfo = useCallback(async () => {
     try {
@@ -176,7 +174,7 @@ const RegisterChampionsForTournamentPage: FunctionComponent = () => {
   };
 
   const handleSaveAndGoToPreview = () => {
-    //
+    setShouldShowPreview(true);
   };
 
   useEffect(() => {
@@ -200,13 +198,23 @@ const RegisterChampionsForTournamentPage: FunctionComponent = () => {
     filterAvaliableChampionsByName(searchValue);
   }, [availableChampions, filterAvaliableChampionsByName, searchValue]);
 
-  //   if (!tournamentInfo) {
-  //     return (
-  //       <div className="page">
-  //         <ActivityIndicator />
-  //       </div>
-  //     );
-  //   }
+  if (!tournamentInfo) {
+    return (
+      <div className="page">
+        <ActivityIndicator />
+      </div>
+    );
+  }
+
+  if (shouldShowPreview) {
+    return (
+      <RegisterPreviewPage
+        tournamentInfo={tournamentInfo}
+        categoriesWithChampions={steps}
+        onBack={() => setShouldShowPreview(false)}
+      />
+    );
+  }
 
   return (
     <div className="page seasonPage">
@@ -215,7 +223,10 @@ const RegisterChampionsForTournamentPage: FunctionComponent = () => {
         <Button
           name="Cancel"
           onClick={() => {
-            //
+            const response = confirm('Are you sure you want to cancel?');
+            if (response) {
+              navigate(ROUTES.HOME);
+            }
           }}
         />
       </div>
@@ -295,7 +306,7 @@ const RegisterChampionsForTournamentPage: FunctionComponent = () => {
               />
             ) : (
               <Button
-                name="Save"
+                name="Go to preview"
                 style={{ width: 100 }}
                 onClick={handleSaveAndGoToPreview}
               />
