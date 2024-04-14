@@ -9,6 +9,7 @@ import com.sumoc.sumochampionship.db.people.WebsiteUser;
 import com.sumoc.sumochampionship.db.people.Wrestler;
 import com.sumoc.sumochampionship.db.season.Country;
 import com.sumoc.sumochampionship.repository.ClubRepository;
+import com.sumoc.sumochampionship.repository.WebsiteUserRepository;
 import com.sumoc.sumochampionship.repository.WrestlerRepository;
 import jakarta.persistence.EntityNotFoundException;
 
@@ -19,6 +20,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -26,6 +29,7 @@ import java.util.Optional;
 public class ClubService {
     private final ClubRepository clubRepository;
     private final WrestlerRepository wrestlerRepository;
+    private final WebsiteUserRepository websiteUserRepository;
 
     public String addClub(ClubRequest clubRequest) {
         Optional<Club> clubOptional = clubRepository.findByName(clubRequest.getName());
@@ -39,7 +43,23 @@ public class ClubService {
         }
 
         Club club = clubRequest.mapToClub();
+        Optional<List<Long>> trainerIds = clubRequest.getTrainerIds();
+        List<WebsiteUser> trainersList = List.of();
+        if (trainerIds.isPresent()) {
+            List<Long> trainers = trainerIds.get();
+            for (Long trainerId : trainers) {
+                Optional<WebsiteUser> trainerOptional = websiteUserRepository.findById(trainerId);
+                if (trainerOptional.isEmpty()) {
+                    return "Error! Trainer with id " + trainerId + " not found";
+                }
+            }
+            trainersList = websiteUserRepository.findAllById(trainers);
+            club.setTrainers(Set.copyOf(trainersList));
+        }
         clubRepository.save(club);
+        for (WebsiteUser trainer : trainersList) {
+            trainer.getOwnedClubs().add(club);
+        }
         return "Club added successfully";
     }
 

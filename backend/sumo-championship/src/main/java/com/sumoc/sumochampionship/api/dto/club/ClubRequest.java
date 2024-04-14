@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Data
@@ -15,6 +17,7 @@ import java.util.Set;
 public class ClubRequest {
     String name;
     String nationality;
+    Optional<List<Long>> trainerIds;
 
     public Club mapToClub() {
         return Club.builder()
