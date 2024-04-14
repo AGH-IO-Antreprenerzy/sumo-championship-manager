@@ -5,7 +5,7 @@ import { BASE_SUMO_URL, checkIsOk } from "./generalUtils";
 export const postLogin = (loginInfo: loginInformation): Promise<UserDto> => {
     const body = JSON.stringify(loginInfo)
 
-    return fetch(`${BASE_SUMO_URL}/authentication/jwt`, {
+    return fetch(`${BASE_SUMO_URL}/auth/authenticate/jwt`, {
         method: "POST",
         headers: {
             "Content-type": "application/json"

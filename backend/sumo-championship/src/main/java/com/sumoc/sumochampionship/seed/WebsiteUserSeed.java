@@ -36,7 +36,7 @@ public class WebsiteUserSeed implements CommandLineRunner {
                 .password(passwordEncoder.encode("sumo123"))
                 .email("admin@gmail.com")
                 .userRole(UserRole.ADMIN)
-                .ownedClubs(new HashSet<>(clubs))
+//                .ownedClubs(new HashSet<>(clubs))
                 .build();
 
         if (websiteUserRepository.findByEmail("admin@gmail.com").isEmpty()) {
