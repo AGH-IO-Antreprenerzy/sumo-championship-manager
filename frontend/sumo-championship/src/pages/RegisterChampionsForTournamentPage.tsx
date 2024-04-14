@@ -9,6 +9,9 @@ import { WeightCategory } from '../types/Seasons';
 import capitalizeFirstLetter from '../utils/stringMethods';
 import { AssignedChampion } from '../types/Champion';
 import { DetailedTournament } from '../types/Tournament';
+import SelectField from '../components/molecules/SelectField';
+import TextField from '../components/molecules/TextField';
+import { Club } from '../types/Club';
 
 type CategoryStep = {
   categoryId: number;
@@ -17,27 +20,28 @@ type CategoryStep = {
   champions: AssignedChampion[];
 };
 
+type WrestlersInfoResponse = {
+  wrestlersInfo: AssignedChampion[];
+};
+
 const RegisterChampionsForTournamentPage: FunctionComponent = () => {
   const { id } = useParams();
   const [tournamentInfo, setTournamentInfo] =
     useState<DetailedTournament | null>(null);
   const [steps, setSteps] = useState<CategoryStep[]>([]);
   const [currentStep, setCurrentStep] = useState(0);
-
-  const [selectedClub, setSelectedClub] = useState('');
-  const [clubChampions, setClubChampions] = useState<AssignedChampion[]>([
-    {
-      id: 1,
-      firstname: 'John',
-      lastname: 'John',
-      gender: 'FEMALE',
-      birthday: '2002-06-22',
-    },
-  ]);
+  const [clubChampions, setClubChampions] = useState<AssignedChampion[]>([]);
 
   const [availableChampions, setAvailableChampions] = useState<
     AssignedChampion[]
   >([]);
+
+  const [filteredAvailableChampions, setFilteredAvailableChampions] = useState<
+    AssignedChampion[]
+  >([]);
+  const [searchValue, setSearchValue] = useState('');
+  const [clubs, setClubs] = useState<Club[]>([]);
+  const [selectedClub, setSelectedClub] = useState<Club | null>(null);
 
   const getTournamentInfo = useCallback(async () => {
     try {
@@ -65,27 +69,79 @@ const RegisterChampionsForTournamentPage: FunctionComponent = () => {
       setSteps(categoriesToEnroll);
     } catch (error) {
       setTournamentInfo(null);
-      setSteps([
-        {
-          categoryId: -1,
-          ageCategory: 'test',
-          weightCategory: {
-            gender: 'MALE',
-            maxWeight: 60,
-          },
-          champions: [],
-        },
-      ]);
+      setSteps([]);
     }
   }, [id]);
 
-  const filterAvaiableChampions = (stepNumber: number) => {
-    const championIds = steps[stepNumber].champions.map((champ) => champ.id);
-    let newAvailableChampions = [...clubChampions];
-    newAvailableChampions = newAvailableChampions.filter(
-      (champ) => !championIds.includes(champ.id),
-    );
-    setAvailableChampions(newAvailableChampions);
+  const getAllClubs = async () => {
+    // change endpoint to get all clubs for logged user
+    try {
+      const response = await api.get<Club[]>('v1/club/from-country', {
+        countryName: 'POLAND',
+      })();
+      setClubs(response);
+      setSelectedClub(response[0]);
+    } catch (error) {
+      setClubs([]);
+    }
+  };
+
+  const getClubChampions = useCallback(async (clubId: number) => {
+    try {
+      const clubSumo = await api.get<WrestlersInfoResponse>(
+        'v1/wrestler/to-club',
+        {
+          clubId,
+        },
+      )();
+
+      setClubChampions(clubSumo.wrestlersInfo);
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
+  const filterAvaliableChampionsByName = useCallback(
+    (value: string) => {
+      setSearchValue(value);
+      if (value === '') {
+        setFilteredAvailableChampions(availableChampions);
+        return;
+      }
+      const filteredChampions = availableChampions.filter((champ) => {
+        const name = `${champ.firstname.toLocaleLowerCase()} ${champ.lastname.toLocaleLowerCase()}`;
+        return name.includes(value.toLocaleLowerCase());
+      });
+      setFilteredAvailableChampions(filteredChampions);
+    },
+    [availableChampions],
+  );
+
+  const filterAvaliableChampions = useCallback(
+    (stepNumber: number) => {
+      if (!steps[stepNumber]) {
+        return;
+      }
+
+      const championIds = steps[stepNumber].champions.map((champ) => champ.id);
+      let newAvailableChampions = [...clubChampions];
+      newAvailableChampions = newAvailableChampions.filter(
+        (champ) => !championIds.includes(champ.id),
+      );
+      setAvailableChampions(newAvailableChampions);
+    },
+    [clubChampions, steps],
+  );
+
+  const handleClubChange = (clubName: string) => {
+    const club = clubs.find((club) => club.name === clubName);
+
+    if (!club) {
+      return;
+    }
+    setSelectedClub(club);
+    club?.id;
+    filterAvaliableChampions(currentStep);
   };
 
   const handleBack = () => {
@@ -93,7 +149,7 @@ const RegisterChampionsForTournamentPage: FunctionComponent = () => {
       return;
     }
     setCurrentStep(currentStep - 1);
-    filterAvaiableChampions(currentStep - 1);
+    filterAvaliableChampions(currentStep - 1);
   };
 
   const handleNext = () => {
@@ -101,7 +157,7 @@ const RegisterChampionsForTournamentPage: FunctionComponent = () => {
       return;
     }
     setCurrentStep(currentStep + 1);
-    filterAvaiableChampions(currentStep + 1);
+    filterAvaliableChampions(currentStep + 1);
   };
 
   const handleAdd = (champion: AssignedChampion) => {
@@ -109,31 +165,48 @@ const RegisterChampionsForTournamentPage: FunctionComponent = () => {
     newSteps[currentStep].champions.push(champion);
     setSteps(newSteps);
 
-    filterAvaiableChampions(currentStep);
+    filterAvaliableChampions(currentStep);
   };
 
   const handleRemove = (index: number) => {
     const newSteps = [...steps];
     newSteps[currentStep].champions.splice(index, 1);
     setSteps(newSteps);
-    filterAvaiableChampions(currentStep);
+    filterAvaliableChampions(currentStep);
+  };
+
+  const handleSaveAndGoToPreview = () => {
+    //
   };
 
   useEffect(() => {
     getTournamentInfo();
+    getAllClubs();
   }, [getTournamentInfo]);
 
   useEffect(() => {
-    setAvailableChampions(clubChampions);
-  }, [clubChampions]);
+    if (!selectedClub) {
+      return;
+    }
+    getClubChampions(selectedClub.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedClub]);
 
-  if (!tournamentInfo) {
-    return (
-      <div className="page">
-        <ActivityIndicator />
-      </div>
-    );
-  }
+  useEffect(() => {
+    filterAvaliableChampions(currentStep);
+  }, [clubChampions, currentStep, filterAvaliableChampions]);
+
+  useEffect(() => {
+    filterAvaliableChampionsByName(searchValue);
+  }, [availableChampions, filterAvaliableChampionsByName, searchValue]);
+
+  //   if (!tournamentInfo) {
+  //     return (
+  //       <div className="page">
+  //         <ActivityIndicator />
+  //       </div>
+  //     );
+  //   }
 
   return (
     <div className="page seasonPage">
@@ -151,14 +224,32 @@ const RegisterChampionsForTournamentPage: FunctionComponent = () => {
         <Tile style={{ flex: 1, height: 700 }}>
           <div className="tileTop">
             <p className="subtitle mb10">Your champions</p>
+            <div style={{ display: 'flex', columnGap: 10 }}>
+              <SelectField
+                style={{ width: 200 }}
+                options={clubs.map((club) => club.name)}
+                value={selectedClub?.name ?? ''}
+                name="Club"
+                onChange={(e) => {
+                  handleClubChange(e.target.value);
+                }}
+              />
+              <TextField
+                style={{ width: 200 }}
+                label="Champion search"
+                placeholder="Search by name"
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+              />
+            </div>
           </div>
           <ChampionTable
-            champions={availableChampions}
+            champions={filteredAvailableChampions}
             showOptions
             onAdd={handleAdd}
           />
         </Tile>
-        <div>
+        <div style={{ flex: 1, height: 700 }}>
           <Tile style={{ flex: 1, height: 700 }}>
             <div className="tileTop">
               <p className="subtitle mb10">Selected champions</p>
@@ -195,12 +286,20 @@ const RegisterChampionsForTournamentPage: FunctionComponent = () => {
               disabled={currentStep <= 0}
               onClick={handleBack}
             />
-            <Button
-              name="Next"
-              style={{ width: 100 }}
-              disabled={currentStep >= steps.length - 1}
-              onClick={handleNext}
-            />
+            {currentStep !== steps.length - 1 ? (
+              <Button
+                name="Next"
+                style={{ width: 100 }}
+                disabled={currentStep >= steps.length - 1}
+                onClick={handleNext}
+              />
+            ) : (
+              <Button
+                name="Save"
+                style={{ width: 100 }}
+                onClick={handleSaveAndGoToPreview}
+              />
+            )}
           </div>
         </div>
       </div>

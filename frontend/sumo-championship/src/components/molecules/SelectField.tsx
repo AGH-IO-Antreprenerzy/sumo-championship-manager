@@ -6,9 +6,10 @@ interface props {
   name: string;
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
   value: string;
-  errorMessage? : string;
+  errorMessage?: string;
   placeholder?: string;
-  defaultOption? :string
+  defaultOption?: string;
+  style?: React.CSSProperties;
 }
 
 const SelectField: React.FC<props> = ({
@@ -18,10 +19,11 @@ const SelectField: React.FC<props> = ({
   value,
   errorMessage,
   placeholder,
-  defaultOption
+  defaultOption,
+  style,
 }) => {
   return (
-    <div className="textField_container">
+    <div className="textField_container" style={style}>
       <label htmlFor={name} className="label">
         {name}
       </label>

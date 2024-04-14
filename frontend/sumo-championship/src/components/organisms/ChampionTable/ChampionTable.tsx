@@ -33,7 +33,7 @@ const ChampionTable: React.FC<props> = ({
             name={champion.firstname + ' ' + champion.lastname}
             gender={champion.gender}
             birthYear={new Date(champion.birthday).getFullYear().toString()}
-            clubName="Example"
+            clubName={champion.clubName ?? '-'}
             showOptions={showOptions}
             onAdd={
               onAdd
