@@ -9,7 +9,6 @@ const clubSchema = z.object({
 
 
 export const getClubsForCountry = (country: string): Promise<Club[]> => {
-    //TODO: add here real backend call
     return api.get<Club[]>("v1/club/from-country", {countryName: country})()
     .then(z.array(clubSchema).parse)
 }

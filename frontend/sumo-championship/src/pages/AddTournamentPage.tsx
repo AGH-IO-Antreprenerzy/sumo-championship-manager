@@ -223,7 +223,7 @@ const AddTournamentPage = () => {
 
     try {
       await addTournament(generalInformation, maleCategories, femaleCategories);
-      navigate(ROUTES.HOME); //TODO: navigate to tournaments after page is created
+      navigate(ROUTES.HOME);
     } catch (ex: unknown) {
       console.log(ex);
       alert('Something went wrong');
