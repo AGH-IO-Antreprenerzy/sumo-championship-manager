@@ -3,7 +3,7 @@ import TextField from '../../molecules/TextField';
 import { Role } from '../../../api/login';
 import { getAllCountries } from '../../../api/country';
 import SelectField from '../../molecules/SelectField';
-import { getClubs } from '../../../api/club';
+import { getClubsForCountry } from '../../../api/club';
 import { addTrainer } from '../../../api/trainer';
 import { useNavigate } from 'react-router-dom';
 import ROUTES from '../../../routes/allRoutes';
@@ -38,7 +38,8 @@ const AddTrainerForm = () => {
             .then(setAllCountries)
         }
 
-        getClubs(country)
+        getClubsForCountry(country)
+        .then(clubs => clubs.map(c => c.name))
         .then(setClubsPerCountry)
         
     }, [country, allCountries.length])
@@ -112,7 +113,7 @@ const AddTrainerForm = () => {
 
         if (isValid){
             const body = {
-                name,
+                firstname: name,
                 lastname,
                 password,
                 email,
@@ -122,7 +123,7 @@ const AddTrainerForm = () => {
             }
             try{
                 await addTrainer(body)
-                navigate(ROUTES.HOME) //change it probably to sth else
+                navigate(ROUTES.HOME)
             }
             catch(ex: unknown){
                 if (ex instanceof Error)
@@ -185,6 +186,7 @@ const AddTrainerForm = () => {
                 options={clubsPerCountry}
                 errorMessage={clubError}
                 value={club}
+                placeholder='Select Club'
             />}
             <Button
                 name='Add trainer'
