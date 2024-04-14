@@ -10,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class WeightDetailsRequest {
-
+    private Long categoryId;
     private Integer maxWeight;
     private Gender gender;
 }

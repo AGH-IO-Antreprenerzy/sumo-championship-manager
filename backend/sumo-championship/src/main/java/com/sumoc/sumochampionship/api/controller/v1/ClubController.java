@@ -73,4 +73,9 @@ public class ClubController {
 
 
     }
+
+    @GetMapping("/from-country")
+    public ResponseEntity<List<ClubDto>> getAllClubsToCountry(@RequestParam String countryName) {
+        return ResponseEntity.ok(clubService.getAllClubsToCountry(countryName));
+    }
 }
