@@ -34,36 +34,28 @@ public class AuthController {
 
     private final AuthenticationService authenticationService;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+//    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    private WebsiteUserRepository userRepository;
+//    private final CustomUserDetailsService userDetailsService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private CustomUserDetailsService userDetailsService;
-
-    @PostMapping("/login")
-    public ResponseEntity<?> authenticateUser(@RequestBody LoginDto loginDto) {
-        WebsiteUserResponse response = userDetailsService.getWebsiteUser(loginDto.getEmail());
-        if (response == null) {
-            return new ResponseEntity<>("User not found", HttpStatus.FORBIDDEN);
-        }
-
-        try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword())
-            );
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        } catch (AuthenticationException e) {
-            return new ResponseEntity<>("Invalid credentials", HttpStatus.FORBIDDEN);
-        }
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
+//    @PostMapping("/login")
+//    public ResponseEntity<?> authenticateUser(@RequestBody LoginDto loginDto) {
+//        WebsiteUserResponse response = userDetailsService.getWebsiteUser(loginDto.getEmail());
+//        if (response == null) {
+//            return new ResponseEntity<>("User not found", HttpStatus.FORBIDDEN);
+//        }
+//
+//        try {
+//            Authentication authentication = authenticationManager.authenticate(
+//                    new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword())
+//            );
+//            SecurityContextHolder.getContext().setAuthentication(authentication);
+//        } catch (AuthenticationException e) {
+//            return new ResponseEntity<>("Invalid credentials", HttpStatus.FORBIDDEN);
+//        }
+//
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+//    }
 
     @GetMapping("/logout")
     public String logoutPage() {
@@ -82,6 +74,11 @@ public class AuthController {
     @PostMapping("/authenticate/jwt")
     public ResponseEntity<AuthenticationResponse> authenticate (@RequestBody AuthenticationRequest request){
         return ResponseEntity.ok(authenticationService.authenticate(request));
+    }
+
+    @GetMapping("/ping")
+    public ResponseEntity<String> pingAuth(){
+        return ResponseEntity.ok("Ping. No i gitara");
     }
 
 }
