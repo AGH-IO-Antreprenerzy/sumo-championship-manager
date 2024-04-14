@@ -20,14 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-
-/**
- * Season controller
- * Implements POST for login
- */
-
 @RequiredArgsConstructor
-@CrossOrigin
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
