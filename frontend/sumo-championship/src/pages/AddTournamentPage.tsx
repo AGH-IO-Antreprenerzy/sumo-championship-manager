@@ -7,19 +7,19 @@ import {
   defaultGeneralInformation,
   defaultGeneralInformationErrors,
 } from '../types/Tournaments';
-import { CategoryDto, Gender, getCategoriesForSeason } from '../api/category';
+import { getCategoriesForSeason, mapCategoriesByGender } from '../api/category';
 import TournamentCategoriesInformation from '../components/organisms/AddTournamentForms/TournamentCategoriesInformation';
 import Button from '../components/Atoms/Button';
 import { useNavigate, useParams } from 'react-router-dom';
-import ROUTES from '../routes/ROUTES';
+import ROUTES from '../routes/allRoutes';
 import { addTournament } from '../api/tournament';
+import { ChoosableAgeCategory, Gender } from '../types/Category';
+import Tile from '../components/Atoms/Tile';
 
 export interface CategoriesPerSex {
   isChoosen: boolean;
-  categories: CategoryToAdd[];
+  categories: ChoosableAgeCategory[];
 }
-
-export type CategoryToAdd = CategoryDto & { isChoosen: boolean };
 
 const AddTournamentPage = () => {
   const { name } = useParams();
@@ -45,73 +45,69 @@ const AddTournamentPage = () => {
       const categories = await getCategoriesForSeason(
         generalInformation.seasonName,
       );
-      const mappedCategories = categories.map((category) => ({
-        ...category,
-        isChoosen: true,
-      }));
 
-      const mappedMaleCategories = mappedCategories.filter(
-        (category) =>
-          category.gender === Gender.MALE || category.gender === Gender.ALL,
-      );
+      const maleCategories = mapCategoriesByGender(categories, Gender.MALE)
 
-      const mappedFemaleCategories = mappedCategories.filter(
-        (category) =>
-          category.gender === Gender.FEMALE || category.gender === Gender.ALL,
-      );
+      const femaleCategories = mapCategoriesByGender(categories, Gender.FEMALE)
 
-      setMaleCategories({ isChoosen: true, categories: mappedMaleCategories });
+      setMaleCategories({ isChoosen: true, categories: maleCategories });
       setFemaleCategories({
         isChoosen: true,
-        categories: mappedFemaleCategories,
+        categories: femaleCategories,
       });
     };
 
     getCategories();
   }, [generalInformation.seasonName]);
 
-  const removeMaleCategory = (name: string) => {
-    const newCategories = maleCategories.categories.filter(
-      (category) => category.name != name,
-    );
+  const toggleMaleCategory = (name: string, id: number, value: boolean) => {
+    const newCategories = maleCategories.categories;
+    const searchedAgeCategory = newCategories.find(cat => cat.ageName === name)
+    const searchedWeightCategory = searchedAgeCategory?.categories.find(cat => cat.id === id)
+
+    if (searchedWeightCategory !== undefined){
+      searchedWeightCategory.isChoosen = value
+    }
+
     setMaleCategories((prev) => ({ ...prev, categories: newCategories }));
   };
 
-  const removeFemaleCategory = (name: string) => {
-    const newCategories = femaleCategories.categories.filter(
-      (category) => category.name != name,
-    );
+  const toggleFemaleCategory = (name: string, id: number, value: boolean) => {
+    const newCategories = femaleCategories.categories;
+    const searchedAgeCategory = newCategories.find(cat => cat.ageName === name)
+    const searchedWeightCategory = searchedAgeCategory?.categories.find(cat => cat.id === id)
+
+    if (searchedWeightCategory !== undefined){
+      searchedWeightCategory.isChoosen = value
+    }
+    
     setFemaleCategories((prev) => ({ ...prev, categories: newCategories }));
   };
 
-  const setChoosenForMaleCategories = (
-    categoryNames: string[],
+  const setChoosenForMaleAgeCategories = (
+    name: string,
     value: boolean,
   ) => {
     const newCategories = maleCategories.categories;
-    categoryNames.forEach((name) => {
-      const cat = newCategories.find((c) => c.name === name);
-
-      if (cat !== undefined) {
-        cat.isChoosen = value;
-      }
-    });
+    const changedCategory = newCategories.find(cat => cat.ageName === name)
+    
+    if (changedCategory !== undefined){
+      changedCategory.isChoosen = value
+    }
 
     setMaleCategories((prev) => ({ ...prev, categories: newCategories }));
   };
 
-  const setChoosenForFemaleCategories = (
-    categoryNames: string[],
+  const setChoosenForFemaleAgeCategories = (
+    name: string,
     value: boolean,
   ) => {
     const newCategories = femaleCategories.categories;
-    categoryNames.forEach((name) => {
-      const cat = newCategories.find((c) => c.name === name);
-
-      if (cat !== undefined) {
-        cat.isChoosen = value;
-      }
-    });
+    const changedCategory = newCategories.find(cat => cat.ageName === name)
+    
+    if (changedCategory !== undefined){
+      changedCategory.isChoosen = value
+    }
 
     setFemaleCategories((prev) => ({ ...prev, categories: newCategories }));
   };
@@ -223,46 +219,60 @@ const AddTournamentPage = () => {
 
     try {
       await addTournament(generalInformation, maleCategories, femaleCategories);
-      navigate(ROUTES.HOME); //TODO: navigate to tournaments after page is created
+      navigate(ROUTES.SEASON_PAGE.replace(":name", generalInformation.seasonName));
     } catch (ex: unknown) {
-      console.log(ex);
-      alert('Something went wrong');
+      if (ex instanceof Error){
+        alert(`Something went wrong: ${ex.message}`);
+      }
+
+      if (ex instanceof Response){
+        alert(`Something went wrong: ${await ex.text()}`)
+      }
     }
   };
 
   return (
     <div className="page">
       <h1 style={{ fontSize: '50px' }}>Add tournament</h1>
+      <br/>
       <div className="addTournamentPage">
-        <GeneralTrounamentInformation
-          values={generalInformation}
-          errors={generalInformationErrors}
-          changeValues={setGeneralInformation}
-          defaultSeason={name}
-        />
-        <TournamentCategoriesInformation
-          label="Men Competition"
-          values={maleCategories.categories}
-          removeCategory={removeMaleCategory}
-          onPerSexCheckboxToggle={(value: boolean) =>
-            setMaleCategories((prev) => ({ ...prev, isChoosen: value }))
-          }
-          onPerAgeCheckboxToggle={setChoosenForMaleCategories}
-          isPerSexCheckboxChecked={maleCategories.isChoosen}
-        />
-        <TournamentCategoriesInformation
-          label="Women Competition"
-          values={femaleCategories.categories}
-          removeCategory={removeFemaleCategory}
-          onPerSexCheckboxToggle={(value: boolean) =>
-            setFemaleCategories((prev) => ({ ...prev, isChoosen: value }))
-          }
-          onPerAgeCheckboxToggle={setChoosenForFemaleCategories}
-          isPerSexCheckboxChecked={femaleCategories.isChoosen}
-        />
+        <Tile>
+          <GeneralTrounamentInformation
+            values={generalInformation}
+            errors={generalInformationErrors}
+            changeValues={setGeneralInformation}
+            defaultSeason={name}
+          />
+        </Tile>
+        <Tile>
+          <TournamentCategoriesInformation
+            label="Men Competition"
+            values={maleCategories.categories}
+            toggleWeightCategory={toggleMaleCategory}
+            onPerSexCheckboxToggle={(value: boolean) =>
+              setMaleCategories((prev) => ({ ...prev, isChoosen: value }))
+            }
+            onPerAgeCheckboxToggle={setChoosenForMaleAgeCategories}
+            isPerSexCheckboxChecked={maleCategories.isChoosen}
+          />
+        </Tile>
+        <Tile>
+          <TournamentCategoriesInformation
+            label="Women Competition"
+            values={femaleCategories.categories}
+            toggleWeightCategory={toggleFemaleCategory}
+            onPerSexCheckboxToggle={(value: boolean) =>
+              setFemaleCategories((prev) => ({ ...prev, isChoosen: value }))
+            }
+            onPerAgeCheckboxToggle={setChoosenForFemaleAgeCategories}
+            isPerSexCheckboxChecked={femaleCategories.isChoosen}
+          />
+        </Tile>
+        
+        
       </div>
       <Button
-        value="Add tournament"
+        name="Add tournament"
         style={{ marginTop: '20px' }}
         onClick={handleAddTournament}
       />

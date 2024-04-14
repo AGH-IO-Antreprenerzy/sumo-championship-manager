@@ -5,18 +5,20 @@ interface props {
   options: string[];
   name: string;
   onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
-  defaultOption?: string;
+  value: string;
+  errorMessage? : string;
   placeholder?: string;
-  value?: string;
+  defaultOption? :string
 }
 
 const SelectField: React.FC<props> = ({
   options,
   name,
   onChange,
-  defaultOption,
-  placeholder,
   value,
+  errorMessage,
+  placeholder,
+  defaultOption
 }) => {
   return (
     <div className="textField_container">
@@ -40,6 +42,7 @@ const SelectField: React.FC<props> = ({
           </option>
         ))}
       </select>
+      <div className="error"> {errorMessage && `*${errorMessage}`} </div>
     </div>
   );
 };

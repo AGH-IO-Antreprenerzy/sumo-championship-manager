@@ -1,26 +1,49 @@
 import { z } from "zod";
 import api from "./api";
+import { ChoosableAgeCategory, Gender } from "../types/Category";
 
-export const getCategoriesForSeason = async (season: string): Promise<CategoryDto[]> => {
-    const response = await api.getPaginated("v1/category/to-season", 100, {season})(0)
+export const getCategoriesForSeason = async (season: string): Promise<ChoosableAgeCategory[]> => {
+    const response = await api.getPaginated("v2/category/to-season", 100, {season})(0)
     const parsedResponse = categoriesSchema.parse(response);
-    return parsedResponse.categories;
+    return mapCategoryToChoosableCategory(parsedResponse.categories);
 }
 
-export enum Gender{
-    MALE = "MALE",
-    FEMALE = "FEMALE",
-    ALL = "ALL"
+export const mapCategoriesByGender = (categories: ChoosableAgeCategory[], gender: Gender): ChoosableAgeCategory[] => {
+    return categories.map(cat => ({
+        ageName: cat.ageName,
+        maxAge: cat.maxAge,
+        minAge: cat.minAge,
+        isChoosen: cat.isChoosen,
+        categories: cat.categories.filter(ageCat => ageCat.gender === gender)
+    }))
 }
 
-const categorySchema = z.object({
-    id: z.number(),
-    name: z.string(),
-    minAge: z.number(),
-    maxAge: z.number(),
-    minWeight: z.number(),
+export const mapCategoryToChoosableCategory = (categories: CategoryDto[]): ChoosableAgeCategory[]  => {
+    return categories.map(cat => ({
+        ageName: cat.ageName,
+        maxAge: cat.maxAge,
+        minAge: cat.minAge,
+        categories: cat.weightsAndGender.map(weightCat => ({
+            id: weightCat.categoryId,
+            maxWeight: weightCat.maxWeight,
+            gender: weightCat.gender,
+            isChoosen: true
+        })),
+        isChoosen: true
+    }))
+}
+
+const weightAndGenderSchema = z.object({
+    categoryId: z.number(),
     maxWeight: z.number(),
     gender: z.nativeEnum(Gender)
+})
+
+const categorySchema = z.object({
+    ageName: z.string(),
+    minAge: z.number(),
+    maxAge: z.number(),
+    weightsAndGender: z.array(weightAndGenderSchema)
 })
 
 export type CategoryDto = z.infer<typeof categorySchema>;
