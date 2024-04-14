@@ -1,7 +1,8 @@
+import api from "./api";
 import { Role } from "./login";
 
 interface TrainerToAdd{
-    name: string,
+    firstname: string,
     lastname: string,
     password: string,
     email: string,
@@ -11,8 +12,6 @@ interface TrainerToAdd{
 }
 
 export const addTrainer = async (trainer: TrainerToAdd) => {
-    console.log(trainer)
-    // const body = JSON.stringify(trainer)
-
-    // api.post("v1/trainer/add", body)()
+    const body = JSON.stringify(trainer);
+    await api.post("v1/website-user/add", body)();
 }
