@@ -107,7 +107,7 @@
   row-gap: 30px;
   align-content: flex-start;
   margin: 10px;
-  width: 30%;
+  width: 100%;
 
   .generalContainer {
     display: flex;

@@ -1,6 +1,5 @@
 import { FunctionComponent, useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { DetailedTournament } from '../types/Tournament';
 import api from '../api/api';
 import ActivityIndicator from '../components/Atoms/ActivityIndicator';
 import Button from '../components/Atoms/Button';
@@ -9,6 +8,7 @@ import ChampionTable from '../components/organisms/ChampionTable/ChampionTable';
 import { WeightCategory } from '../types/Seasons';
 import capitalizeFirstLetter from '../utils/stringMethods';
 import { AssignedChampion } from '../types/Champion';
+import { DetailedTournament } from '../types/Tournament';
 
 type CategoryStep = {
   categoryId: number;
@@ -140,7 +140,7 @@ const RegisterChampionsForTournamentPage: FunctionComponent = () => {
       <div className="pageTop">
         <p className="title">Tournament: {tournamentInfo?.name ?? '-'}</p>
         <Button
-          value="Cancel"
+          name="Cancel"
           onClick={() => {
             //
           }}
@@ -188,7 +188,7 @@ const RegisterChampionsForTournamentPage: FunctionComponent = () => {
           </Tile>
           <div className="belowTile">
             <Button
-              value="Back"
+              name="Back"
               style={{
                 width: 100,
               }}
@@ -196,7 +196,7 @@ const RegisterChampionsForTournamentPage: FunctionComponent = () => {
               onClick={handleBack}
             />
             <Button
-              value="Next"
+              name="Next"
               style={{ width: 100 }}
               disabled={currentStep >= steps.length - 1}
               onClick={handleNext}

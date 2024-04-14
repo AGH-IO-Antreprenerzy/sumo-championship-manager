@@ -4,7 +4,7 @@ import './../../styles/Molecules.css';
 import TournamentItem from './TournamentItem';
 import { Tournament } from '../../types/Tournament';
 import { useNavigate } from 'react-router-dom';
-import ROUTES from '../../routes/ROUTES';
+import ROUTES from '../../routes/allRoutes';
 
 type props = {
   tournaments: Tournament[];

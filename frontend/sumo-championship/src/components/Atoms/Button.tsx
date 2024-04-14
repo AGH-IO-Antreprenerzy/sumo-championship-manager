@@ -2,7 +2,7 @@ import React from 'react';
 import './../../styles/Atoms.css';
 
 interface props {
-  value: string;
+  name: string;
   style?: React.CSSProperties;
   onClick?: () => void;
   disabled?: boolean;
@@ -10,7 +10,7 @@ interface props {
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 const Button: React.FC<props> = ({
-  value,
+  name,
   style,
   onClick = () => {
     //
@@ -24,7 +24,7 @@ const Button: React.FC<props> = ({
       onClick={onClick}
       disabled={disabled}
     >
-      {value}
+      {name}
     </button>
   );
 };

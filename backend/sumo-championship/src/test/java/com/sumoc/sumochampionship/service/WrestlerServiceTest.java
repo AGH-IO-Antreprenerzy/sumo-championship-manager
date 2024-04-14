@@ -7,6 +7,7 @@ import com.sumoc.sumochampionship.db.people.Gender;
 import com.sumoc.sumochampionship.db.people.WebsiteUser;
 import com.sumoc.sumochampionship.db.people.Wrestler;
 import com.sumoc.sumochampionship.db.season.Category;
+import com.sumoc.sumochampionship.db.season.Country;
 import com.sumoc.sumochampionship.repository.CategoryRepository;
 import com.sumoc.sumochampionship.repository.WrestlerRepository;
 import org.junit.jupiter.api.Assertions;
@@ -54,7 +55,7 @@ public class WrestlerServiceTest {
         Club club = Club.builder()
                 .name("c")
                 .id(1L)
-                .nationality("Poland")
+                .nationality(Country.POLAND)
                 .build();
         user.setOwnedClubs(Set.of(club));
         List<Wrestler> content = new ArrayList<>(wrestlerNumber);

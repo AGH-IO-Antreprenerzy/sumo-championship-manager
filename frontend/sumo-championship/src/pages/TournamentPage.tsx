@@ -8,9 +8,9 @@ import CategoryTable from '../components/organisms/CategoryTable';
 import Button from '../components/Atoms/Button';
 import { DetailedTournament } from '../types/Tournament';
 import ChampionsPerCategoryTable from '../components/organisms/ChampionsPerCategoryTable/ChampionsPerCategoryTable';
-import ROUTES from '../routes/ROUTES';
 import { AllRegisteredChampionsResponse } from '../types/RegisteredChampions';
 import { AssignedChampion } from '../types/Champion';
+import ROUTES from '../routes/allRoutes';
 
 const TournamentPage: React.FC = () => {
   const navigate = useNavigate();
@@ -108,7 +108,7 @@ const TournamentPage: React.FC = () => {
       <div className="pageTop">
         <p className="title">Tournament: {tournamentInfo?.name ?? '-'}</p>
         <Button
-          value="Export"
+          name="Export"
           onClick={() => {
             // TODO: Implement export functionality
           }}
@@ -136,7 +136,7 @@ const TournamentPage: React.FC = () => {
           <DetailItem name="Status:" info={getStatus()} />
 
           <Button
-            value="Register champions"
+            name="Register champions"
             onClick={() => {
               if (id) {
                 navigate(ROUTES.TOURNAMENT_REGISTER_PAGE.replace(':id', id));

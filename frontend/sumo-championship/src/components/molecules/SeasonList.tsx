@@ -4,7 +4,7 @@ import { Season } from '../../types/Seasons';
 import Tile from '../Atoms/Tile';
 import SeasonItem from './SeasonItem';
 import { useNavigate } from 'react-router-dom';
-import ROUTES from '../../routes/ROUTES';
+import ROUTES from '../../routes/allRoutes';
 
 type props = {
   seasons: Season[];

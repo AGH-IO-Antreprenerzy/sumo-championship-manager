@@ -126,7 +126,7 @@ const WeightCategoryFrom: React.FC<props> = ({ onSave, categories }) => {
 
       <p className="error">{errorMessage}</p>
       <Button
-        value={'Add weight category'}
+        name={'Add weight category'}
         onClick={addCategory}
         style={{
           width: '100%',
