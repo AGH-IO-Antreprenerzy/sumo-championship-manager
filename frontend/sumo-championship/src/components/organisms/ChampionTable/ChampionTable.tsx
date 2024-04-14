@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { Champion } from '../../../types/Champion';
 import ChampionItem from './ChampionItem';
 

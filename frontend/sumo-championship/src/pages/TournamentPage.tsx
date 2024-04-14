@@ -9,12 +9,19 @@ import Button from '../components/Atoms/Button';
 import { DetailedTournament } from '../types/Tournament';
 import ChampionsPerCategoryTable from '../components/organisms/ChampionsPerCategoryTable/ChampionsPerCategoryTable';
 import ROUTES from '../routes/ROUTES';
+import { AllRegisteredChampionsResponse } from '../types/RegisteredChampions';
+import { AssignedChampion } from '../types/Champion';
 
 const TournamentPage: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [tournamentInfo, setTournamentInfo] =
     useState<DetailedTournament | null>(null);
+
+  const [enrolledChampions, setEnrolledChampions] = useState<
+    AssignedChampion[]
+  >([]);
+
   const currentDate = new Date();
 
   const getTournamentInfo = useCallback(async () => {
@@ -25,11 +32,38 @@ const TournamentPage: React.FC = () => {
           tournamentId: id,
         },
       )();
+
       setTournamentInfo(tournamentDetails);
     } catch (error) {
       setTournamentInfo(null);
     }
   }, [id]);
+
+  const getAllEnrolledChampions = async () => {
+    try {
+      const response = await api.get<AllRegisteredChampionsResponse>(
+        'v1/wrestler-enrollment/all/to-tournament',
+        {
+          tournamentId: id,
+        },
+      )();
+
+      const enrolled: AssignedChampion[] = response.enrollments.map(
+        (enrollment) => {
+          return {
+            id: enrollment.wrestler.id,
+            firstname: enrollment.wrestler.firstname,
+            lastname: enrollment.wrestler.lastname,
+            gender: enrollment.wrestler.gender,
+            categoryId: enrollment.categoryId,
+          };
+        },
+      );
+      setEnrolledChampions(enrolled);
+    } catch (error) {
+      setEnrolledChampions([]);
+    }
+  };
 
   const getStatus = () => {
     if (
@@ -64,8 +98,9 @@ const TournamentPage: React.FC = () => {
   };
 
   useEffect(() => {
+    getAllEnrolledChampions();
     getTournamentInfo();
-  }, [getTournamentInfo]);
+  }, []);
 
   return (
     <div className="page seasonPage">
@@ -125,33 +160,7 @@ const TournamentPage: React.FC = () => {
 
           <ChampionsPerCategoryTable
             categories={tournamentInfo?.ageCategories ?? []}
-            champions={[
-              // waiting for Backend to implement this - temporary testing data
-              {
-                firstname: 'John',
-                lastname: 'Doe',
-                categoryId: 1,
-                clubName: 'Club 1',
-                gender: 'MALE',
-                id: 1,
-              },
-              {
-                firstname: 'John',
-                lastname: 'Doe',
-                categoryId: 1,
-                clubName: 'Club 1',
-                gender: 'MALE',
-                id: 1,
-              },
-              {
-                firstname: 'John',
-                lastname: 'Doe',
-                categoryId: 1,
-                clubName: 'Club 1',
-                gender: 'MALE',
-                id: 1,
-              },
-            ]}
+            champions={enrolledChampions}
           />
         </Tile>
       </div>

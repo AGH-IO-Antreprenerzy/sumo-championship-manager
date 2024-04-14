@@ -14,7 +14,7 @@ type AssignedChampion = {
   firstname: string;
   lastname: string;
   gender: Gender;
-  clubName: string;
+  clubName?: string;
   categoryId: number;
 };
 

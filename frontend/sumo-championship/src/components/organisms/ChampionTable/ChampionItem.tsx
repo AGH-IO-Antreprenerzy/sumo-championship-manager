@@ -33,10 +33,7 @@ const ChampionItem: React.FC<props> = ({
         </p>
         <p className={fieldClass}>{gender}</p>
         <p className={fieldClass}>{birthYear}</p>
-        <p
-          className={fieldClass}
-          style={{ flex: 2, justifyContent: header ? 'center' : 'flex-start' }}
-        >
+        <p className={fieldClass} style={{ flex: 2 }}>
           {clubName}
         </p>
       </div>
