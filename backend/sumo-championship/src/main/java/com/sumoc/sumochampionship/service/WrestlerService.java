@@ -157,4 +157,18 @@ public class WrestlerService {
         return availableWrestlers;
     }
 
+    public List<WrestlersDto> getAllWrestlersToClub(Long clubId){
+        Optional<Club> optionalClub = clubRepository.findById(clubId);
+
+        if (optionalClub.isEmpty()){
+            throw new EntityNotFoundException("Club with id = " + clubId + " not found in database");
+        }
+
+
+        List<Wrestler> wrestlers = wrestlerRepository.findAllByClubIn(Set.of(optionalClub.get()));
+
+        return wrestlers.stream().map(WrestlersDto::mapToDto).toList();
+
+    }
+
 }

@@ -3,10 +3,7 @@ package com.sumoc.sumochampionship.api.controller.v1;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.sumoc.sumochampionship.api.dto.wrestler.WrestlerDetails;
-import com.sumoc.sumochampionship.api.dto.wrestler.WrestlerRequest;
-import com.sumoc.sumochampionship.api.dto.wrestler.WrestlersDto;
-import com.sumoc.sumochampionship.api.dto.wrestler.WrestlersResponse;
+import com.sumoc.sumochampionship.api.dto.wrestler.*;
 import com.sumoc.sumochampionship.db.people.WebsiteUser;
 import com.sumoc.sumochampionship.service.WrestlerService;
 import jakarta.persistence.EntityNotFoundException;
@@ -114,6 +111,21 @@ public class WrestlerController {
         }
 
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/to-club")
+    public ResponseEntity<WrestlersResponseNoPag> getAllWrestlersToClub(@RequestParam Long clubId){
+
+        List<WrestlersDto> wrestlersdto = null;
+        try{
+            wrestlersdto = wrestlerService.getAllWrestlersToClub(clubId);
+        }catch (EntityNotFoundException e){
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(WrestlersResponseNoPag.builder()
+                        .wrestlersInfo(wrestlersdto)
+                        .build());
     }
 
 }
