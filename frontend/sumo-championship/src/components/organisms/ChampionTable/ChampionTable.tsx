@@ -1,14 +1,20 @@
 import React from 'react';
-import { Champion } from '../../../types/Champion';
+import { AssignedChampion } from '../../../types/Champion';
 import ChampionItem from './ChampionItem';
 
 type props = {
-  champions: Champion[];
+  champions: AssignedChampion[];
   showOptions?: boolean;
-  onAdd?: () => void;
+  onAdd?: (champion: AssignedChampion) => void;
+  onRemove?: (index: number) => void;
 };
 
-const ChampionTable: React.FC<props> = ({ champions, showOptions, onAdd }) => {
+const ChampionTable: React.FC<props> = ({
+  champions,
+  showOptions,
+  onAdd,
+  onRemove,
+}) => {
   return (
     <div className="championTable">
       <ChampionItem
@@ -20,7 +26,7 @@ const ChampionTable: React.FC<props> = ({ champions, showOptions, onAdd }) => {
         showOptions={showOptions}
         header
       />
-      {champions.map((champion) => {
+      {champions.map((champion, index) => {
         return (
           <ChampionItem
             key={`championItem${champion.id}`}
@@ -29,9 +35,20 @@ const ChampionTable: React.FC<props> = ({ champions, showOptions, onAdd }) => {
             birthYear={new Date(champion.birthday).getFullYear().toString()}
             clubName="Example"
             showOptions={showOptions}
-            onAdd={() => {
-              //
-            }}
+            onAdd={
+              onAdd
+                ? () => {
+                    onAdd(champion);
+                  }
+                : undefined
+            }
+            onRemove={
+              onRemove
+                ? () => {
+                    onRemove(index);
+                  }
+                : undefined
+            }
           />
         );
       })}

@@ -27,6 +27,15 @@
   background-color: #ff8b38;
 }
 
+.button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.button:disabled:hover {
+  background-color: #f37316;
+}
+
 .iconButton {
   display: flex;
   align-items: center;
@@ -216,4 +225,17 @@ input[type='radio'] {
 .columnFlex {
   display: flex;
   flex-direction: column;
+}
+
+.categoryInfo {
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
+  font-size: 20px;
+  margin-bottom: 5px;
+
+  .value {
+    color: #f37316;
+    font-weight: bold;
+  }
 }

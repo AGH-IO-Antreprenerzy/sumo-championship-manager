@@ -40,7 +40,7 @@ const ChampionsPerCategoryTable = ({ categories, champions }: Props) => {
 
     champions.forEach((champion) => {
       const ageCategoryIndex = indexArray.findIndex((index) =>
-        index.weightCategoryIds.includes(champion.categoryId),
+        index.weightCategoryIds.includes(champion.categoryId ?? -1),
       );
 
       const weightCategoryIndex = availableCategories[

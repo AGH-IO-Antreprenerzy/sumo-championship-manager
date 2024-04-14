@@ -9,6 +9,7 @@ type props = {
   clubName?: string;
   showOptions?: boolean;
   onAdd?: () => void;
+  onRemove?: () => void;
   header?: boolean;
 };
 
@@ -19,6 +20,7 @@ const ChampionItem: React.FC<props> = ({
   clubName,
   showOptions,
   onAdd,
+  onRemove,
   header,
 }) => {
   const fieldClass = header ? 'headerField' : 'field';
@@ -39,8 +41,16 @@ const ChampionItem: React.FC<props> = ({
       </div>
 
       <div className="options">
-        {!header && showOptions && (
+        {!header && showOptions && onAdd && (
           <IconButton name="FaPlus" size={24} color="#ff8b38" onClick={onAdd} />
+        )}
+        {!header && showOptions && onRemove && (
+          <IconButton
+            name="FaMinus"
+            size={24}
+            color="#ff8b38"
+            onClick={onRemove}
+          />
         )}
       </div>
     </div>

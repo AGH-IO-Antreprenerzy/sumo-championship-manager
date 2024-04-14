@@ -14,8 +14,9 @@ type AssignedChampion = {
   firstname: string;
   lastname: string;
   gender: Gender;
+  birthday: string;
   clubName?: string;
-  categoryId: number;
+  categoryId?: number;
 };
 
 type ChampionsWeightCategory = WeightCategory & {

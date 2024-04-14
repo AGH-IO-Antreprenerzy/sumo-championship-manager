@@ -55,6 +55,7 @@ const TournamentPage: React.FC = () => {
             firstname: enrollment.wrestler.firstname,
             lastname: enrollment.wrestler.lastname,
             gender: enrollment.wrestler.gender,
+            birthday: enrollment.wrestler.birthday,
             categoryId: enrollment.categoryId,
           };
         },
@@ -135,7 +136,7 @@ const TournamentPage: React.FC = () => {
           <DetailItem name="Status:" info={getStatus()} />
 
           <Button
-            value="Register champpions"
+            value="Register champions"
             onClick={() => {
               if (id) {
                 navigate(ROUTES.TOURNAMENT_REGISTER_PAGE.replace(':id', id));

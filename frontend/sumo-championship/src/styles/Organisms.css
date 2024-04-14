@@ -237,6 +237,18 @@
   column-gap: 20px;
 }
 
+.tileTop {
+  height: 100px;
+}
+
+.belowTile {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
 .championTable {
   display: flex;
   flex-direction: column;
