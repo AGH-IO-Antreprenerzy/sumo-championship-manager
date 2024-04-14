@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import React from 'react';
-import './../../styles/Molecules.css';
-import { WeightCategory } from '../../types/Seasons';
-import RemovableTag from '../Atoms/RemovableTag';
+import { WeightCategory } from '../../../types/Seasons';
+import RemovableTag from '../../Atoms/RemovableTag';
 
 type props = {
   name: string;

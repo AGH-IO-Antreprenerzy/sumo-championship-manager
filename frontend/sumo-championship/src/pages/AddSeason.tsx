@@ -39,7 +39,6 @@ const AddSeason: React.FC = () => {
     };
 
     try {
-      console.log(newSeason);
       await api.post('v2/season/add', newSeason)();
       navigate(ROUTES.SEASONS);
     } catch (error) {

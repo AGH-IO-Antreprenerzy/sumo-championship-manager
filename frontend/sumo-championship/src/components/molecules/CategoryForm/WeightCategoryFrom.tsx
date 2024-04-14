@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import React, { useRef, useState } from 'react';
-import './../../styles/Molecules.css';
-import ValueField from './ValueField';
-import Button from '../Atoms/Button';
-import SubtitleWithIcon from '../Atoms/SubtitleWithIcon';
-import { Category } from '../../types/Seasons';
-import SelectField from './SelectField';
-import Checkbox from '../Atoms/Checkbox';
+import ValueField from '../ValueField';
+import Button from '../../Atoms/Button';
+import SubtitleWithIcon from '../../Atoms/SubtitleWithIcon';
+import { Category } from '../../../types/Seasons';
+import SelectField from '../SelectField';
+import Checkbox from '../../Atoms/Checkbox';
 
 type props = {
   onSave: (newCategories: Category[]) => void;

@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import React, { useEffect, useState } from 'react';
-import './../../styles/Molecules.css';
-import TextField from './TextField';
-import MinMaxField from './MinMaxField';
-import Button from '../Atoms/Button';
-import SubtitleWithIcon from '../Atoms/SubtitleWithIcon';
-import { Category } from '../../types/Seasons';
+import TextField from '../TextField';
+import MinMaxField from '../MinMaxField';
+import Button from '../../Atoms/Button';
+import SubtitleWithIcon from '../../Atoms/SubtitleWithIcon';
+import { Category } from '../../../types/Seasons';
 
 const errorPointsValues = {
   categoryName: 2,

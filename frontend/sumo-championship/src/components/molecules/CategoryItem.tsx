@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './../../styles/Atoms.css';
 import IconButton from '../Atoms/IconButton';
 import { WeightCategory } from '../../types/Seasons';
-import WeightCategoryList from './WeightCategoryList';
+import WeightCategoryList from './CategoryForm/WeightCategoryList';
 
 interface props {
   keyValue?: string;
