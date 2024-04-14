@@ -28,8 +28,6 @@ export const addTournament = async (general: GeneralInformation, male: Categorie
         categoryIds: categories
     }
 
-    console.log(body)
-
     return fetch(BASE_TOURNAMENT_URL + "/add", {
         method: "POST",
         body: JSON.stringify(body),
