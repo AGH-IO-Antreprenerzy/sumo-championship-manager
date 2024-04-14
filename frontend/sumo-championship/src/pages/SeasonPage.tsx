@@ -74,8 +74,9 @@ const SeasonPage: React.FC = () => {
         <Tile>
           <div className="pageTop">
             <p className="subtitle mb20">Tournaments:</p>
-
-            <Button name="Add Tournament +" onClick={handleAddTournament} />
+            {user.role === Role.Admin && (
+              <Button name="+ Add Tournament" onClick={handleAddTournament} />
+            )}
           </div>
           <TournamentList tournaments={seasonInfo?.tournaments || []} />
         </Tile>
