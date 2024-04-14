@@ -25,6 +25,7 @@ public class WrestlerEnrollmentController {
 
     @PostMapping("/enroll-wrestlers")
     public ResponseEntity<JsonNode> enrollWrestlers(@RequestBody List<WrestlerEnrollmentRequest> enrollments){
+        System.out.println("Working");
         String response = wrestlerEnrollmentService.enrollWrestlers(enrollments);
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode json = objectMapper.createObjectNode();
@@ -44,6 +45,17 @@ public class WrestlerEnrollmentController {
         WrestlerEnrollmentResponse wer = null;
         try{
             wer = wrestlerEnrollmentService.getWrestlerToTrainerAndTournament(websiteUser, tournamentId);
+        }catch (EntityNotFoundException e){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(wer);
+    }
+
+    @GetMapping("/all/to-tournament")
+    public ResponseEntity<WrestlerEnrollmentResponse> getAllWrestlersToTournament(@RequestParam Long tournamentId){
+        WrestlerEnrollmentResponse wer = null;
+        try{
+            wer = wrestlerEnrollmentService.getAllWrestlersToTournament(tournamentId);
         }catch (EntityNotFoundException e){
             return ResponseEntity.notFound().build();
         }

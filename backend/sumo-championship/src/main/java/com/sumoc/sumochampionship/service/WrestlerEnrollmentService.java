@@ -89,6 +89,25 @@ public class WrestlerEnrollmentService {
                 .build();
     }
 
+    public WrestlerEnrollmentResponse getAllWrestlersToTournament(Long tournamentId){
+        Optional<Tournament> tournamentOptional = tournamentRepository.findById(tournamentId);
+
+        if (tournamentOptional.isEmpty())
+            throw new EntityNotFoundException("Tournament with id = " + tournamentId + " not found");
+
+        List<WrestlersEnrollment> we = wrestlerEnrollmentRepository.findAllByTournament_Id(tournamentId);
+        List<WrestlerEnrollmentDto2> wrestlers = we.stream()
+                .map(enroll -> {
+                    return WrestlerEnrollmentDto2.mapToDto(enroll.getWrestler(), enroll.getCategory());
+                })
+                .toList();
+
+        return WrestlerEnrollmentResponse.builder()
+                .enrollments(wrestlers)
+                .build();
+
+    }
+
     private boolean mayWrestlerEnroll(WrestlerEnrollmentRequest request){
         Optional<Tournament> tournamentOptional = tournamentRepository.findById(request.getTournamentId());
 
