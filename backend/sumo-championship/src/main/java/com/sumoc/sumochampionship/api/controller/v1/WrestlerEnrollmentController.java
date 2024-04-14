@@ -25,7 +25,6 @@ public class WrestlerEnrollmentController {
 
     @PostMapping("/enroll-wrestlers")
     public ResponseEntity<JsonNode> enrollWrestlers(@RequestBody List<WrestlerEnrollmentRequest> enrollments){
-        System.out.println("Working");
         String response = wrestlerEnrollmentService.enrollWrestlers(enrollments);
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode json = objectMapper.createObjectNode();
