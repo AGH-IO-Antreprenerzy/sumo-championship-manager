@@ -12,6 +12,7 @@ import AllSeasonsPage from './pages/AllSeasonsPage';
 import CurrentTournamentsPage from './pages/CurrentTournamentsPage';
 import AddTournamentPage from './pages/AddTournamentPage';
 import TournamentPage from './pages/TournamentPage';
+import RegisterChampionsForTournamentPage from './pages/RegisterChampionsForTournamentPage';
 
 const App: FunctionComponent = () => {
   const { user } = useUser();
@@ -41,6 +42,10 @@ const App: FunctionComponent = () => {
             element={<AddTournamentPage />}
           />
           <Route path={ROUTES.TOURNAMENT_PAGE} element={<TournamentPage />} />
+          <Route
+            path={ROUTES.TOURNAMENT_REGISTER_PAGE}
+            element={<RegisterChampionsForTournamentPage />}
+          />
           <Route
             path={ROUTES.TOURNAMENTS_ADD_TO_SEASON}
             element={<AddTournamentPage />}

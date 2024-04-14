@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Tile from '../components/Atoms/Tile';
 import DetailItem from '../components/Atoms/DetailItem';
 import api from '../api/api';
@@ -8,8 +8,10 @@ import CategoryTable from '../components/organisms/CategoryTable';
 import Button from '../components/Atoms/Button';
 import { DetailedTournament } from '../types/Tournament';
 import ChampionsPerCategoryTable from '../components/organisms/ChampionsPerCategoryTable/ChampionsPerCategoryTable';
+import ROUTES from '../routes/ROUTES';
 
 const TournamentPage: React.FC = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [tournamentInfo, setTournamentInfo] =
     useState<DetailedTournament | null>(null);
@@ -77,7 +79,7 @@ const TournamentPage: React.FC = () => {
         />
       </div>
       <div className="season_topPanel">
-        <Tile className="generalInfo">
+        <Tile className="generalInfo columnFlex">
           <p className="subtitle mb10">General information</p>
 
           <img
@@ -96,13 +98,22 @@ const TournamentPage: React.FC = () => {
             info={`${tournamentInfo?.registerStart} - ${tournamentInfo?.registerEnd}`}
           />
           <DetailItem name="Status:" info={getStatus()} />
+
+          <Button
+            value="Register champpions"
+            onClick={() => {
+              if (id) {
+                navigate(ROUTES.TOURNAMENT_REGISTER_PAGE.replace(':id', id));
+              }
+            }}
+          />
         </Tile>
         <Tile className="categories">
           <p className="subtitle mb10">Tournament categories</p>
           <CategoryTable
             categories={tournamentInfo?.ageCategories || []}
             showOptions={false}
-            style={{ height: 380 }}
+            style={{ height: '100%' }}
           />
         </Tile>
       </div>
@@ -115,6 +126,7 @@ const TournamentPage: React.FC = () => {
           <ChampionsPerCategoryTable
             categories={tournamentInfo?.ageCategories ?? []}
             champions={[
+              // waiting for Backend to implement this - temporary testing data
               {
                 firstname: 'John',
                 lastname: 'Doe',

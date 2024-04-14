@@ -212,3 +212,8 @@ input[type='radio'] {
 .semiBold {
   font-weight: 600;
 }
+
+.columnFlex {
+  display: flex;
+  flex-direction: column;
+}
