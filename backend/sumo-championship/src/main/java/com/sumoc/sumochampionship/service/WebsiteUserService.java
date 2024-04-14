@@ -1,22 +1,23 @@
 package com.sumoc.sumochampionship.service;
 
-import com.sumoc.sumochampionship.api.dto.club.ClubRequest;
 import com.sumoc.sumochampionship.api.dto.websiteuser.WebsiteUserRequest;
 import com.sumoc.sumochampionship.db.people.Club;
-import com.sumoc.sumochampionship.db.people.OwnedClub;
 import com.sumoc.sumochampionship.db.people.UserRole;
 import com.sumoc.sumochampionship.db.people.WebsiteUser;
+import com.sumoc.sumochampionship.db.season.Country;
 import com.sumoc.sumochampionship.repository.ClubRepository;
-import com.sumoc.sumochampionship.repository.OwnedClubsRepository;
 import com.sumoc.sumochampionship.repository.WebsiteUserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 
 
 @AllArgsConstructor
@@ -24,15 +25,15 @@ import java.util.Optional;
 public class WebsiteUserService {
     private final WebsiteUserRepository websiteUserRepository;
     private final ClubRepository clubRepository;
-    private final OwnedClubsRepository ownedClubsRepository;
     private PasswordEncoder passwordEncoder;
+
 
     public ResponseEntity<String> addWebsiteUser(WebsiteUserRequest websiteUserRequest) {
         WebsiteUser websiteUser = getWebsiteUserFromRequest(websiteUserRequest);
         String clubName = websiteUserRequest.getClub();
-        String countryName = websiteUserRequest.getCountry();
+        Country country = websiteUserRequest.getCountry();
 
-        if ((countryName == null || clubName == null) && websiteUser.getUserRole() != UserRole.ADMIN) {
+        if ((country == null || clubName == null) && websiteUser.getUserRole() != UserRole.ADMIN) {
             return ResponseEntity.badRequest().body("You need to provide club and country for trainer");
         }
 
@@ -45,7 +46,7 @@ public class WebsiteUserService {
                     "with database connection");
         }
 
-        if (websiteUser.getUserRole() != UserRole.ADMIN && !addClubOwner(websiteUser, clubName, countryName)){
+        if (websiteUser.getUserRole() != UserRole.ADMIN && !addClubOwner(websiteUser, clubName, country)){
             return ResponseEntity.internalServerError().body("Server cannot save club owner due to problem " +
                     "with database connection");
         }
@@ -73,19 +74,26 @@ public class WebsiteUserService {
         return true;
     }
 
-    private boolean addClubOwner(WebsiteUser websiteUser, String clubName, String countryName) {
+
+    protected boolean addClubOwner(WebsiteUser websiteUser, String clubName, Country country) {
         Optional<Club> club = clubRepository.findByName(clubName);
         if (club.isEmpty()) {
-            System.out.println(Club.builder().name(clubName).nationality(countryName).build());
+            System.out.println(Club.builder().name(clubName).nationality(country).build());
             try {
-                clubRepository.save(Club.builder().name(clubName).nationality(countryName).build());
+                clubRepository.save(Club.builder().name(clubName).nationality(country).build());
             } catch (DataAccessException ex) {
                 return false;
             }
         }
-        Long clubId = Objects.requireNonNull(clubRepository.findByName(clubName).orElse(null)).getId();
+        Club ownedClub = Objects.requireNonNull(clubRepository.findByName(clubName).orElse(null));
         try {
-            ownedClubsRepository.save(OwnedClub.builder().club_id(clubId).trainer_id(websiteUser.getId()).build());
+            Set<Club> ownedClubs = websiteUser.getOwnedClubs();
+            if (ownedClubs == null) {
+                ownedClubs = new HashSet<>();
+            }
+            ownedClubs.add(ownedClub);
+            websiteUser.setOwnedClubs(ownedClubs);
+            websiteUserRepository.save(websiteUser);
         } catch (DataAccessException ex){
             return false;
         }

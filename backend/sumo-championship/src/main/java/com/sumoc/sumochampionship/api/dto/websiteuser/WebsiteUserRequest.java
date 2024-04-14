@@ -1,6 +1,7 @@
 package com.sumoc.sumochampionship.api.dto.websiteuser;
 
 import com.sumoc.sumochampionship.db.people.UserRole;
+import com.sumoc.sumochampionship.db.season.Country;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +17,6 @@ public class WebsiteUserRequest {
     String lastname;
     String password;
     UserRole userRole;
-    String club; // Optional field for club
-    String country; // Optional field for country
+    String club; // Optional field for club; string because it can be used to add club
+    Country country; // Optional field for country
 }
