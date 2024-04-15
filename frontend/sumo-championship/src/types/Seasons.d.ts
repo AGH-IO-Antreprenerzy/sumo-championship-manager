@@ -3,6 +3,7 @@ import { Tournament } from './Tournament';
 type Gender = 'FEMALE' | 'MALE' | 'ALL';
 
 type WeightCategory = {
+  categoryId?: number;
   maxWeight: number;
   gender: Gender;
 };

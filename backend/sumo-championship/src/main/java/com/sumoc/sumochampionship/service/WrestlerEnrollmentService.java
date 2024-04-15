@@ -112,7 +112,9 @@ public class WrestlerEnrollmentService {
     private boolean mayWrestlerEnroll(WrestlerEnrollmentRequest request){
         Optional<Tournament> tournamentOptional = tournamentRepository.findById(request.getTournamentId());
 
-
+        System.out.println("Wrestler_id " + request.getWrestlerId());
+        System.out.println("Tournament_id " + request.getTournamentId());
+        System.out.println("Category_id " + request.getCategoriesId());
         if (tournamentOptional.isEmpty())
             return false;
 
