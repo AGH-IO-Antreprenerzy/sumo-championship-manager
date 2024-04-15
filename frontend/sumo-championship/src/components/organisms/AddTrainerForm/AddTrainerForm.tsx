@@ -38,9 +38,11 @@ const AddTrainerForm = () => {
             .then(setAllCountries)
         }
 
-        getClubsForCountry(country)
-        .then(clubs => clubs.map(c => c.name))
-        .then(setClubsPerCountry)
+        if (country !== ""){
+            getClubsForCountry(country)
+            .then(clubs => clubs.map(c => c.name))
+            .then(setClubsPerCountry)
+        }
         
     }, [country, allCountries.length])
 

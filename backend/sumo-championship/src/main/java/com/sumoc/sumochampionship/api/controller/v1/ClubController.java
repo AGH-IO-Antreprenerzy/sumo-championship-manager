@@ -12,12 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import com.sumoc.sumochampionship.api.dto.club.ClubDto;
 import com.sumoc.sumochampionship.db.people.WebsiteUser;
-import com.sumoc.sumochampionship.service.ClubService;
 import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
