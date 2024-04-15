@@ -29,7 +29,7 @@ const userContext = createContext<UserContextType | undefined>(undefined);
 
 const UserContext = (props: { children: string | JSX.Element | JSX.Element[]; }) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [cookie, setCookie] = useCookies(["Authorization"])
+    const [cookie, setCookie, removeCookie] = useCookies(["Authorization"])
     const [userState, setUserState] = useState<UserContextType>(
         {
             user: defaultUser,
@@ -57,7 +57,10 @@ const UserContext = (props: { children: string | JSX.Element | JSX.Element[]; })
                 }
             },
 
-            signOut: () => setUserState(prev => ({...prev, user: defaultUser}))
+            signOut: () => {
+                setUserState(prev => ({...prev, user: defaultUser}))
+                removeCookie("Authorization", {path: "/"})
+            }
         }
     );
 

@@ -8,7 +8,7 @@ import ROUTES from '../../routes/allRoutes';
 const Nav: React.FC = () => {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
-  const {user} = useUser();
+  const {user, signOut} = useUser();
 
   interface NavTab{
     name: string,
@@ -66,12 +66,21 @@ const Nav: React.FC = () => {
           </div> 
         )}
       </div>
-      {!user.isLogged && <button
+      {user.isLogged ?  (<button
+        className={`nav-button ${menuOpen ? 'open' : ''}`}
+        onClick={() => {
+          signOut()
+          navigate(ROUTES.LOGIN)
+        }}
+      >
+        <div className="login">Log out</div>
+      </button>) :
+      (<button
         className={`nav-button ${menuOpen ? 'open' : ''}`}
         onClick={() => navigate(ROUTES.LOGIN)}
       >
         <div className="login">Log in</div>
-      </button>}
+      </button>)}
     </div>
   );
 };
