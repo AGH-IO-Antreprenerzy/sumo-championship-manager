@@ -51,7 +51,6 @@ const ChampionsPage: React.FC = () => {
 
   const handleUpdateChampion = async (champion: Champion) => {
     try {
-      console.log(champion);
       const clubId = clubs.find((club) => club.name === champion.clubName)?.id;
       await api.put(`v1/wrestler/modify?id=${clubId}`, {
         firstname: champion.firstname,
