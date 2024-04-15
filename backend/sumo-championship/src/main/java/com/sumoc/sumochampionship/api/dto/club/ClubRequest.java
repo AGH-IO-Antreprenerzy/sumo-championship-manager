@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Data
@@ -15,6 +17,7 @@ import java.util.Set;
 @Builder
 public class ClubRequest {
     String name;
+    List<Long> trainerIds;
     Country nationality;
 
     public Club mapToClub() {
