@@ -16,11 +16,10 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -43,22 +42,34 @@ public class ClubService {
         }
 
         Club club = clubRequest.mapToClub();
-        Optional<List<Long>> trainerIds = clubRequest.getTrainerIds();
-        List<WebsiteUser> trainersList = List.of();
-        if (trainerIds.isPresent()) {
-            List<Long> trainers = trainerIds.get();
-            for (Long trainerId : trainers) {
+        System.out.println(club);
+        clubRepository.save(club);
+        List<Long> trainerIds = clubRequest.getTrainerIds();
+        List<Long> badIds = new ArrayList<>();
+        if (trainerIds != null) {
+            for (Long trainerId : trainerIds) {
                 Optional<WebsiteUser> trainerOptional = websiteUserRepository.findById(trainerId);
                 if (trainerOptional.isEmpty()) {
-                    return "Error! Trainer with id " + trainerId + " not found";
+                    badIds.add(trainerId);
+                    continue;
+                }
+                try {
+                    WebsiteUser trainer = trainerOptional.get();
+                    Set<Club> ownedClubs = trainer.getOwnedClubs();
+                    if (ownedClubs == null) {
+                        ownedClubs = new HashSet<>();
+                    }
+                    ownedClubs.add(club);
+                    trainer.setOwnedClubs(ownedClubs);
+                    System.out.println(trainer);
+                    websiteUserRepository.save(trainer);
+                } catch (DataAccessException ex){
+                    return "Error! with DB";
                 }
             }
-            trainersList = websiteUserRepository.findAllById(trainers);
-            club.setTrainers(Set.copyOf(trainersList));
         }
-        clubRepository.save(club);
-        for (WebsiteUser trainer : trainersList) {
-            trainer.getOwnedClubs().add(club);
+        if (!badIds.isEmpty()) {
+            return "Club added. Invalid trainer ids: " + badIds;
         }
         return "Club added successfully";
     }

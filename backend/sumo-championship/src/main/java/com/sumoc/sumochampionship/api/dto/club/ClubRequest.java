@@ -17,7 +17,7 @@ import java.util.Set;
 public class ClubRequest {
     String name;
     String nationality;
-    Optional<List<Long>> trainerIds;
+    List<Long> trainerIds;
 
     public Club mapToClub() {
         return Club.builder()
