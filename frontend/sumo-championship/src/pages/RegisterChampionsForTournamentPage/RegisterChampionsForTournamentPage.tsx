@@ -40,6 +40,9 @@ const RegisterChampionsForTournamentPage: FunctionComponent = () => {
   const [clubs, setClubs] = useState<Club[]>([]);
   const [selectedClub, setSelectedClub] = useState<Club | null>(null);
   const [shouldShowPreview, setShouldShowPreview] = useState(false);
+  const [alreadyEnrolledChampions, setAlreadyEnrolledChampions] = useState<
+    AssignedChampion[]
+  >([]);
 
   const getAllEnrolledChampions = useCallback(async () => {
     try {
@@ -63,6 +66,8 @@ const RegisterChampionsForTournamentPage: FunctionComponent = () => {
           };
         },
       );
+
+      setAlreadyEnrolledChampions(enrolled);
       return enrolled;
     } catch (e) {
       throw new Error('Error while fetching enrolled champions');
@@ -248,6 +253,7 @@ const RegisterChampionsForTournamentPage: FunctionComponent = () => {
         tournamentInfo={tournamentInfo}
         categoriesWithChampions={steps}
         onBack={() => setShouldShowPreview(false)}
+        alreadyEnrolledChampions={alreadyEnrolledChampions}
       />
     );
   }

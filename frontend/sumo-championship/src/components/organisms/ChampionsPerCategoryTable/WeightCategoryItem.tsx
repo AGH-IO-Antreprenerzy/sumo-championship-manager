@@ -1,4 +1,5 @@
 import { ChampionsWeightCategory } from '../../../types/Champion';
+import capitalizeFirstLetter from '../../../utils/stringMethods';
 import FaIcon from '../../Atoms/FaIcon';
 import AssignedChampionCategoryItem from './AssignedChampionCategoryItem';
 
@@ -23,7 +24,7 @@ const WeightCategoryItem = ({ weightCategory }: Props) => {
     <div className="championCategoryItem">
       <div className="header">
         <FaIcon name="FaWeightHanging" size={16} />
-        <p className="field">{weightCategory.gender}</p>
+        <p className="field">{capitalizeFirstLetter(weightCategory.gender)}</p>
         <p>
           {`< `}
           {weightCategory.maxWeight}kg

@@ -157,7 +157,7 @@ const TournamentPage: React.FC = () => {
       <div className="season_bottomPanel">
         <Tile>
           <div className="pageTop">
-            <p className="subtitle mb20">Registered champions</p>
+            <p className="subtitle">Registered champions</p>
           </div>
 
           <ChampionsPerCategoryTable

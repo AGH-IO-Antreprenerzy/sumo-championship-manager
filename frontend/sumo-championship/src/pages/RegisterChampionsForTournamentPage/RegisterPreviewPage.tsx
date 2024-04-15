@@ -13,30 +13,37 @@ type Props = {
   tournamentInfo: DetailedTournament | null;
   categoriesWithChampions: CategoryStep[];
   onBack: () => void;
+  alreadyEnrolledChampions: AssignedChampion[];
 };
 
 const RegisterPreviewPage = ({
   tournamentInfo,
   categoriesWithChampions,
   onBack,
+  alreadyEnrolledChampions,
 }: Props) => {
   const navigate = useNavigate();
   const [enrolledChampions, setEnrolledChampions] = useState<
     AssignedChampion[]
   >([]);
   const getEnrolledChampions = useCallback(() => {
+    const alreadyEnrolledIds = alreadyEnrolledChampions.map(
+      (champ) => champ.id,
+    );
     const champions: AssignedChampion[] = [];
     categoriesWithChampions.forEach((category) => {
       champions.push(
-        ...category.champions.map((champion) => ({
-          ...champion,
-          categoryId: category.categoryId,
-        })),
+        ...category.champions
+          .filter((champion) => !alreadyEnrolledIds.includes(champion.id))
+          .map((champion) => ({
+            ...champion,
+            categoryId: category.categoryId,
+          })),
       );
     });
 
     return champions;
-  }, [categoriesWithChampions]);
+  }, [alreadyEnrolledChampions, categoriesWithChampions]);
 
   const enroll = async () => {
     const body = enrolledChampions.map((champion) => ({
