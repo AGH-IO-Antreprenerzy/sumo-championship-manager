@@ -45,4 +45,15 @@ public class WrestlersDto {
 
     }
 
+    public static WrestlersDto mapToDto_v2(Wrestler wrestler, String clubName){
+        return WrestlersDto.builder()
+                .id(wrestler.getId())
+                .firstname(wrestler.getFirstname())
+                .clubId(wrestler.getClub().getId())
+                .lastname(wrestler.getLastname())
+                .birthday(wrestler.getBirthday())
+                .clubName(clubName)
+                .gender(wrestler.getGender())
+                .build();
+    }
 }
