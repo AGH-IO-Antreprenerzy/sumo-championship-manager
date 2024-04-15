@@ -31,7 +31,7 @@ public class WrestlersDto {
     private String clubName;
 
     public static WrestlersDto mapToDto(Wrestler wrestler){
-        Optional<Club> clubOptional = clubRepository.findById(wrestler.getId());
+        Optional<Club> clubOptional = clubRepository.findById(wrestler.getClub().getId());
         String name = clubOptional.get().getName();
 
         return WrestlersDto.builder()
