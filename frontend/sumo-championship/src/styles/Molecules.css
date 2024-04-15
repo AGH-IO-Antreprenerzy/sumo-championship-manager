@@ -208,3 +208,53 @@
     row-gap: 5px;
   }
 }
+.nationalityItem {
+  max-width: 300px;
+  min-height: 200px;
+  border-radius: 15px;
+  border: 1px solid black;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: 0.3s;
+
+  .nationalityItem_image {
+    width: 100%;
+  }
+
+  .nationalityItem_content {
+    flex: 1;
+    padding: 10px;
+  }
+}
+
+.nationalityItem:hover {
+  transform: scale(1.02);
+  background-color: #eee;
+}
+.clubItem {
+  max-width: 300px;
+  min-height: 200px;
+  border-radius: 15px;
+  border: 1px solid black;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: 0.3s;
+
+  .clubItem_image {
+    width: 100%;
+  }
+
+  .clubItem_content {
+    flex: 1;
+    padding: 10px;
+  }
+}
+
+.clubItem:hover {
+  transform: scale(1.02);
+  background-color: #eee;
+}
