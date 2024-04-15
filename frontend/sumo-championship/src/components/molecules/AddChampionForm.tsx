@@ -9,15 +9,23 @@ import { Champion } from '../../types/Champion';
 
 type props = {
   onSubmit?: (champion: Champion) => void;
+  onEditSave?: (champion: Champion) => void;
   clubs?: Club[];
+  editedChampion?: Champion | null;
 };
 
-const AddChampionForm: React.FC<props> = ({ clubs, onSubmit }) => {
+const AddChampionForm: React.FC<props> = ({
+  clubs,
+  onSubmit,
+  editedChampion = null,
+  onEditSave,
+}) => {
   const [firstname, setFirstName] = useState('');
   const [lastname, setLastName] = useState('');
   const [gender, setGender] = useState<Gender | null>(null);
   const [birthday, setBirthday] = useState('');
   const [club, setClub] = useState<Club | null>(null);
+  const isEdited = !!editedChampion;
 
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -39,19 +47,51 @@ const AddChampionForm: React.FC<props> = ({ clubs, onSubmit }) => {
     return false;
   };
 
+  const resetForm = () => {
+    setFirstName('');
+    setLastName('');
+    setGender(null);
+    setBirthday('');
+    setClub(null);
+  };
+
   const handleSubmit = () => {
-    if (validateForm() && gender) {
-      if (onSubmit) {
-        onSubmit({
-          firstname,
-          lastname,
-          gender,
-          birthday,
-          clubId: club?.id ?? 0,
-        } as Champion);
-      }
+    if (validateForm() && gender && onSubmit) {
+      onSubmit({
+        firstname,
+        lastname,
+        gender,
+        birthday,
+        clubId: club?.id ?? 0,
+        clubName: club?.name,
+      } as Champion);
+      resetForm();
     }
   };
+
+  const handleEdit = () => {
+    if (validateForm() && gender && onEditSave) {
+      onEditSave({
+        firstname,
+        lastname,
+        gender,
+        birthday,
+        clubId: club?.id ?? 0,
+        clubName: club?.name,
+      } as Champion);
+      resetForm();
+    }
+  };
+
+  useEffect(() => {
+    if (editedChampion) {
+      setFirstName(editedChampion.firstname);
+      setLastName(editedChampion.lastname);
+      setGender(editedChampion.gender);
+      setBirthday(editedChampion.birthday);
+      setClub(clubs?.find((club) => club.id === editedChampion.clubId) ?? null);
+    }
+  }, [clubs, editedChampion]);
 
   return (
     <div className="addChampionForm">
@@ -73,11 +113,13 @@ const AddChampionForm: React.FC<props> = ({ clubs, onSubmit }) => {
             onChange={(e) => e.target.value === 'on' && setGender('FEMALE')}
             label="Female"
             name="gender"
+            checked={gender === 'FEMALE'}
           />
           <RadioButton
             onChange={(e) => e?.target.value === 'on' && setGender('MALE')}
             label="Male"
             name="gender"
+            checked={gender === 'MALE'}
           />
         </div>
       </div>
@@ -103,7 +145,10 @@ const AddChampionForm: React.FC<props> = ({ clubs, onSubmit }) => {
       />
       <p className="error mb10">{errorMessage}</p>
 
-      <Button name="Add Champion" onClick={handleSubmit} />
+      <Button
+        name={isEdited ? 'Save' : 'Add Champion'}
+        onClick={isEdited ? handleEdit : handleSubmit}
+      />
     </div>
   );
 };

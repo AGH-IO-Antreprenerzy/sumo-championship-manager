@@ -10,10 +10,11 @@ type props = {
   showOptions?: boolean;
   onAdd?: () => void;
   onRemove?: () => void;
+  onEdit?: () => void;
   header?: boolean;
 };
 
-const EnrolledChampionItem: React.FC<props> = ({
+const ChampionItem: React.FC<props> = ({
   name,
   gender,
   birthYear,
@@ -21,6 +22,7 @@ const EnrolledChampionItem: React.FC<props> = ({
   showOptions,
   onAdd,
   onRemove,
+  onEdit,
   header,
 }) => {
   const fieldClass = header ? 'headerField' : 'field';
@@ -52,9 +54,17 @@ const EnrolledChampionItem: React.FC<props> = ({
             onClick={onRemove}
           />
         )}
+        {!header && showOptions && onEdit && (
+          <IconButton
+            name="FaEdit"
+            size={24}
+            color="#ff8b38"
+            onClick={onEdit}
+          />
+        )}
       </div>
     </div>
   );
 };
 
-export default EnrolledChampionItem;
+export default ChampionItem;

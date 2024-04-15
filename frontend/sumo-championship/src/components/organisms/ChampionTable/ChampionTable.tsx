@@ -1,19 +1,21 @@
 import React from 'react';
 import { AssignedChampion } from '../../../types/Champion';
-import ChampionItem from './EnrolledChampionItem';
+import ChampionItem from './ChampionItem';
 
 type props = {
   champions: AssignedChampion[];
   showOptions?: boolean;
   onAdd?: (champion: AssignedChampion) => void;
   onRemove?: (index: number) => void;
+  onEdit?: (champion: AssignedChampion) => void;
 };
 
-const EnrolledChampionTable: React.FC<props> = ({
+const ChampionTable: React.FC<props> = ({
   champions,
   showOptions,
   onAdd,
   onRemove,
+  onEdit,
 }) => {
   return (
     <div className="championTable">
@@ -27,7 +29,6 @@ const EnrolledChampionTable: React.FC<props> = ({
         header
       />
       {champions.map((champion, index) => {
-        console.log(champion.alreadyAssigned);
         return (
           <ChampionItem
             key={`championItem${champion.id}`}
@@ -50,6 +51,13 @@ const EnrolledChampionTable: React.FC<props> = ({
                   }
                 : undefined
             }
+            onEdit={
+              onEdit
+                ? () => {
+                    onEdit(champion);
+                  }
+                : undefined
+            }
           />
         );
       })}
@@ -57,4 +65,4 @@ const EnrolledChampionTable: React.FC<props> = ({
   );
 };
 
-export default EnrolledChampionTable;
+export default ChampionTable;

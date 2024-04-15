@@ -1,38 +1,23 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useCallback, useEffect, useState } from 'react';
 import Tile from '../components/Atoms/Tile';
-import DetailItem from '../components/Atoms/DetailItem';
 import api from '../api/api';
-import { DetailedSeason } from '../types/Seasons';
-import { isDateBetween } from '../utils/dateUtils';
-import CategoryTable from '../components/organisms/CategoryTable';
-import TournamentList from '../components/molecules/TournamentList';
-import Button from '../components/Atoms/Button';
-import ROUTES from '../routes/allRoutes';
-import { useUser } from '../contexts/UserContext';
-import { Role } from '../api/login';
-import TextField from '../components/molecules/TextField';
-import Checkbox from '../components/Atoms/Checkbox';
-import ValueField from '../components/molecules/ValueField';
 import AddChampionForm from '../components/molecules/AddChampionForm';
 import { Club } from '../types/Club';
+import { AssignedChampion, Champion } from '../types/Champion';
+import ChampionTable from '../components/organisms/ChampionTable/ChampionTable';
+
+type WrestlersResponse = {
+  wrestlersInfo: Champion[];
+  pageNo: number;
+  pageSize: number;
+  totalPages: number;
+  totalElements: number;
+};
 
 const ChampionsPage: React.FC = () => {
-  const navigate = useNavigate();
-  const [seasonInfo, setSeasonInfo] = useState<DetailedSeason | null>(null);
-  const { user } = useUser();
-  const [showAddChampion, setShowAddChampion] = useState(true);
-  const [filterName, setFilterName] = useState('');
-  const femaleCheckboxRef = useRef<HTMLInputElement>(null);
-  const maleCheckboxRef = useRef<HTMLInputElement>(null);
-  const [minAge, setMinAge] = useState(0);
-  const [maxAge, setMaxAge] = useState(500);
-
+  const [champions, setChampions] = useState<AssignedChampion[]>([]);
   const [clubs, setClubs] = useState<Club[]>([]);
-
-  const handleAddChampion = () => {
-    setShowAddChampion(!showAddChampion);
-  };
+  const [editedChampion, setEditedChampion] = useState<Champion | null>(null);
 
   const getClubs = useCallback(async () => {
     try {
@@ -46,80 +31,72 @@ const ChampionsPage: React.FC = () => {
     }
   }, []);
 
+  const getAllChampions = useCallback(async () => {
+    try {
+      const response = await api.get<WrestlersResponse>('v1/wrestler/all')();
+      setChampions(response.wrestlersInfo ?? []);
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
+  const handleAddChampion = async (champion: Champion) => {
+    try {
+      await api.post('v1/wrestler/add', champion)();
+      getAllChampions();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleUpdateChampion = async (champion: Champion) => {
+    try {
+      console.log(champion);
+      const clubId = clubs.find((club) => club.name === champion.clubName)?.id;
+      await api.put(`v1/wrestler/modify?id=${clubId}`, {
+        firstname: champion.firstname,
+        lastname: champion.lastname,
+        gender: champion.gender,
+        birthday: champion.birthday,
+        clubId: champion.clubId,
+      })();
+      getAllChampions();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
+    getAllChampions();
     getClubs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div className="page championsPage">
       <div className="pageTop">
-        <p className="title">Current Seasons:</p>
-        {/* {user.role === Role.Admin && ( */}
-        <Button
-          name={showAddChampion ? 'Hide' : '+ Add Season'}
-          onClick={handleAddChampion}
-        />
-        {/* )} */}
+        <p className="title">Champions:</p>
       </div>
       <div className="topPanel">
-        <div className="sideBar">
-          <Tile className="filter" style={{ flex: 1 }}>
-            <p className="subtitle mb10">Filter</p>
+        <Tile className="addChampion" style={{ height: 520 }}>
+          <p className="subtitle mb10">Add champion</p>
+          <AddChampionForm
+            onSubmit={handleAddChampion}
+            onEditSave={handleUpdateChampion}
+            clubs={clubs}
+            editedChampion={editedChampion}
+          />
+        </Tile>
 
-            <TextField
-              label="Name"
-              value={filterName}
-              onChange={(e) => setFilterName(e.target.value)}
-            />
-
-            <div className="gender">
-              <p className="heading">Gender:</p>
-              <div className="checkboxes">
-                <Checkbox
-                  ref={femaleCheckboxRef}
-                  label="Female"
-                  name="gender"
-                />
-                <Checkbox ref={maleCheckboxRef} label="Male" name="gender" />
-              </div>
-            </div>
-            <div className="ageBox">
-              <p className="heading">Age:</p>
-              <div className="fields">
-                <ValueField
-                  label=""
-                  value={minAge}
-                  onChange={(e) => setMinAge(Number(e.target.value))}
-                  min={0}
-                  max={500}
-                />
-
-                <ValueField
-                  label=""
-                  value={maxAge}
-                  onChange={(e) => setMaxAge(Number(e.target.value))}
-                  min={0}
-                  max={500}
-                />
-              </div>
-            </div>
-          </Tile>
-          <div style={{ flex: 3 }}>
-            {showAddChampion && (
-              <Tile className="addChampion">
-                <p className="subtitle mb10">Add champion</p>
-                <AddChampionForm
-                  onSubmit={() => {
-                    //
-                  }}
-                  clubs={clubs}
-                />
-              </Tile>
-            )}
-          </div>
-        </div>
         <Tile className="champions">
           <p className="subtitle mb10">Champions</p>
+          <ChampionTable
+            champions={champions}
+            showOptions
+            onEdit={(champion) => {
+              setEditedChampion(champion as Champion);
+            }}
+          />
         </Tile>
       </div>
     </div>

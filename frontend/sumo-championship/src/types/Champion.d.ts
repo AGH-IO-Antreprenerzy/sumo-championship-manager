@@ -7,6 +7,7 @@ type Champion = {
   gender: Gender;
   birthday: string;
   clubId: number;
+  clubName?: string;
 };
 
 type AssignedChampion = {
@@ -17,6 +18,7 @@ type AssignedChampion = {
   birthday: string;
   clubName?: string;
   categoryId?: number;
+  clubId?: number;
   alreadyAssigned?: boolean;
 };
 
