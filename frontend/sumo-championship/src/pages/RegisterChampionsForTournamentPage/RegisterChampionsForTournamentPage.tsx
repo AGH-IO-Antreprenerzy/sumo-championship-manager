@@ -4,7 +4,7 @@ import api from '../../api/api';
 import ActivityIndicator from '../../components/Atoms/ActivityIndicator';
 import Button from '../../components/Atoms/Button';
 import Tile from '../../components/Atoms/Tile';
-import ChampionTable from '../../components/organisms/ChampionTable/ChampionTable';
+import ChampionTable from '../../components/organisms/EnrolledChampionTable/EnrolledChampionTable';
 import capitalizeFirstLetter from '../../utils/stringMethods';
 import { AssignedChampion } from '../../types/Champion';
 import { DetailedTournament } from '../../types/Tournament';

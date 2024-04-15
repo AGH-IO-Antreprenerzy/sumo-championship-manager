@@ -13,7 +13,7 @@ type props = {
   header?: boolean;
 };
 
-const ChampionItem: React.FC<props> = ({
+const EnrolledChampionItem: React.FC<props> = ({
   name,
   gender,
   birthYear,
@@ -57,4 +57,4 @@ const ChampionItem: React.FC<props> = ({
   );
 };
 
-export default ChampionItem;
+export default EnrolledChampionItem;

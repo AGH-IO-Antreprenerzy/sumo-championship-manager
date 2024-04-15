@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '../Atoms/Button';
 import { Gender } from '../../types/Seasons';
 import { Club } from '../../types/Club';
@@ -17,9 +17,7 @@ const AddChampionForm: React.FC<props> = ({ clubs, onSubmit }) => {
   const [lastname, setLastName] = useState('');
   const [gender, setGender] = useState<Gender | null>(null);
   const [birthday, setBirthday] = useState('');
-  const [club, setClub] = useState<Club | null>(
-    clubs?.length ? clubs[0] : null,
-  );
+  const [club, setClub] = useState<Club | null>(null);
 
   const [errorMessage, setErrorMessage] = useState('');
 

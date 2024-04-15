@@ -1,6 +1,6 @@
 import React from 'react';
 import { AssignedChampion } from '../../../types/Champion';
-import ChampionItem from './ChampionItem';
+import ChampionItem from './EnrolledChampionItem';
 
 type props = {
   champions: AssignedChampion[];
@@ -9,7 +9,7 @@ type props = {
   onRemove?: (index: number) => void;
 };
 
-const ChampionTable: React.FC<props> = ({
+const EnrolledChampionTable: React.FC<props> = ({
   champions,
   showOptions,
   onAdd,
@@ -57,4 +57,4 @@ const ChampionTable: React.FC<props> = ({
   );
 };
 
-export default ChampionTable;
+export default EnrolledChampionTable;
