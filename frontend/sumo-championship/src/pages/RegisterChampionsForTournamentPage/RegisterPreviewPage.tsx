@@ -42,11 +42,18 @@ const RegisterPreviewPage = ({
     const body = enrolledChampions.map((champion) => ({
       tournamentId: tournamentInfo?.id,
       wrestlerId: champion.id,
-      categoryId: [champion.categoryId],
+      categoriesId: [champion.categoryId],
     }));
+    console.log(body);
 
     try {
       await api.post('v1/wrestler-enrollment/enroll-wrestlers', body)();
+      navigate(
+        ROUTES.TOURNAMENT_PAGE.replace(
+          ':id',
+          tournamentInfo?.id.toString() ?? '',
+        ),
+      );
     } catch (error) {
       console.error(error);
       alert('Something went wrong');

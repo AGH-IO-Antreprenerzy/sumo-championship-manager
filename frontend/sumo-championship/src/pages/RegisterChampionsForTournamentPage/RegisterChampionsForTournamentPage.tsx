@@ -11,9 +11,10 @@ import { DetailedTournament } from '../../types/Tournament';
 import SelectField from '../../components/molecules/SelectField';
 import TextField from '../../components/molecules/TextField';
 import { Club } from '../../types/Club';
-import { CategoryStep } from './types';
 import RegisterPreviewPage from './RegisterPreviewPage';
 import ROUTES from '../../routes/allRoutes';
+import { AllRegisteredChampionsResponse } from '../../types/RegisteredChampions';
+import { CategoryStep } from './types';
 
 type WrestlersInfoResponse = {
   wrestlersInfo: AssignedChampion[];
@@ -38,8 +39,35 @@ const RegisterChampionsForTournamentPage: FunctionComponent = () => {
   const [searchValue, setSearchValue] = useState('');
   const [clubs, setClubs] = useState<Club[]>([]);
   const [selectedClub, setSelectedClub] = useState<Club | null>(null);
-
   const [shouldShowPreview, setShouldShowPreview] = useState(false);
+
+  const getAllEnrolledChampions = useCallback(async () => {
+    try {
+      const response = await api.get<AllRegisteredChampionsResponse>(
+        'v1/wrestler-enrollment/all/to-tournament',
+        {
+          tournamentId: id,
+        },
+      )();
+
+      const enrolled: AssignedChampion[] = response.enrollments.map(
+        (enrollment) => {
+          return {
+            id: enrollment.wrestler.id,
+            firstname: enrollment.wrestler.firstname,
+            lastname: enrollment.wrestler.lastname,
+            gender: enrollment.wrestler.gender,
+            birthday: enrollment.wrestler.birthday,
+            categoryId: enrollment.categoryId,
+            alreadyAssigned: true,
+          };
+        },
+      );
+      return enrolled;
+    } catch (e) {
+      throw new Error('Error while fetching enrolled champions');
+    }
+  }, [id]);
 
   const getTournamentInfo = useCallback(async () => {
     try {
@@ -50,17 +78,25 @@ const RegisterChampionsForTournamentPage: FunctionComponent = () => {
         },
       )();
       setTournamentInfo(tournamentDetails);
+
+      const enrolledChampions: AssignedChampion[] =
+        await getAllEnrolledChampions();
+
       const categoriesToEnroll: CategoryStep[] = [];
       tournamentDetails.ageCategories.forEach((category) => {
         category.weightsAndGender.forEach((weightCategory) => {
           if (!weightCategory.categoryId) {
             return;
           }
+          const alreadyEnrolled = enrolledChampions.filter((champ) => {
+            return champ.categoryId === weightCategory.categoryId;
+          });
+
           categoriesToEnroll.push({
             categoryId: weightCategory.categoryId,
             ageCategory: category.ageName,
             weightCategory,
-            champions: [],
+            champions: alreadyEnrolled,
           });
         });
       });
@@ -69,7 +105,7 @@ const RegisterChampionsForTournamentPage: FunctionComponent = () => {
       setTournamentInfo(null);
       setSteps([]);
     }
-  }, [id]);
+  }, [getAllEnrolledChampions, id]);
 
   const getAllClubs = async () => {
     // change endpoint to get all clubs for logged user
@@ -138,7 +174,6 @@ const RegisterChampionsForTournamentPage: FunctionComponent = () => {
       return;
     }
     setSelectedClub(club);
-    club?.id;
     filterAvaliableChampions(currentStep);
   };
 
@@ -159,6 +194,7 @@ const RegisterChampionsForTournamentPage: FunctionComponent = () => {
   };
 
   const handleAdd = (champion: AssignedChampion) => {
+    console.log(JSON.stringify(champion, null, 2));
     const newSteps = [...steps];
     newSteps[currentStep].champions.push(champion);
     setSteps(newSteps);
@@ -180,7 +216,7 @@ const RegisterChampionsForTournamentPage: FunctionComponent = () => {
   useEffect(() => {
     getTournamentInfo();
     getAllClubs();
-  }, [getTournamentInfo]);
+  }, [getAllEnrolledChampions, getTournamentInfo]);
 
   useEffect(() => {
     if (!selectedClub) {

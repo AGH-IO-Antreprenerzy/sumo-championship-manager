@@ -27,6 +27,7 @@ const ChampionTable: React.FC<props> = ({
         header
       />
       {champions.map((champion, index) => {
+        console.log(champion.alreadyAssigned);
         return (
           <ChampionItem
             key={`championItem${champion.id}`}
@@ -34,7 +35,7 @@ const ChampionTable: React.FC<props> = ({
             gender={champion.gender}
             birthYear={new Date(champion.birthday).getFullYear().toString()}
             clubName={champion.clubName ?? '-'}
-            showOptions={showOptions}
+            showOptions={!champion.alreadyAssigned && showOptions}
             onAdd={
               onAdd
                 ? () => {

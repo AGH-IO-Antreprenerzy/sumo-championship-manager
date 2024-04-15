@@ -17,6 +17,7 @@ type AssignedChampion = {
   birthday: string;
   clubName?: string;
   categoryId?: number;
+  alreadyAssigned?: boolean;
 };
 
 type ChampionsWeightCategory = WeightCategory & {

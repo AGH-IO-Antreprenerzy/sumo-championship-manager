@@ -1,3 +1,5 @@
+import { AssignedChampion } from '../../types/Champion';
+
 type CategoryStep = {
   categoryId: number;
   ageCategory: string;

@@ -101,6 +101,7 @@ const TournamentPage: React.FC = () => {
   useEffect(() => {
     getAllEnrolledChampions();
     getTournamentInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
