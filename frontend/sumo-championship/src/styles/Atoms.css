@@ -27,6 +27,15 @@
   background-color: #ff8b38;
 }
 
+.button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.button:disabled:hover {
+  background-color: #f37316;
+}
+
 .iconButton {
   display: flex;
   align-items: center;
@@ -133,6 +142,7 @@
   padding: 10px;
   height: 40px;
   border-radius: 15px;
+  background-color: #a3a3a3;
   color: #000;
   border: solid black 2px;
 }
@@ -206,4 +216,26 @@ input[type='radio'] {
   border-radius: 100px;
   display: flex;
   column-gap: 2px;
+}
+
+.semiBold {
+  font-weight: 600;
+}
+
+.columnFlex {
+  display: flex;
+  flex-direction: column;
+}
+
+.categoryInfo {
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
+  font-size: 20px;
+  margin-bottom: 5px;
+
+  .value {
+    color: #f37316;
+    font-weight: bold;
+  }
 }

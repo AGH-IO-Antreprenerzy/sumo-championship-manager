@@ -24,17 +24,21 @@ const AllSeasonsPage: FunctionComponent = () => {
 
   const getSeasons = async (page: number) => {
     setIsLoading(true);
-    const seasons = await api.getPaginated<AllSeasons>('v1/season/all', 6, {
-      historical: false,
-    })(page);
+    try {
+      const seasons = await api.getPaginated<AllSeasons>('v1/season/all', 6, {
+        historical: false,
+      })(page);
 
-    setTotalPages(seasons.totalPages);
-    setCurrentPage(seasons.pageNo);
-    setSeasons(seasons.seasonDtoList);
-    setIsLoading(false);
+      setTotalPages(seasons.totalPages);
+      setCurrentPage(seasons.pageNo);
+      setSeasons(seasons.seasonDtoList);
+      setIsLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const {user} = useUser();
+  const { user } = useUser();
 
   useEffect(() => {
     getSeasons(0);
@@ -52,7 +56,9 @@ const AllSeasonsPage: FunctionComponent = () => {
     <div className="page">
       <div className="pageTop">
         <p className="title">Current Seasons:</p>
-        {user.role === Role.Admin && <Button name="Add Season" onClick={handleAddSeason} />}
+        {user.role === Role.Admin && (
+          <Button name="Add Season" onClick={handleAddSeason} />
+        )}
       </div>
 
       <SeasonList seasons={seasons} />
