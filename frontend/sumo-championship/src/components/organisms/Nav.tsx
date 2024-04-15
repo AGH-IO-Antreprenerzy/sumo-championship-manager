@@ -8,43 +8,50 @@ import ROUTES from '../../routes/allRoutes';
 const Nav: React.FC = () => {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
-  const {user} = useUser();
+  const { user } = useUser();
 
-  interface NavTab{
-    name: string,
-    navigate: () => void,
-    roles: Role[]
+  interface NavTab {
+    name: string;
+    navigate: () => void;
+    roles: Role[];
   }
-  
+
   const tabs: NavTab[] = [
     {
-      name: "Home",
+      name: 'Home',
       navigate: () => navigate(ROUTES.HOME),
-      roles: []
+      roles: [],
     },
     {
-      name: "Seasons",
+      name: 'Seasons',
       navigate: () => navigate(ROUTES.SEASONS),
-      roles: []
+      roles: [],
     },
     {
-      name: "Tournaments",
+      name: 'Tournaments',
       navigate: () => navigate(ROUTES.TOURNAMENTS),
-      roles: []
+      roles: [],
     },
     {
-      name: "Contact",
+      name: 'Champions',
+      navigate: () => navigate(ROUTES.CHAMPIONS),
+      roles: [],
+    },
+    {
+      name: 'Contact',
       navigate: () => navigate(ROUTES.CONTACT),
-      roles: []
+      roles: [],
     },
     {
-      name: "Add trainer",
+      name: 'Add trainer',
       navigate: () => navigate(ROUTES.ADDTRAINER),
-      roles: [Role.Admin]
+      roles: [Role.Admin],
     },
-  ]
+  ];
 
-  const canUserView = (tab: NavTab) => tab.roles.length === 0 || (user.role !== null && tab.roles.includes(user.role))
+  const canUserView = (tab: NavTab) =>
+    tab.roles.length === 0 ||
+    (user.role !== null && tab.roles.includes(user.role));
 
   return (
     <div className="nav">
@@ -60,18 +67,23 @@ const Nav: React.FC = () => {
         style={{ height: 64 }}
       />
       <div className={`options-parent ${menuOpen ? 'open' : ''}`}>
-        {tabs.map((tab, index) => canUserView(tab) &&
-          <div className="option" onClick={tab.navigate} key={index}>
-            {tab.name}
-          </div> 
+        {tabs.map(
+          (tab, index) =>
+            canUserView(tab) && (
+              <div className="option" onClick={tab.navigate} key={index}>
+                {tab.name}
+              </div>
+            ),
         )}
       </div>
-      {!user.isLogged && <button
-        className={`nav-button ${menuOpen ? 'open' : ''}`}
-        onClick={() => navigate(ROUTES.LOGIN)}
-      >
-        <div className="login">Log in</div>
-      </button>}
+      {!user.isLogged && (
+        <button
+          className={`nav-button ${menuOpen ? 'open' : ''}`}
+          onClick={() => navigate(ROUTES.LOGIN)}
+        >
+          <div className="login">Log in</div>
+        </button>
+      )}
     </div>
   );
 };

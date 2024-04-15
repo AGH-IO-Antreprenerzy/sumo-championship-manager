@@ -15,6 +15,7 @@ import TournamentPage from './pages/TournamentPage';
 import RegisterChampionsForTournamentPage from './pages/RegisterChampionsForTournamentPage/RegisterChampionsForTournamentPage';
 import { Role } from './api/login';
 import AddTrainer from './pages/AddTrainer/AddTrainer';
+import ChampionsPage from './pages/ChampionsPage';
 
 const App: FunctionComponent = () => {
   const { user } = useUser();
@@ -45,6 +46,7 @@ const App: FunctionComponent = () => {
           />
           <Route path={ROUTES.SEASON_PAGE} element={<SeasonPage />} />
           <Route path={ROUTES.HOME} element={<Home />} />
+          <Route path={ROUTES.CHAMPIONS} element={<ChampionsPage />} />
           <Route
             path={ROUTES.TOURNAMENTS_ADD}
             element={adminRestrictedPage(<AddTournamentPage />)}
