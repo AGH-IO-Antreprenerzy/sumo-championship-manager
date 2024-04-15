@@ -1,6 +1,7 @@
 package com.sumoc.sumochampionship.api.dto.club;
 
 import com.sumoc.sumochampionship.db.people.Club;
+import com.sumoc.sumochampionship.db.season.Country;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,8 +17,8 @@ import java.util.Set;
 @Builder
 public class ClubRequest {
     String name;
-    String nationality;
     List<Long> trainerIds;
+    Country nationality;
 
     public Club mapToClub() {
         return Club.builder()

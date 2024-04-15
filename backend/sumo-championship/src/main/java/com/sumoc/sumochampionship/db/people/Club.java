@@ -1,5 +1,6 @@
 package com.sumoc.sumochampionship.db.people;
 
+import com.sumoc.sumochampionship.db.season.Country;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,9 +27,10 @@ public class Club {
     @Column(unique = true)
     private String name;
 
-    private String nationality;
+    @Enumerated(EnumType.STRING)
+    private Country nationality;
 
-    @ManyToMany(mappedBy = "ownedClubs")
+    @ManyToMany(mappedBy = "ownedClubs", cascade = CascadeType.ALL)
     private Set<WebsiteUser> trainers;
 
     @OneToMany(mappedBy = "club")

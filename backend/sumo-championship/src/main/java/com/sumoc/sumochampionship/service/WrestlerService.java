@@ -171,8 +171,12 @@ public class WrestlerService {
 
         List<Wrestler> wrestlers = wrestlerRepository.findAllByClubIn(Set.of(optionalClub.get()));
         WrestlersDto.clubRepository = clubRepository;
-        return wrestlers.stream().map(WrestlersDto::mapToDto).toList();
 
+        System.out.println(wrestlers);
+
+        return wrestlers.stream()
+                .map(wrestler -> WrestlersDto.mapToDto_v2(wrestler, optionalClub.get().getName()))
+                .toList();
     }
 
 }
