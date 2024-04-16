@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Tile from '../components/Atoms/Tile';
 import DetailItem from '../components/Atoms/DetailItem';
@@ -11,6 +11,9 @@ import ChampionsPerCategoryTable from '../components/organisms/ChampionsPerCateg
 import { AllRegisteredChampionsResponse } from '../types/RegisteredChampions';
 import { AssignedChampion } from '../types/Champion';
 import ROUTES from '../routes/allRoutes';
+import { CSVLink } from 'react-csv';
+import { AsyncClickHandler } from 'react-csv/components/CommonPropTypes';
+import { set } from 'zod';
 
 const TournamentPage: React.FC = () => {
   const navigate = useNavigate();
@@ -21,7 +24,8 @@ const TournamentPage: React.FC = () => {
   const [enrolledChampions, setEnrolledChampions] = useState<
     AssignedChampion[]
   >([]);
-
+  const [data, setData] = useState('');
+  const csvRef = useRef<any>(null);
   const currentDate = new Date();
 
   const getTournamentInfo = useCallback(async () => {
@@ -98,6 +102,38 @@ const TournamentPage: React.FC = () => {
     }
   };
 
+  const handleExport = async () => {
+    try {
+      if (!id) {
+        return;
+      }
+      let uri = api.DOMAIN + 'v1/tournament/exportContestants';
+      uri = `${uri}?${new URLSearchParams({
+        tournamentId: id,
+      })}`;
+      const response = await fetch(uri, {
+        method: 'Get',
+        headers: {
+          'Content-Type': 'application/octet-stream',
+          accept: 'application/octet-stream',
+        },
+      });
+      const arrayBuffer = await response.arrayBuffer();
+      const uint8Array = new Uint8Array(arrayBuffer);
+      const csvString = new TextDecoder('utf-8').decode(uint8Array);
+      setData(csvString);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    if (data && data !== '') {
+      csvRef.current.link.click();
+      setData('');
+    }
+  }, [data]);
+
   useEffect(() => {
     getAllEnrolledChampions();
     getTournamentInfo();
@@ -108,12 +144,13 @@ const TournamentPage: React.FC = () => {
     <div className="page seasonPage">
       <div className="pageTop">
         <p className="title">Tournament: {tournamentInfo?.name ?? '-'}</p>
-        <Button
-          name="Export"
-          onClick={() => {
-            // TODO: Implement export functionality
-          }}
+
+        <CSVLink
+          ref={csvRef}
+          data={data}
+          filename={`tournament-${id}-export.csv`}
         />
+        <Button name="Export" onClick={handleExport} />
       </div>
       <div className="season_topPanel">
         <Tile className="generalInfo columnFlex">
