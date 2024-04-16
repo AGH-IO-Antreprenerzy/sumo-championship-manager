@@ -43,6 +43,11 @@ const Nav: React.FC = () => {
       roles: [],
     },
     {
+      name: 'Clubs',
+      navigate: () => navigate(ROUTES.NATIONALITIES),
+      roles: [],
+    },
+    {
       name: 'Add trainer',
       navigate: () => navigate(ROUTES.ADDTRAINER),
       roles: [Role.Admin],

@@ -170,9 +170,25 @@
   gap: 1rem;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
+.nationalityFlexList {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  flex-wrap: wrap;
+  gap: 20px;
+}
 
+.nationalityGridList {
+  display: grid;
+  margin: 0 auto;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
 @media (max-width: 900px) {
   .tournamentFlexList {
+    justify-content: center;
+  }
+  .nationalityFlexList {
     justify-content: center;
   }
 }

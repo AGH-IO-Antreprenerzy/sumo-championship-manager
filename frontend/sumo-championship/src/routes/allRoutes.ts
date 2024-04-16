@@ -12,6 +12,9 @@ const ROUTES = {
   CONTACT: '/contact',
   ADDTRAINER: '/addtrainer',
   CHAMPIONS: '/champions',
+  NATIONALITIES: '/nationalities',
+  CLUBS: '/clubs/:countryName',
+  CLUBS_ADD: '/clubs/add',
 };
 
 export default ROUTES;
