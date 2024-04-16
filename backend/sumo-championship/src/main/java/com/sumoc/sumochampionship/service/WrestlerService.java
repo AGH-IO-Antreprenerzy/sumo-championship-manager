@@ -10,10 +10,7 @@ import com.sumoc.sumochampionship.db.people.WebsiteUser;
 import com.sumoc.sumochampionship.db.people.Wrestler;
 import com.sumoc.sumochampionship.db.season.Category;
 import com.sumoc.sumochampionship.db.season.WrestlersEnrollment;
-import com.sumoc.sumochampionship.repository.CategoryRepository;
-import com.sumoc.sumochampionship.repository.ClubRepository;
-import com.sumoc.sumochampionship.repository.WrestlerEnrollmentRepository;
-import com.sumoc.sumochampionship.repository.WrestlerRepository;
+import com.sumoc.sumochampionship.repository.*;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -36,6 +33,7 @@ public class WrestlerService {
     private final ClubRepository clubRepository;
     private final WrestlerEnrollmentRepository wrestlerEnrollmentRepository;
     private final CategoryRepository categoryRepository;
+    private final WebsiteUserRepository websiteUserRepository;
 
     /*
     Using Repository collect all Wrestlers belong to WebsiteUser(Trainer)
@@ -43,9 +41,18 @@ public class WrestlerService {
      */
     public WrestlersResponse findAllInClubs(WebsiteUser user, Pageable pageable){
         if (user == null){
-            // TODO: Refactor this to sth that make more sense
-            return WrestlersResponse.builder().build();
+            Page<Wrestler> wrestlerPage =  wrestlerRepository.findAll(pageable);
+            WrestlersDto.clubRepository = clubRepository;
+            List<WrestlersDto> content = wrestlerPage.stream().map(WrestlersDto::mapToDto).toList();
+
+            return WrestlersResponse.builder()
+                    .wrestlersInfo(content)
+                    .pageNo(wrestlerPage.getNumber())
+                    .pageSize(wrestlerPage.getSize())
+                    .totalElements(wrestlerPage.getTotalElements())
+                    .totalPages(wrestlerPage.getTotalPages()).build();
         }
+
         Set<Club> ownedClubs = user.getOwnedClubs();
         Page<Wrestler> wrestlerPage = wrestlerRepository.findWrestlerByClubIn(ownedClubs, pageable);
 
@@ -53,6 +60,7 @@ public class WrestlerService {
         WrestlersDto.clubRepository = clubRepository;
         List<WrestlersDto> content = listOfWrestlers.stream().map(WrestlersDto::mapToDto).toList();
 
+        System.out.println("Content = " + content);
         WrestlersDto.clubRepository = clubRepository;
 
         return WrestlersResponse.builder()
