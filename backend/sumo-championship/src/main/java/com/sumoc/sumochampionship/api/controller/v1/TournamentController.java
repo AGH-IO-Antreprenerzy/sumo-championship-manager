@@ -70,6 +70,7 @@ public class TournamentController {
 
     @GetMapping("/exportContestants")
     public ResponseEntity<byte[]> exportContestants(@RequestParam Long tournamentId) {
+        System.out.println("Exporting :)");
         if (!this.tournamentService.checkTournamentExist(tournamentId)) {
             return ResponseEntity.badRequest().body(new byte[0]);
         }
@@ -78,6 +79,7 @@ public class TournamentController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+
         headers.setContentDispositionFormData("attachment", "contestants.csv");
 
         byte[] csvBytes = csvGeneratorUtil.generateCsvBytes(wrestlerEnrollmentDtos);

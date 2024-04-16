@@ -6,12 +6,12 @@ interface TrainerToAdd{
     lastname: string,
     password: string,
     email: string,
-    role: Role,
+    userRole: Role,
     country: string,
     club: string,
 }
 
+
 export const addTrainer = async (trainer: TrainerToAdd) => {
-    const body = JSON.stringify(trainer);
-    await api.post("v1/website-user/add", body)();
+    await api.post("v1/website-user/add", trainer)();
 }

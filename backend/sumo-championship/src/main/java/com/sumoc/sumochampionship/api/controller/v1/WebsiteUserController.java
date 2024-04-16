@@ -1,5 +1,6 @@
 package com.sumoc.sumochampionship.api.controller.v1;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.sumoc.sumochampionship.api.dto.websiteuser.WebsiteUserRequest;
@@ -16,7 +17,12 @@ public class WebsiteUserController {
     private final WebsiteUserService websiteUserService;
 
     @PostMapping("/add")
-    public ResponseEntity<String> addWebsiteUser(@RequestBody WebsiteUserRequest websiteUserRequest){
-        return websiteUserService.addWebsiteUser(websiteUserRequest);
+    public ResponseEntity<JsonNode> addWebsiteUser(@RequestBody WebsiteUserRequest websiteUserRequest){
+        String response = websiteUserService.addWebsiteUser(websiteUserRequest).getBody();
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode json = objectMapper.createObjectNode();
+        json.put("response", response);
+
+        return ResponseEntity.ok(json);
     }
 }
