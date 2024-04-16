@@ -31,25 +31,24 @@
     display: flex;
     flex-direction: row;
   }
+}
+.gender {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
 
-  .gender {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
-  }
+.checkboxes {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
 
-  .checkboxes {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .checkbox {
-    margin-right: 10px;
-  }
+.checkbox {
+  margin-right: 10px;
 }
 
 .addSeasonFormColumn {
@@ -323,5 +322,38 @@
 
   .championItem:nth-child(2n) {
     background-color: #ccc;
+  }
+}
+.championsPage {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  column-gap: 20px;
+  align-content: flex-start;
+  margin-bottom: 20px;
+  height: 950px;
+
+  .topPanel {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    row-gap: 20px;
+    column-gap: 20px;
+  }
+
+  .sideBar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+  }
+
+  .addChampion {
+    flex: 1;
+    height: 100%;
+  }
+
+  .champions {
+    flex: 3;
   }
 }

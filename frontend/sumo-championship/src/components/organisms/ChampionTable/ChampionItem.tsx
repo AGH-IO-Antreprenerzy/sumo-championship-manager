@@ -10,6 +10,7 @@ type props = {
   showOptions?: boolean;
   onAdd?: () => void;
   onRemove?: () => void;
+  onEdit?: () => void;
   header?: boolean;
 };
 
@@ -21,6 +22,7 @@ const ChampionItem: React.FC<props> = ({
   showOptions,
   onAdd,
   onRemove,
+  onEdit,
   header,
 }) => {
   const fieldClass = header ? 'headerField' : 'field';
@@ -50,6 +52,14 @@ const ChampionItem: React.FC<props> = ({
             size={24}
             color="#ff8b38"
             onClick={onRemove}
+          />
+        )}
+        {!header && showOptions && onEdit && (
+          <IconButton
+            name="FaEdit"
+            size={24}
+            color="#ff8b38"
+            onClick={onEdit}
           />
         )}
       </div>

@@ -208,6 +208,27 @@
     row-gap: 5px;
   }
 }
+
+.ageBox {
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+
+  .fields {
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+    align-items: center;
+  }
+}
+
+.addChampionForm {
+  display: flex;
+  flex-direction: column;
+}
+
 .nationalityItem {
   max-width: 300px;
   min-height: 200px;

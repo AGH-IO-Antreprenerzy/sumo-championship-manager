@@ -7,6 +7,7 @@ type props = {
   showOptions?: boolean;
   onAdd?: (champion: AssignedChampion) => void;
   onRemove?: (index: number) => void;
+  onEdit?: (champion: AssignedChampion) => void;
 };
 
 const ChampionTable: React.FC<props> = ({
@@ -14,6 +15,7 @@ const ChampionTable: React.FC<props> = ({
   showOptions,
   onAdd,
   onRemove,
+  onEdit,
 }) => {
   return (
     <div className="championTable">
@@ -27,7 +29,6 @@ const ChampionTable: React.FC<props> = ({
         header
       />
       {champions.map((champion, index) => {
-        console.log(champion.alreadyAssigned);
         return (
           <ChampionItem
             key={`championItem${champion.id}`}
@@ -47,6 +48,13 @@ const ChampionTable: React.FC<props> = ({
               onRemove
                 ? () => {
                     onRemove(index);
+                  }
+                : undefined
+            }
+            onEdit={
+              onEdit
+                ? () => {
+                    onEdit(champion);
                   }
                 : undefined
             }

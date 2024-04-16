@@ -6,10 +6,11 @@ interface Props {
   name?: string;
   id?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  checked?: boolean;
 }
 
 const RadioButton = React.forwardRef<HTMLInputElement, Props>(
-  ({ label, name, id, onChange }, ref) => {
+  ({ label, name, id, onChange, checked }, ref) => {
     return (
       <div className="radio">
         <label htmlFor={name ?? label}>{label}</label>
@@ -20,6 +21,7 @@ const RadioButton = React.forwardRef<HTMLInputElement, Props>(
           ref={ref}
           onChange={onChange}
           className="radioButton"
+          checked={checked}
         />
       </div>
     );

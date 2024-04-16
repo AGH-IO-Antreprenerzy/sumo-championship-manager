@@ -11,10 +11,10 @@ const ROUTES = {
   TOURNAMENTS_ADD_TO_SEASON: '/tournaments/add/:name',
   CONTACT: '/contact',
   ADDTRAINER: '/addtrainer',
+  CHAMPIONS: '/champions',
   NATIONALITIES: '/nationalities',
   CLUBS: '/clubs/:countryName',
-  CLUBS_ADD: '/clubs/add'
+  CLUBS_ADD: '/clubs/add',
 };
-
 
 export default ROUTES;

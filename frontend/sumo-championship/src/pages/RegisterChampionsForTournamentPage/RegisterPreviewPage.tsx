@@ -51,7 +51,6 @@ const RegisterPreviewPage = ({
       wrestlerId: champion.id,
       categoriesId: [champion.categoryId],
     }));
-    console.log(body);
 
     try {
       await api.post('v1/wrestler-enrollment/enroll-wrestlers', body)();
