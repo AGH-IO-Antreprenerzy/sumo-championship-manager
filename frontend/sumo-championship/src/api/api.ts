@@ -14,7 +14,12 @@ const throwFetchError = (method: string, endpoint: string, text: string) => {
   throw new Error(`[${method}] ${endpoint}: ${text}`);
 };
 
-function get<T>(endpoint: string, params = {}): () => Promise<T> {
+function get<T>(
+  endpoint: string,
+  params = {},
+  accept = 'application/json',
+  type = 'application/json',
+): () => Promise<T> {
   return async () => {
     let uri = `${DOMAIN}${endpoint}`;
     if (params) {
@@ -24,8 +29,8 @@ function get<T>(endpoint: string, params = {}): () => Promise<T> {
     const response = await fetch(uri, {
       method: 'Get',
       headers: {
-        'Content-Type': 'application/json',
-        accept: 'application/json',
+        'Content-Type': type,
+        accept,
       },
     });
 
@@ -100,6 +105,7 @@ function put(endpoint: string, body = {}) {
 }
 
 export default {
+  DOMAIN,
   get,
   getPaginated,
   post,

@@ -31,25 +31,24 @@
     display: flex;
     flex-direction: row;
   }
+}
+.gender {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
 
-  .gender {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
-  }
+.checkboxes {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
 
-  .checkboxes {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .checkbox {
-    margin-right: 10px;
-  }
+.checkbox {
+  margin-right: 10px;
 }
 
 .addSeasonFormColumn {
@@ -107,7 +106,7 @@
   row-gap: 30px;
   align-content: flex-start;
   margin: 10px;
-  width: 30%;
+  width: 100%;
 
   .generalContainer {
     display: flex;
@@ -171,9 +170,25 @@
   gap: 1rem;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
+.nationalityFlexList {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  flex-wrap: wrap;
+  gap: 20px;
+}
 
+.nationalityGridList {
+  display: grid;
+  margin: 0 auto;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
 @media (max-width: 900px) {
   .tournamentFlexList {
+    justify-content: center;
+  }
+  .nationalityFlexList {
     justify-content: center;
   }
 }
@@ -193,4 +208,152 @@
   justify-content: center;
   width: 500px;
   row-gap: 20px;
+}
+
+.championCategoryItem {
+  .header {
+    display: flex;
+    column-gap: 10px;
+    width: 100%;
+    height: 50px;
+    align-items: center;
+  }
+
+  .field {
+    width: 70px;
+    text-align: center;
+  }
+
+  .body {
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+  }
+}
+
+.assignedChampionCategoryItem {
+  display: flex;
+  column-gap: 10px;
+  width: 100%;
+  height: 50px;
+  align-items: center;
+  padding-left: 20px;
+}
+
+.assignedChampionCategoryItem:nth-child(2n - 1) {
+  background-color: #ccc;
+}
+
+.registerChampionsForTournamentPage {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  row-gap: 20px;
+  column-gap: 20px;
+}
+
+.tileTop {
+  height: 110px;
+}
+
+.belowTile {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.championTable {
+  display: flex;
+  flex-direction: column;
+
+  .championItem {
+    height: 50px;
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+  }
+
+  .content {
+    flex: 1;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    align-items: center;
+  }
+
+  .name {
+    width: 200px;
+  }
+
+  .headerField {
+    font-weight: bold;
+  }
+
+  .field,
+  .headerField {
+    text-align: center;
+    flex: 1;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .options {
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .championItemHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 25px;
+  }
+
+  .championItem:nth-child(2n) {
+    background-color: #ccc;
+  }
+}
+.championsPage {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  column-gap: 20px;
+  align-content: flex-start;
+  margin-bottom: 20px;
+  height: 950px;
+
+  .topPanel {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    row-gap: 20px;
+    column-gap: 20px;
+  }
+
+  .sideBar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+  }
+
+  .addChampion {
+    flex: 1;
+    height: 100%;
+  }
+
+  .champions {
+    flex: 3;
+  }
 }

@@ -1,15 +1,13 @@
 package com.sumoc.sumochampionship.service;
 
-import com.sumoc.sumochampionship.api.dto.CategoryDto;
-import com.sumoc.sumochampionship.api.dto.SeasonDto;
-import com.sumoc.sumochampionship.api.dto.request.CategoryRequest;
-import com.sumoc.sumochampionship.api.dto.request.SeasonRequest;
-import com.sumoc.sumochampionship.api.dto.response.AllSeasonResponse;
+import com.sumoc.sumochampionship.api.dto.season.SeasonDto;
+import com.sumoc.sumochampionship.api.dto.category.CategoryRequest;
+import com.sumoc.sumochampionship.api.dto.season.SeasonRequest;
+import com.sumoc.sumochampionship.api.dto.season.AllSeasonResponse;
 import com.sumoc.sumochampionship.db.people.Gender;
 import com.sumoc.sumochampionship.db.season.Category;
 import com.sumoc.sumochampionship.db.season.Season;
 import com.sumoc.sumochampionship.repository.CategoryRepository;
-import com.sumoc.sumochampionship.repository.CategoryRepositoryTest;
 import com.sumoc.sumochampionship.repository.SeasonRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

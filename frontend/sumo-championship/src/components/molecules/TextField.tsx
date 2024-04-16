@@ -9,6 +9,7 @@ type props = {
   type?: 'text' | 'password' | 'date';
   style?: React.CSSProperties;
   small?: boolean;
+  placeholder?: string;
 };
 
 const TextField: React.FC<props> = ({
@@ -19,6 +20,7 @@ const TextField: React.FC<props> = ({
   type,
   style,
   small = false,
+  placeholder,
 }) => {
   return (
     <div className="textField_container" style={style}>
@@ -31,7 +33,7 @@ const TextField: React.FC<props> = ({
         name={`input_${label}`}
         value={value}
         onChange={onChange}
-        placeholder={label}
+        placeholder={placeholder ?? label}
       />
       <div className="error"> {errorMessage && `*${errorMessage}`} </div>
     </div>

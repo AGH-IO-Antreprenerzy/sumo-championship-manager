@@ -1,4 +1,7 @@
+import { Category } from './Seasons';
+
 type Tournament = {
+  id: number;
   name: string;
   location: {
     country: string;
@@ -25,4 +28,21 @@ type PaginatedTournaments = {
   totalElements: number;
 };
 
-export { Tournament, PaginatedTournaments };
+type DetailedTournament = {
+  id: number;
+  name: string;
+  seasonName: string;
+  registerStart: string;
+  registerEnd: string;
+  contestStart: string;
+  contestEnd: string;
+  location: {
+    country: string;
+    city: string;
+    street: string;
+    nr: number;
+  };
+  ageCategories: Category[];
+};
+
+export { Tournament, PaginatedTournaments, DetailedTournament };

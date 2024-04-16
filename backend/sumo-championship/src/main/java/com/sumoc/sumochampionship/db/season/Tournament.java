@@ -41,9 +41,6 @@ public class Tournament {
     private Season season;
 
     @ManyToMany
-    @JoinTable(name = "TournamentCategories",
-            joinColumns = @JoinColumn(name = "tournament_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories;
 
     @OneToMany(mappedBy = "tournament")

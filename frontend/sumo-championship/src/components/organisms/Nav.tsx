@@ -1,11 +1,63 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/Nav.css';
-import ROUTES from '../../routes/ROUTES';
+import { useUser } from '../../contexts/UserContext';
+import { Role } from '../../api/login';
+import ROUTES from '../../routes/allRoutes';
 
 const Nav: React.FC = () => {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+  const { user } = useUser();
+
+  interface NavTab {
+    name: string;
+    navigate: () => void;
+    roles: Role[];
+  }
+
+  const tabs: NavTab[] = [
+    {
+      name: 'Home',
+      navigate: () => navigate(ROUTES.HOME),
+      roles: [],
+    },
+    {
+      name: 'Seasons',
+      navigate: () => navigate(ROUTES.SEASONS),
+      roles: [],
+    },
+    {
+      name: 'Tournaments',
+      navigate: () => navigate(ROUTES.TOURNAMENTS),
+      roles: [],
+    },
+    {
+      name: 'Champions',
+      navigate: () => navigate(ROUTES.CHAMPIONS),
+      roles: [],
+    },
+    {
+      name: 'Contact',
+      navigate: () => navigate(ROUTES.CONTACT),
+      roles: [],
+    },
+    {
+      name: 'Clubs',
+      navigate: () => navigate(ROUTES.NATIONALITIES),
+      roles: [],
+    },
+    {
+      name: 'Add trainer',
+      navigate: () => navigate(ROUTES.ADDTRAINER),
+      roles: [Role.Admin],
+    },
+  ];
+
+  const canUserView = (tab: NavTab) =>
+    tab.roles.length === 0 ||
+    (user.role !== null && tab.roles.includes(user.role));
+
   return (
     <div className="nav">
       <div className="menu" onClick={() => setMenuOpen(!menuOpen)}>
@@ -20,25 +72,23 @@ const Nav: React.FC = () => {
         style={{ height: 64 }}
       />
       <div className={`options-parent ${menuOpen ? 'open' : ''}`}>
-        <div className="option" onClick={() => navigate(ROUTES.HOME)}>
-          Home
-        </div>
-        <div className="option" onClick={() => navigate(ROUTES.SEASONS)}>
-          Seasons
-        </div>
-        <div className="option" onClick={() => navigate(ROUTES.TOURNAMENTS)}>
-          Tournaments
-        </div>
-        <div className="option" onClick={() => navigate(ROUTES.CONTACT)}>
-          Contact
-        </div>
+        {tabs.map(
+          (tab, index) =>
+            canUserView(tab) && (
+              <div className="option" onClick={tab.navigate} key={index}>
+                {tab.name}
+              </div>
+            ),
+        )}
       </div>
-      <button
-        className={`nav-button ${menuOpen ? 'open' : ''}`}
-        onClick={() => navigate(ROUTES.LOGIN)}
-      >
-        <div className="login">Log in</div>
-      </button>
+      {!user.isLogged && (
+        <button
+          className={`nav-button ${menuOpen ? 'open' : ''}`}
+          onClick={() => navigate(ROUTES.LOGIN)}
+        >
+          <div className="login">Log in</div>
+        </button>
+      )}
     </div>
   );
 };

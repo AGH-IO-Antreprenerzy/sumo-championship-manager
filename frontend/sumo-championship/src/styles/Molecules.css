@@ -14,7 +14,7 @@
   .input {
     padding: 10px;
     border-radius: 10px;
-    border: 2px solid black;
+    border: 1px solid black;
     font-size: 16px;
     width: 100%;
     height: 50px;
@@ -31,14 +31,30 @@
 }
 
 .categoryItem {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  height: 50px;
-  padding-left: 10px;
-  background-color: white;
+  .heading {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    padding-left: 10px;
+  }
+
+  .body {
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+    font-size: 14px;
+  }
+
+  .weightCategories {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    flex: 1;
+  }
 
   .field {
     flex: 1;
@@ -70,22 +86,9 @@
     font-weight: bold;
     flex: 1;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    height: 100%;
     align-items: center;
-    width: 100%;
-    background-color: white;
-    height: 25px;
-
-    .headerField {
-      text-align: center;
-      font-weight: bold;
-      flex: 1;
-      display: flex;
-      height: 100%;
-      align-items: center;
-      justify-content: center;
-    }
+    justify-content: center;
   }
 }
 
@@ -178,6 +181,101 @@
 }
 
 .tournamentItem:hover {
+  transform: scale(1.02);
+  background-color: #eee;
+}
+
+.categoryForms {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  row-gap: 40px;
+}
+
+.weightCategoryList {
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
+  align-items: center;
+
+  .list {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1;
+    column-gap: 5px;
+    row-gap: 5px;
+  }
+}
+
+.ageBox {
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+
+  .fields {
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+    align-items: center;
+  }
+}
+
+.addChampionForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.nationalityItem {
+  max-width: 300px;
+  min-height: 200px;
+  border-radius: 15px;
+  border: 1px solid black;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: 0.3s;
+
+  .nationalityItem_image {
+    width: 100%;
+  }
+
+  .nationalityItem_content {
+    flex: 1;
+    padding: 10px;
+  }
+}
+
+.nationalityItem:hover {
+  transform: scale(1.02);
+  background-color: #eee;
+}
+.clubItem {
+  max-width: 300px;
+  min-height: 200px;
+  border-radius: 15px;
+  border: 1px solid black;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: 0.3s;
+
+  .clubItem_image {
+    width: 100%;
+  }
+
+  .clubItem_content {
+    flex: 1;
+    padding: 10px;
+  }
+}
+
+.clubItem:hover {
   transform: scale(1.02);
   background-color: #eee;
 }

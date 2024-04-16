@@ -15,14 +15,17 @@ import lombok.NoArgsConstructor;
 public class WrestlersEnrollment {
 
     @Id
+    @GeneratedValue
+    private Long id;
+
     @ManyToOne
     private Wrestler wrestler;
 
-    @Id
+
     @ManyToOne
     private Tournament tournament;
 
-    @Id
+
     @ManyToOne
     private Category category;
 

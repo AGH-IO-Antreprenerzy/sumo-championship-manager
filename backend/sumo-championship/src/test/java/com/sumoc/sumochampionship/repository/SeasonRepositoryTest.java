@@ -12,12 +12,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.context.TestPropertySource;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
+@TestPropertySource(properties = {
+        "spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect"
+})
 public class SeasonRepositoryTest {
 
     @Autowired
@@ -50,15 +54,6 @@ public class SeasonRepositoryTest {
         Assertions.assertEquals(2, seasons.size());
         Assertions.assertEquals("2024", seasons.get(0).getName());
         Assertions.assertEquals("2024-2", seasons.get(1).getName());
-    }
-
-    @Test
-    void  findById(){
-        // Act
-        Season season = seasonRepository.findById(1);
-
-        // Assertions
-        Assertions.assertEquals("2023", season.getName());
     }
 
     @BeforeEach

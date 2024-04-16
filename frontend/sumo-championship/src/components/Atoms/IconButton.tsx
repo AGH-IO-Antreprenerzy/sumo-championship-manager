@@ -1,19 +1,24 @@
 import React from 'react';
 import './../../styles/Atoms.css';
-import Icon from './Icon';
+import * as FaIcons from 'react-icons/fa';
+import FaIcon from './FaIcon';
 
 interface props {
-  name: string;
+  name: keyof typeof FaIcons;
   size: number;
   style?: React.CSSProperties;
   onClick?: () => void;
   disabled?: boolean;
+  color?: string;
+  iconSttyle?: React.CSSProperties;
 }
 
 const IconButton: React.FC<props> = ({
   name,
   size,
   style,
+  color,
+  iconSttyle,
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   onClick = () => {},
   disabled = false,
@@ -24,11 +29,7 @@ const IconButton: React.FC<props> = ({
       style={{ ...style, opacity: disabled ? 0.5 : 1 }}
       onClick={() => !disabled && onClick()}
     >
-      <Icon
-        src={require(`./../../assets/icons/${name}.png`)}
-        alt={name}
-        size={size - 2}
-      />
+      <FaIcon name={name} size={size - 2} color={color} style={iconSttyle} />
     </button>
   );
 };

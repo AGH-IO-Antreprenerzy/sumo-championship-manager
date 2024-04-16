@@ -27,6 +27,15 @@
   background-color: #ff8b38;
 }
 
+.button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.button:disabled:hover {
+  background-color: #f37316;
+}
+
 .iconButton {
   display: flex;
   align-items: center;
@@ -102,7 +111,7 @@
 }
 
 .checkbox {
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .checkbox > label {
@@ -161,5 +170,72 @@
   .right {
     text-align: right;
     flex: 1;
+  }
+}
+.subtitleWithIcon {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  column-gap: 10px;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.twoSelectionFields {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  column-gap: 20px;
+  margin-bottom: 10px;
+}
+
+input[type='radio'] {
+  width: 16px;
+  height: 16px;
+}
+
+.radio {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: 5px;
+  margin-left: 10px;
+  font-size: 16px;
+}
+
+.h6 {
+  line-height: 20px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.tag {
+  background-color: #f37316;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 100px;
+  display: flex;
+  column-gap: 2px;
+}
+
+.semiBold {
+  font-weight: 600;
+}
+
+.columnFlex {
+  display: flex;
+  flex-direction: column;
+}
+
+.categoryInfo {
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
+  font-size: 20px;
+  margin-bottom: 5px;
+
+  .value {
+    color: #f37316;
+    font-weight: bold;
   }
 }

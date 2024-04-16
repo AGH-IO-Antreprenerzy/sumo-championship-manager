@@ -7,7 +7,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Set;
+
+import static java.util.Objects.hash;
 
 /**
  * Model that represent categories in which wrestlers can compete in.
@@ -42,10 +45,15 @@ public class Category {
     private Season season;
 
     // Categories for a given tournament
-    @ManyToMany(mappedBy = "categories")
-    private Set<Tournament> tournaments;
+    @ManyToMany
+    private List<Tournament> tournament;
 
     // Category for an enrolled Wrestler
     @OneToMany(mappedBy = "category")
     private Set<WrestlersEnrollment> enrollments;
+
+    @Override
+    public int hashCode(){
+        return hash(id);
+    }
 }

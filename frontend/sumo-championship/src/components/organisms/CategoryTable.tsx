@@ -1,7 +1,7 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import './../../styles/Organisms.css';
 import CategoryItem from '../molecules/CategoryItem';
-import { Category } from '../../types/Seasons';
+import { Category, WeightCategory } from '../../types/Seasons';
 
 type props = {
   categories: Category[];
@@ -9,7 +9,9 @@ type props = {
   onDelete?: (category: Category) => void;
   onEdit?: (category: Category) => void;
   onEditCancel?: () => void;
+  onUpdate?: (newCategories: Category[]) => void;
   style?: React.CSSProperties;
+  editedCategoryNumber?: number;
 };
 
 const CategoryTable: React.FC<props> = ({
@@ -18,18 +20,38 @@ const CategoryTable: React.FC<props> = ({
   onDelete,
   onEdit,
   onEditCancel,
+  editedCategoryNumber,
+  onUpdate,
   style,
 }) => {
+  const onWeightCategoryDelete = useCallback(
+    (ageCategoryIndex: number, weightCategory: WeightCategory) => {
+      const newCategories = [...categories];
+      if (!onUpdate || !newCategories[ageCategoryIndex]) {
+        return;
+      }
+
+      newCategories[ageCategoryIndex].weightsAndGender = newCategories[
+        ageCategoryIndex
+      ].weightsAndGender.filter((category) => {
+        return !(
+          category.gender === weightCategory.gender &&
+          category.maxWeight === weightCategory.maxWeight
+        );
+      });
+      onUpdate?.(newCategories);
+    },
+    [categories, onUpdate],
+  );
+
   const categoriesList = useMemo(() => {
     return categories.map((category, index) => {
       return (
         <CategoryItem
-          name={category.name}
-          gender={category.gender}
+          name={category.ageName}
           minAge={category.minAge}
           maxAge={category.maxAge}
-          minWeight={category.minWeight}
-          maxWeight={category.maxWeight}
+          weightCategories={category.weightsAndGender}
           key={index.toString()}
           onDelete={() => {
             if (onEditCancel) onEditCancel();
@@ -39,11 +61,23 @@ const CategoryTable: React.FC<props> = ({
             if (onEdit) onEdit(category);
           }}
           onEditCancel={() => onEditCancel && onEditCancel()}
+          onWeightCategoryDelete={(weightCategory) =>
+            onWeightCategoryDelete(index, weightCategory)
+          }
           showOptions={showOptions}
+          isEdited={editedCategoryNumber === index}
         />
       );
     });
-  }, [categories, onDelete, onEdit, onEditCancel, showOptions]);
+  }, [
+    categories,
+    editedCategoryNumber,
+    onDelete,
+    onEdit,
+    onEditCancel,
+    onWeightCategoryDelete,
+    showOptions,
+  ]);
 
   return (
     <div className="categoriesTable" style={style}>
@@ -56,9 +90,7 @@ const CategoryTable: React.FC<props> = ({
         >
           Name
         </div>
-        <div className="headerField">Gender</div>
         <div className="headerField">Age</div>
-        <div className="headerField">Weight</div>
         {showOptions && <div className="headerField">Options</div>}
       </div>
 

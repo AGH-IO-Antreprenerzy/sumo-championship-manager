@@ -1,0 +1,18 @@
+version: '3'
+services:
+  backend:
+    build:
+      context: ./backend/sumo-championship
+      dockerfile: Dockerfile
+    environment:
+      - SUMO_DB_URL=${SUMO_DB_URL}
+      - SUMO_PASSWORD=${SUMO_PASSWORD}
+      - SUMO_USERNAME=${SUMO_USERNAME}
+    ports:
+      - "8080:8080"
+  frontend:
+    build:
+      context: ./frontend/sumo-championship
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"

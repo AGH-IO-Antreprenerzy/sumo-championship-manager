@@ -1,6 +1,7 @@
 package com.sumoc.sumochampionship.repository;
 
 import com.sumoc.sumochampionship.db.people.*;
+import com.sumoc.sumochampionship.db.season.Country;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Assertions;
 
@@ -12,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.test.context.TestPropertySource;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -23,6 +25,9 @@ import java.util.Set;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
+@TestPropertySource(properties = {
+        "spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect"
+})
 class WrestlerRepositoryTest {
 
     @Autowired
@@ -152,17 +157,17 @@ class WrestlerRepositoryTest {
     private List<Club> contextClubs(){
         Club club1 = Club.builder()
                 .name("club1")
-                .nationality("Poland")
+                .nationality(Country.POLAND)
                 .build();
 
         Club club2 = Club.builder()
                 .name("club2")
-                .nationality("Poland")
+                .nationality(Country.POLAND)
                 .build();
 
         Club club3 = Club.builder()
                 .name("club3")
-                .nationality("England")
+                .nationality(Country.UNITED_KINGDOM)
                 .build();
 
         List<Club> clubs = List.of(club1, club2, club3);

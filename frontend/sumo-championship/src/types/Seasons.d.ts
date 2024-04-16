@@ -2,13 +2,17 @@ import { Tournament } from './Tournament';
 
 type Gender = 'FEMALE' | 'MALE' | 'ALL';
 
-type Category = {
-  name: string;
+type WeightCategory = {
+  categoryId?: number;
+  maxWeight: number;
   gender: Gender;
+};
+
+type Category = {
+  ageName: string;
   minAge: number;
   maxAge: number;
-  minWeight: number;
-  maxWeight: number;
+  weightsAndGender: WeightCategory[];
 };
 
 type Season = {
@@ -18,9 +22,9 @@ type Season = {
 };
 
 type DetailedSeason = Season & {
-  categories: Category[];
+  ageCategories: Category[];
   status: 'ACTIVE' | 'INACTIVE';
   tournaments: Tournament[];
 };
 
-export { DetailedSeason, Season, Category, Gender };
+export { DetailedSeason, Season, Category, WeightCategory, Gender };

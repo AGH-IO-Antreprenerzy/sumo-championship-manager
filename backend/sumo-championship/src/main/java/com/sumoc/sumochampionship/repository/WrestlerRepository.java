@@ -26,5 +26,6 @@ public interface WrestlerRepository extends JpaRepository<Wrestler, Long> {
         belongs to polish club's
      */
     Page<Wrestler> findWrestlerByClubIn(Collection<Club> club, Pageable pageable);
+    List<Wrestler> findAllByClubIn(Set<Club> clubs);
 
 }

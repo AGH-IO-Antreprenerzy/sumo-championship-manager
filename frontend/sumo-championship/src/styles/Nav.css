@@ -27,6 +27,11 @@
   margin: 0 0.5rem;
   border-radius: 0.5rem;
 }
+
+.option:hover{
+  cursor: pointer;
+}
+
 .login {
   color: white;
 }
@@ -57,6 +62,7 @@
 
 .nav-image {
   margin-left: 10px;
+  cursor: pointer;
 }
 
 @media (max-width: 600px) {
