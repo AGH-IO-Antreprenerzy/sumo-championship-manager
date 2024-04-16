@@ -120,7 +120,7 @@ const AddTrainerForm = () => {
                 password,
                 email,
                 country,
-                role: role as Role,
+                userRole: role as Role,
                 club
             }
             try{
